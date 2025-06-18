@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageContent from '../components/PageContent';
+import '../styles/global.css';
+import fs from 'fs/promises';
+import path from 'path';
+
+export async function getStaticPaths() {
+    // Read pages from the JSON file
+    let pages = [];
+    try {
+        const pagesFile = path.join(process.cwd(), 'src/data/pages.json');
+        const content = await fs.readFile(pagesFile, 'utf-8');
+        pages = JSON.parse(content);
+    } catch (error) {
+        console.warn('No pages found or error reading pages:', error);
+        pages = [];
+    }
+
+    return pages.map(page => ({
+        params: { slug: page.slug },
+        props: { page },
+    }));
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title={page.title}>
+    <PageContent title={page.title} content={page.content} client:load />
+</Layout> 
