@@ -17,7 +17,7 @@ const { page } = Astro.props;
 
 // Resolve all components for this page
 const resolvedComponents = await Promise.all(
-  (page.componentInstances || []).map(async (instance) => {
+  (page.components || []).map(async (instance) => {
     const Component = await resolveComponent(instance.componentName);
     return {
       Component,
