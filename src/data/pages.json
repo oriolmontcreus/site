@@ -12,23 +12,23 @@
       {
         "componentName": "Hero",
         "instanceId": "hero-main",
-        "displayName": "Hero Main",
+        "displayName": "Main Hero Section",
         "formData": {
-          "title": "title here",
-          "description": "dadasdaddasdasd"
+          "title": "This is the main page",
+          "description": "testtttttds"
         }
       },
       {
         "componentName": "Hero",
         "instanceId": "hero-secondary",
-        "displayName": "Hero Secondary",
+        "displayName": "Secondary Hero Section",
         "formData": {
-          "title": "testdasdas",
+          "title": "test2",
           "description": ""
         }
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-06-21T08:58:49.639Z"
+    "updatedAt": "2025-06-21T09:19:17.364Z"
   }
 ]

@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { resolveComponent } from '../utils/component-resolver';
-import { getPageData, getAllPagesData } from '../utils/dev-data-fetcher';
+import { getAllPagesData } from '../utils/dev-data-fetcher';
 import '../styles/global.css';
 
 export async function getStaticPaths() {
@@ -37,7 +37,6 @@ const resolvedComponents = await Promise.all(
         return (
           <div class="component-error" data-instance-id={instanceId}>
             <p>⚠️ Component '{componentName}' not found</p>
-            <p>Create: astro-site/src/components/{componentName}.astro</p>
           </div>
         );
       }
