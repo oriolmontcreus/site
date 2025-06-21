@@ -15,15 +15,14 @@ export async function getStaticPaths() {
 
 const { page } = Astro.props;
 
-// Resolve all components for this page
 const resolvedComponents = await Promise.all(
-  (page.components || []).map(async (instance) => {
-    const Component = await resolveComponent(instance.componentName);
+  page.components.map(async (component) => {
+    const Component = await resolveComponent(component.componentName);
     return {
       Component,
-      props: instance.formData,
-      instanceId: instance.instanceId,
-      componentName: instance.componentName
+      props: component.formData,
+      instanceId: component.instanceId,
+      componentName: component.componentName
     };
   })
 );
@@ -46,8 +45,7 @@ const resolvedComponents = await Promise.all(
       return <Component data-instance-id={instanceId} {...props} />;
     })}
     
-    {/* Fallback content if no components */}
-    {page.content && resolvedComponents.length === 0 && (
+    {page.content && !resolvedComponents.length && (
       <div class="fallback-content">
         <p>{page.content}</p>
       </div>
