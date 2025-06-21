@@ -1,10 +1,48 @@
 [
   {
-    "_id": "6852febc85504bea0d4d343b",
-    "title": "Test",
-    "slug": "test",
-    "content": "test content2",
-    "createdAt": "2025-06-18T18:00:28.338Z",
-    "updatedAt": "2025-06-18T19:45:00.527Z"
+    "_id": "6855a62cc9146371b38a2fd5",
+    "title": "Home",
+    "slug": "home",
+    "content": "",
+    "formData": {
+      "hero-main": {
+        "title": "This is my first hero title, hello from cms",
+        "description": "and this is my first description",
+        "input2": "aaa"
+      },
+      "hero-secondary": {
+        "title": "This is the second title nice!!",
+        "description": "descriptionnn",
+        "input2": "bbb"
+      }
+    },
+    "config": {
+      "title": "Home",
+      "slug": "home"
+    },
+    "componentInstances": [
+      {
+        "componentName": "Hero",
+        "instanceId": "hero-main",
+        "displayName": "Hero Main",
+        "formData": {
+          "title": "This is my first hero title, hello from cms",
+          "description": "and this is my first description",
+          "input2": "aaa"
+        }
+      },
+      {
+        "componentName": "Hero",
+        "instanceId": "hero-secondary",
+        "displayName": "Hero Secondary",
+        "formData": {
+          "title": "This is the second title nice!!",
+          "description": "descriptionnn",
+          "input2": "bbb"
+        }
+      }
+    ],
+    "createdAt": "2025-06-20T18:19:24.464Z",
+    "updatedAt": "2025-06-20T20:46:11.894Z"
   }
 ]

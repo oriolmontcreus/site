@@ -1,31 +1,85 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PageContent from '../components/PageContent';
+import { resolveComponent } from '../utils/component-resolver';
+import { getPageData, getAllPagesData } from '../utils/dev-data-fetcher';
 import '../styles/global.css';
-import fs from 'fs/promises';
-import path from 'path';
 
 export async function getStaticPaths() {
-    // Read pages from the JSON file
-    let pages = [];
-    try {
-        const pagesFile = path.join(process.cwd(), 'src/data/pages.json');
-        const content = await fs.readFile(pagesFile, 'utf-8');
-        pages = JSON.parse(content);
-    } catch (error) {
-        console.warn('No pages found or error reading pages:', error);
-        pages = [];
-    }
-
-    return pages.map(page => ({
-        params: { slug: page.slug },
-        props: { page },
-    }));
+  const pages = await getAllPagesData();
+  
+  return pages.map(page => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
 }
 
 const { page } = Astro.props;
+
+// Resolve all components for this page
+const resolvedComponents = await Promise.all(
+  (page.componentInstances || []).map(async (instance) => {
+    const Component = await resolveComponent(instance.componentName);
+    return {
+      Component,
+      props: instance.formData,
+      instanceId: instance.instanceId,
+      componentName: instance.componentName
+    };
+  })
+);
 ---
 
 <Layout title={page.title}>
-    <PageContent title={page.title} content={page.content} client:load />
-</Layout> 
+  <div class="page-content">
+    <h1 class="page-title">{page.title}</h1>
+    
+    {resolvedComponents.map(({ Component, props, instanceId, componentName }) => {
+      if (!Component) {
+        return (
+          <div class="component-error" data-instance-id={instanceId}>
+            <p>⚠️ Component '{componentName}' not found</p>
+            <p>Create: astro-site/src/components/{componentName}.astro</p>
+          </div>
+        );
+      }
+      
+      return <Component data-instance-id={instanceId} {...props} />;
+    })}
+    
+    {/* Fallback content if no components */}
+    {page.content && resolvedComponents.length === 0 && (
+      <div class="fallback-content">
+        <p>{page.content}</p>
+      </div>
+    )}
+  </div>
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .component-error {
+    background: #fee;
+    border: 1px solid #fcc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+    color: #c33;
+  }
+  
+  .fallback-content {
+    padding: 2rem;
+    text-align: center;
+    color: #666;
+  }
+</style> 

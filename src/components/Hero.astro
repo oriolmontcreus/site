@@ -1,0 +1,49 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  input2?: string;
+}
+
+const { title, description, input2 } = Astro.props;
+---
+
+<section class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">{title}</h1>
+    <p class="hero-description">{description}</p>
+    {input2 && <p class="hero-extra">{input2}</p>}
+  </div>
+</section>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+  
+  .hero-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-extra {
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+</style> 
