@@ -1,4 +1,4 @@
-import type { Page } from '../../../shared/types/pages';
+import type { Page } from '../../../shared/types/pages.type';
 
 export async function getPageData(slug: string): Promise<Page | null> {
   try {
