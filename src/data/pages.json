@@ -12,23 +12,68 @@
       {
         "componentName": "Hero",
         "instanceId": "hero-main",
-        "displayName": "Main Hero Section",
+        "displayName": "HERO SECTION",
         "formData": {
-          "title": "This is the main page",
-          "description": "testtttttds"
-        }
-      },
-      {
-        "componentName": "Hero",
-        "instanceId": "hero-secondary",
-        "displayName": "Secondary Hero Section",
-        "formData": {
-          "title": "test2",
-          "description": ""
+          "title": "AAAAAAAAAAAA",
+          "title2": "title",
+          "subtitle": "dsadasdad",
+          "image": null,
+          "backgroundColor": "#EF4444",
+          "textColor": "#000000",
+          "showButton": true,
+          "autoSave": false,
+          "featureCards": [
+            {
+              "icon": null,
+              "title": "test title 2",
+              "subtitle": "test subtitledfgfd 1"
+            },
+            {
+              "icon": null,
+              "title": "test title 2",
+              "subtitle": "test subtitle 2"
+            }
+          ],
+          "translations": {
+            "es-ES": {
+              "title": "AAAAAAAAAAAA",
+              "subtitle": "dsadasdad",
+              "title2": "title",
+              "image": null,
+              "backgroundColor": "#EF4444",
+              "textColor": "#000000",
+              "showButton": true,
+              "autoSave": false,
+              "featureCards": [
+                {
+                  "icon": null,
+                  "title": "test title 2",
+                  "subtitle": "test subtitledfgfd 1"
+                },
+                {
+                  "icon": null,
+                  "title": "test title 2",
+                  "subtitle": "test subtitle 2"
+                }
+              ]
+            },
+            "en-US": {
+              "title": "IN ELGISH",
+              "subtitle": "",
+              "featureCards_0": {
+                "title": "",
+                "subtitle": ""
+              },
+              "featureCards_1": {
+                "title": "",
+                "subtitle": ""
+              }
+            }
+          }
         }
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-06-21T09:19:17.364Z"
+    "updatedAt": "2025-07-13T18:00:28.665Z"
   }
 ]
