@@ -14,18 +14,18 @@
         "instanceId": "hero-main",
         "displayName": "HERO SECTION",
         "formData": {
-          "title": "AAAAAAAAAAAA",
-          "title2": "title",
-          "subtitle": "dsadasdad",
+          "title": "dsddsds",
+          "title2": "title hell yeafdffgd",
+          "subtitle": "This is the subtitle in english. Edited from translation mode",
           "image": null,
           "backgroundColor": "#EF4444",
           "textColor": "#000000",
-          "showButton": true,
+          "showButton": false,
           "autoSave": false,
           "featureCards": [
             {
               "icon": null,
-              "title": "test title 2",
+              "title": "test title 1",
               "subtitle": "test subtitledfgfd 1"
             },
             {
@@ -34,20 +34,30 @@
               "subtitle": "test subtitle 2"
             }
           ],
+          "icon": "",
+          "accentColor": "#000000",
           "translations": {
-            "es-ES": {
-              "title": "AAAAAAAAAAAA",
-              "subtitle": "dsadasdad",
-              "title2": "title",
-              "image": null,
+            "en": {
+              "title": "dsddsds",
+              "subtitle": "This is the subtitle in english. Edited from translation mode",
+              "title2": "title hell yeafdffgd",
+              "image": {
+                "id": "01360aec-ad56-4474-b6c1-a17173336be7",
+                "originalName": "notion-avatar-1751829959386.png",
+                "fileName": "01360aec-ad56-4474-b6c1-a17173336be7.png",
+                "mimeType": "image/png",
+                "size": 20100,
+                "path": "uploads\\01360aec-ad56-4474-b6c1-a17173336be7.png",
+                "uploadedAt": "2025-07-19T16:59:00.482Z"
+              },
               "backgroundColor": "#EF4444",
               "textColor": "#000000",
-              "showButton": true,
+              "showButton": false,
               "autoSave": false,
               "featureCards": [
                 {
                   "icon": null,
-                  "title": "test title 2",
+                  "title": "test title 1",
                   "subtitle": "test subtitledfgfd 1"
                 },
                 {
@@ -55,25 +65,58 @@
                   "title": "test title 2",
                   "subtitle": "test subtitle 2"
                 }
+              ],
+              "icon": "",
+              "accentColor": "#000000"
+            },
+            "es": {
+              "title": "This is the hero title in spanishssss",
+              "subtitle": "subtitle but in spanishsssssss",
+              "featureCards": [
+                {
+                  "title": "First title card in spanish",
+                  "subtitle": "Subtítulo 1"
+                },
+                {
+                  "title": "Second title card in spanish",
+                  "subtitle": "Subtítulo 2"
+                }
               ]
             },
-            "en-US": {
-              "title": "IN ELGISH",
+            "fr": {
+              "title": "",
               "subtitle": "",
-              "featureCards_0": {
-                "title": "",
-                "subtitle": ""
-              },
-              "featureCards_1": {
-                "title": "",
-                "subtitle": ""
-              }
+              "featureCards": [
+                {
+                  "title": "test fr title 1",
+                  "subtitle": ""
+                },
+                {
+                  "title": "",
+                  "subtitle": ""
+                }
+              ]
             }
+          }
+        }
+      },
+      {
+        "componentName": "Contact information",
+        "instanceId": "contact-info",
+        "displayName": "CONTACT INFORMATION",
+        "formData": {
+          "email": "",
+          "translations": {
+            "en": {
+              "email": ""
+            },
+            "es": {},
+            "fr": {}
           }
         }
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-07-13T18:00:28.665Z"
+    "updatedAt": "2025-07-19T16:59:08.419Z"
   }
 ]
