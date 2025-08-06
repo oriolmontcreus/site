@@ -14,14 +14,15 @@
         "instanceId": "hero-main",
         "displayName": "HERO SECTION",
         "formData": {
-          "title": "dsddsds",
-          "title2": "title hell yeafdffgd",
-          "subtitle": "This is the subtitle in english. Edited from translation mode",
+          "title": "Hero title test",
+          "title2": "secondary title test",
+          "subtitle": "This is the subtitle in english",
           "image": null,
           "backgroundColor": "#EF4444",
           "textColor": "#000000",
           "showButton": false,
           "autoSave": false,
+          "debugInfo": "",
           "featureCards": [
             {
               "icon": null,
@@ -38,22 +39,15 @@
           "accentColor": "#000000",
           "translations": {
             "en": {
-              "title": "dsddsds",
-              "subtitle": "This is the subtitle in english. Edited from translation mode",
-              "title2": "title hell yeafdffgd",
-              "image": {
-                "id": "01360aec-ad56-4474-b6c1-a17173336be7",
-                "originalName": "notion-avatar-1751829959386.png",
-                "fileName": "01360aec-ad56-4474-b6c1-a17173336be7.png",
-                "mimeType": "image/png",
-                "size": 20100,
-                "path": "uploads\\01360aec-ad56-4474-b6c1-a17173336be7.png",
-                "uploadedAt": "2025-07-19T16:59:00.482Z"
-              },
+              "title": "Hero title test",
+              "subtitle": "This is the subtitle in english",
+              "title2": "secondary title test",
+              "image": null,
               "backgroundColor": "#EF4444",
               "textColor": "#000000",
               "showButton": false,
               "autoSave": false,
+              "debugInfo": "",
               "featureCards": [
                 {
                   "icon": null,
@@ -70,25 +64,25 @@
               "accentColor": "#000000"
             },
             "es": {
-              "title": "This is the hero title in spanishssss",
-              "subtitle": "subtitle but in spanishsssssss",
+              "title": "dsddsds",
+              "subtitle": "",
               "featureCards": [
                 {
-                  "title": "First title card in spanish",
-                  "subtitle": "Subtítulo 1"
+                  "title": "",
+                  "subtitle": ""
                 },
                 {
-                  "title": "Second title card in spanish",
-                  "subtitle": "Subtítulo 2"
+                  "title": "",
+                  "subtitle": ""
                 }
               ]
             },
             "fr": {
-              "title": "",
+              "title": "dsddsds",
               "subtitle": "",
               "featureCards": [
                 {
-                  "title": "test fr title 1",
+                  "title": "",
                   "subtitle": ""
                 },
                 {
@@ -106,17 +100,85 @@
         "displayName": "CONTACT INFORMATION",
         "formData": {
           "email": "",
+          "heroSections": [
+            {
+              "image": null,
+              "featureCards": [
+                {
+                  "icon": null,
+                  "title": "Feature card title inside the Hero component that its inside the Contact Info component",
+                  "subtitle": "subtitle test"
+                }
+              ],
+              "title": "Hero title inside the Hero component that its inside the Contact Info component"
+            }
+          ],
+          "title": "",
+          "title2": "",
+          "subtitle": "",
+          "image": "",
+          "backgroundColor": "#000000",
+          "textColor": "#000000",
+          "showButton": false,
+          "autoSave": false,
+          "debugInfo": "",
+          "featureCards": "",
+          "icon": "",
+          "accentColor": "#000000",
           "translations": {
             "en": {
-              "email": ""
+              "title": "",
+              "subtitle": "",
+              "email": "",
+              "heroSections": [
+                {
+                  "image": null,
+                  "featureCards": [
+                    {
+                      "icon": null,
+                      "title": "Feature card title inside the Hero component that its inside the Contact Info component",
+                      "subtitle": "subtitle test"
+                    }
+                  ],
+                  "title": "Hero title inside the Hero component that its inside the Contact Info component"
+                }
+              ],
+              "title2": "",
+              "image": "",
+              "backgroundColor": "#000000",
+              "textColor": "#000000",
+              "showButton": false,
+              "autoSave": false,
+              "debugInfo": "",
+              "featureCards": "",
+              "icon": "",
+              "accentColor": "#000000"
             },
-            "es": {},
-            "fr": {}
+            "es": {
+              "title": "",
+              "subtitle": "",
+              "heroSections": [
+                {
+                  "title": "",
+                  "subtitle": ""
+                }
+              ]
+            },
+            "fr": {
+              "title": "",
+              "subtitle": "",
+              "heroSections": [
+                {
+                  "title": "",
+                  "subtitle": ""
+                }
+              ]
+            }
           }
         }
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-07-19T16:59:08.419Z"
+    "updatedAt": "2025-08-06T11:01:39.154Z"
   }
 ]
