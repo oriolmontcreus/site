@@ -40,56 +40,31 @@
           "translations": {
             "en": {
               "title": "Hero title test",
-              "subtitle": "This is the subtitle in english",
-              "title2": "secondary title test",
-              "image": null,
-              "backgroundColor": "#EF4444",
-              "textColor": "#000000",
-              "showButton": false,
-              "autoSave": false,
-              "debugInfo": "",
-              "featureCards": [
-                {
-                  "icon": null,
-                  "title": "test title 1",
-                  "subtitle": "test subtitledfgfd 1"
-                },
-                {
-                  "icon": null,
-                  "title": "test title 2",
-                  "subtitle": "test subtitle 2"
-                }
-              ],
-              "icon": "",
-              "accentColor": "#000000"
+              "subtitle": "This is the subtitle in english"
             },
             "es": {
               "title": "dsddsds",
               "subtitle": "",
-              "featureCards": [
-                {
-                  "title": "",
-                  "subtitle": ""
-                },
-                {
-                  "title": "",
-                  "subtitle": ""
-                }
-              ]
+              "featureCards_0": {
+                "title": "",
+                "subtitle": ""
+              },
+              "featureCards_1": {
+                "title": "",
+                "subtitle": ""
+              }
             },
             "fr": {
               "title": "dsddsds",
               "subtitle": "",
-              "featureCards": [
-                {
-                  "title": "",
-                  "subtitle": ""
-                },
-                {
-                  "title": "",
-                  "subtitle": ""
-                }
-              ]
+              "featureCards_0": {
+                "title": "",
+                "subtitle": ""
+              },
+              "featureCards_1": {
+                "title": "",
+                "subtitle": ""
+              }
             }
           }
         }
@@ -106,67 +81,41 @@
               "featureCards": [
                 {
                   "icon": null,
-                  "title": "Feature card title inside the Hero component that its inside the Contact Info component",
+                  "title": "Feature card title inside the Hero component that its inside the Contact Info component...",
                   "subtitle": "subtitle test"
+                },
+                {
+                  "icon": null
                 }
               ],
               "title": "Hero title inside the Hero component that its inside the Contact Info component"
             }
           ],
           "title": "",
-          "title2": "",
-          "subtitle": "",
-          "image": "",
-          "backgroundColor": "#000000",
-          "textColor": "#000000",
-          "showButton": false,
-          "autoSave": false,
-          "debugInfo": "",
-          "featureCards": "",
-          "icon": "",
-          "accentColor": "#000000",
+          "hero-tabs": "",
           "translations": {
             "en": {
-              "title": "",
-              "subtitle": "",
-              "email": "",
-              "heroSections": [
-                {
-                  "image": null,
-                  "featureCards": [
-                    {
-                      "icon": null,
-                      "title": "Feature card title inside the Hero component that its inside the Contact Info component",
-                      "subtitle": "subtitle test"
-                    }
-                  ],
-                  "title": "Hero title inside the Hero component that its inside the Contact Info component"
-                }
-              ],
-              "title2": "",
-              "image": "",
-              "backgroundColor": "#000000",
-              "textColor": "#000000",
-              "showButton": false,
-              "autoSave": false,
-              "debugInfo": "",
-              "featureCards": "",
-              "icon": "",
-              "accentColor": "#000000"
+              "title": ""
             },
             "es": {
               "title": "",
-              "subtitle": "",
               "heroSections": [
                 {
-                  "title": "",
-                  "subtitle": ""
+                  "title": "adeudasdsa",
+                  "subtitle": "",
+                  "featureCards_0": {
+                    "title": "Card title edited in spanish mode (edit19)dasdsad",
+                    "subtitle": "test spanish subtitle"
+                  },
+                  "featureCards_1": {
+                    "title": "test card 2 spanish",
+                    "subtitle": ""
+                  }
                 }
               ]
             },
             "fr": {
               "title": "",
-              "subtitle": "",
               "heroSections": [
                 {
                   "title": "",
@@ -179,6 +128,6 @@
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-08-06T11:01:39.154Z"
+    "updatedAt": "2025-08-07T16:35:37.328Z"
   }
 ]
