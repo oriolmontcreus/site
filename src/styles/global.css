@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@theme {
+    --font-sans: 'Merriweather-sans', 'sans-serif';
+    --font-serif: 'Merriweather', 'serif';
+}
+
+body {
+    font-family: "Merriweather-sans", sans-serif;
+    font-display: swap;
+}
