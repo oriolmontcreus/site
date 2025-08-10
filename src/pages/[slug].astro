@@ -1,13 +1,31 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { resolveComponent } from '../utils/component-resolver';
-import { getAllPagesData } from '../utils/dev-data-fetcher';
-import '../styles/global.css';
+import Layout from "../layouts/Layout.astro";
+import { resolveComponent } from "../utils/component-resolver";
+import { getAllPagesData } from "../utils/dev-data-fetcher";
+import "../styles/global.css";
 
 export async function getStaticPaths() {
   const pages = await getAllPagesData();
-  
-  return pages.map(page => ({
+  console.log(
+    "All pages:",
+    pages.map((p) => ({ slug: p.slug, title: p.title })),
+  );
+
+  // Filter out invalid slugs: root page, empty, null, undefined, or containing special characters
+  const filteredPages = pages.filter((page) => {
+    if (!page.slug) return false;
+    if (page.slug === "/") return false; // Root page handled by index.astro
+    if (typeof page.slug !== "string") return false;
+    if (page.slug.trim() === "") return false;
+    return true;
+  });
+
+  console.log(
+    "Filtered pages:",
+    filteredPages.map((p) => ({ slug: p.slug, title: p.title })),
+  );
+
+  return filteredPages.map((page) => ({
     params: { slug: page.slug },
     props: { page },
   }));
@@ -22,33 +40,39 @@ const resolvedComponents = await Promise.all(
       Component,
       props: component.formData,
       instanceId: component.instanceId,
-      componentName: component.componentName
+      componentName: component.componentName,
     };
-  })
+  }),
 );
 ---
 
 <Layout title={page.title}>
   <div class="page-content">
     <h1 class="page-title">{page.title}</h1>
-    
-    {resolvedComponents.map(({ Component, props, instanceId, componentName }) => {
-      if (!Component) {
-        return (
-          <div class="component-error" data-instance-id={instanceId}>
-            <p>⚠️ Component '{componentName}' not found</p>
-          </div>
-        );
-      }
-      
-      return <Component data-instance-id={instanceId} {...props} />;
-    })}
-    
-    {page.content && !resolvedComponents.length && (
-      <div class="fallback-content">
-        <p>{page.content}</p>
-      </div>
-    )}
+
+    {
+      resolvedComponents.map(
+        ({ Component, props, instanceId, componentName }) => {
+          if (!Component) {
+            return (
+              <div class="component-error" data-instance-id={instanceId}>
+                <p>⚠️ Component '{componentName}' not found</p>
+              </div>
+            );
+          }
+
+          return <Component data-instance-id={instanceId} {...props} />;
+        },
+      )
+    }
+
+    {
+      page.content && !resolvedComponents.length && (
+        <div class="fallback-content">
+          <p>{page.content}</p>
+        </div>
+      )
+    }
   </div>
 </Layout>
 
@@ -58,13 +82,13 @@ const resolvedComponents = await Promise.all(
     margin: 0 auto;
     padding: 2rem;
   }
-  
+
   .page-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     text-align: center;
   }
-  
+
   .component-error {
     background: #fee;
     border: 1px solid #fcc;
@@ -73,10 +97,10 @@ const resolvedComponents = await Promise.all(
     margin: 1rem 0;
     color: #c33;
   }
-  
+
   .fallback-content {
     padding: 2rem;
     text-align: center;
     color: #666;
   }
-</style> 
+</style>

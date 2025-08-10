@@ -15,7 +15,7 @@
         "displayName": "HERO SECTION",
         "formData": {
           "title": "Hero title test",
-          "title2": "secondary title test",
+          "title2": "test save",
           "subtitle": "This is the subtitle in english",
           "image": null,
           "backgroundColor": "#EF4444",
@@ -38,24 +38,12 @@
           "icon": "",
           "accentColor": "#000000",
           "translations": {
-            "en": {
+            "es-ES": {
               "title": "Hero title test",
               "subtitle": "This is the subtitle in english"
             },
-            "es": {
-              "title": "dsddsds",
-              "subtitle": "",
-              "featureCards_0": {
-                "title": "",
-                "subtitle": ""
-              },
-              "featureCards_1": {
-                "title": "",
-                "subtitle": ""
-              }
-            },
-            "fr": {
-              "title": "dsddsds",
+            "en-US": {
+              "title": "",
               "subtitle": "",
               "featureCards_0": {
                 "title": "",
@@ -94,27 +82,10 @@
           "title": "",
           "hero-tabs": "",
           "translations": {
-            "en": {
+            "es-ES": {
               "title": ""
             },
-            "es": {
-              "title": "",
-              "heroSections": [
-                {
-                  "title": "adeudasdsa",
-                  "subtitle": "",
-                  "featureCards_0": {
-                    "title": "Card title edited in spanish mode (edit19)dasdsad",
-                    "subtitle": "test spanish subtitle"
-                  },
-                  "featureCards_1": {
-                    "title": "test card 2 spanish",
-                    "subtitle": ""
-                  }
-                }
-              ]
-            },
-            "fr": {
+            "en-US": {
               "title": "",
               "heroSections": [
                 {
@@ -128,6 +99,74 @@
       }
     ],
     "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-08-07T16:35:37.328Z"
+    "updatedAt": "2025-08-08T09:52:49.395Z"
+  },
+  {
+    "_id": "page_1754822703113_c2ypafm8v",
+    "title": "Home",
+    "slug": "/",
+    "content": "",
+    "config": {
+      "title": "Home",
+      "slug": "/"
+    },
+    "components": [
+      {
+        "componentName": "Hero",
+        "instanceId": "hero-main",
+        "displayName": "HERO SECTION",
+        "formData": {
+          "title": "Hola",
+          "title2": "",
+          "subtitle": "",
+          "image": "",
+          "backgroundColor": "#000000",
+          "textColor": "#000000",
+          "showButton": false,
+          "autoSave": false,
+          "debugInfo": "",
+          "featureCards": [],
+          "icon": "",
+          "accentColor": "#000000",
+          "translations": {
+            "es-ES": {
+              "title": "",
+              "title2": "",
+              "subtitle": "",
+              "image": "",
+              "backgroundColor": "#000000",
+              "textColor": "#000000",
+              "showButton": false,
+              "autoSave": false,
+              "debugInfo": "",
+              "featureCards": [],
+              "icon": "",
+              "accentColor": "#000000"
+            }
+          }
+        }
+      },
+      {
+        "componentName": "Contact information",
+        "instanceId": "contact-info",
+        "displayName": "CONTACT INFORMATION",
+        "formData": {
+          "email": "",
+          "heroSections": [],
+          "title": "",
+          "hero-tabs": "",
+          "translations": {
+            "es-ES": {
+              "email": "",
+              "heroSections": [],
+              "title": "",
+              "hero-tabs": ""
+            }
+          }
+        }
+      }
+    ],
+    "createdAt": "2025-08-10T10:45:03.114Z",
+    "updatedAt": "2025-08-10T10:54:24.913Z"
   }
 ]
