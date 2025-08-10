@@ -116,32 +116,14 @@
         "instanceId": "hero-main",
         "displayName": "HERO SECTION",
         "formData": {
-          "title": "Hola",
-          "title2": "",
-          "subtitle": "",
-          "image": "",
-          "backgroundColor": "#000000",
-          "textColor": "#000000",
-          "showButton": false,
-          "autoSave": false,
-          "debugInfo": "",
-          "featureCards": [],
-          "icon": "",
-          "accentColor": "#000000",
+          "title": "EXCALIBUR",
+          "docsUrl": "",
+          "githubUrl": "",
           "translations": {
             "es-ES": {
-              "title": "",
-              "title2": "",
-              "subtitle": "",
-              "image": "",
-              "backgroundColor": "#000000",
-              "textColor": "#000000",
-              "showButton": false,
-              "autoSave": false,
-              "debugInfo": "",
-              "featureCards": [],
-              "icon": "",
-              "accentColor": "#000000"
+              "title": "Excalibur",
+              "docsUrl": "",
+              "githubUrl": ""
             }
           }
         }
@@ -154,19 +136,21 @@
           "email": "",
           "heroSections": [],
           "title": "",
-          "hero-tabs": "",
+          "docsUrl": "",
+          "githubUrl": "",
           "translations": {
             "es-ES": {
               "email": "",
               "heroSections": [],
               "title": "",
-              "hero-tabs": ""
+              "docsUrl": "",
+              "githubUrl": ""
             }
           }
         }
       }
     ],
     "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-10T10:54:24.913Z"
+    "updatedAt": "2025-08-10T15:12:05.623Z"
   }
 ]

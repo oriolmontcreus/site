@@ -8,25 +8,15 @@ export interface Props {
 const { title, docsUrl, githubUrl } = Astro.props;
 ---
 
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-  <!-- Background Elements -->
-  <div class="absolute inset-0 z-0">
-    <!-- Animated Grid -->
-    <div class="absolute inset-0 opacity-30 animate-grid-move" style="background-image: linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
-    <!-- Glow Effect -->
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] animate-glow-pulse" style="background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(147, 197, 253, 0.1) 30%, transparent 70%);"></div>
-  </div>
-  
+<section class="min-h-screen pt-[30vh]">
   <!-- Content -->
-  <div class="relative z-10 text-center max-w-4xl px-8">
-    <div class="mb-12">
-      <!-- Animated Title -->
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6 bg-gradient-to-br from-white via-blue-300 to-blue-700 bg-clip-text text-transparent animate-gradient-shift" style="background-size: 400% 400%;">
+  <div class="z-10 px-8 mb-12">
+      <h1 class="text-5xl md:text-7xl lg:text-8xl font-semibold leading-tight mb-6 text-white">
         {title}
       </h1>
       
       <!-- Subtitle with fade-up animation -->
-      <p class="text-lg md:text-xl lg:text-2xl leading-relaxed text-slate-400 max-w-3xl mx-auto opacity-0 animate-fade-up-delay">
+      <p class="text-lg md:text-xl lg:text-2xl leading-relaxed text-slate-400 max-w-2xl font-serif">
         The next-generation content management system built for developers who demand power, flexibility, and elegance.
       </p>
     </div>
@@ -64,20 +54,9 @@ const { title, docsUrl, githubUrl } = Astro.props;
         </a>
       )}
     </div>
-  </div>
 </section>
 
 <style>
-  @keyframes grid-move {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(50px, 50px); }
-  }
-
-  @keyframes glow-pulse {
-    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; }
-    100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; }
-  }
-
   @keyframes gradient-shift {
     0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -86,14 +65,6 @@ const { title, docsUrl, githubUrl } = Astro.props;
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-grid-move {
-    animation: grid-move 20s linear infinite;
-  }
-
-  .animate-glow-pulse {
-    animation: glow-pulse 4s ease-in-out infinite alternate;
   }
 
   .animate-gradient-shift {
