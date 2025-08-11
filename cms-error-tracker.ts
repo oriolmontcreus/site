@@ -10,184 +10,277 @@ interface ComponentError {
 export default defineToolbarApp({
     init(canvas, app, server) {
         const errors: ComponentError[] = [];
-        let errorCountElement: HTMLElement;
-        let errorPanelElement: HTMLElement;
-        let isExpanded = false;
+        let sidebarElement: HTMLElement;
+        let isDarkMode = false;
 
-        // Create the main toolbar button
-        function createToolbarButton() {
-            const button = document.createElement('div');
-            button.style.cssText = `
+        // Detect theme preference
+        function detectTheme() {
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            isDarkMode = mediaQuery.matches;
+
+            // Listen for theme changes
+            mediaQuery.addEventListener('change', (e) => {
+                isDarkMode = e.matches;
+                updateTheme();
+            });
+        }
+
+        // Minimal shadcn-style theme colors
+        function getThemeColors() {
+            return {
+                background: isDarkMode ? 'hsl(224 71% 4%)' : 'hsl(0 0% 100%)',
+                card: isDarkMode ? 'hsl(224 71% 4%)' : 'hsl(0 0% 100%)',
+                cardForeground: isDarkMode ? 'hsl(213 31% 91%)' : 'hsl(224 71% 4%)',
+                muted: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
+                mutedForeground: isDarkMode ? 'hsl(217 33% 64%)' : 'hsl(220 9% 46%)',
+                border: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 13% 91%)',
+                input: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 13% 91%)',
+                primary: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(224 71% 4%)',
+                primaryForeground: isDarkMode ? 'hsl(222.2 84% 4.9%)' : 'hsl(210 40% 98%)',
+                secondary: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
+                secondaryForeground: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(220 9% 46%)',
+                destructive: isDarkMode ? 'hsl(0 63% 31%)' : 'hsl(0 84% 60%)',
+                destructiveForeground: 'hsl(210 40% 98%)',
+                ring: isDarkMode ? 'hsl(216 34% 17%)' : 'hsl(215 20% 65%)',
+                accent: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
+                accentForeground: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(220 9% 46%)',
+            };
+        }
+
+        // Create sidebar
+        function createSidebar() {
+            const sidebar = document.createElement('div');
+            const colors = getThemeColors();
+
+            sidebar.style.cssText = `
         position: fixed;
-        top: 60px;
-        right: 20px;
-        background: #ff4444;
-        color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-family: system-ui, sans-serif;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        z-index: 999999;
-        transition: all 0.2s ease;
+        top: 0;
+        right: -420px;
+        width: 420px;
+        height: 100vh;
+        background: ${colors.background};
+        border-left: 1px solid ${colors.border};
+        z-index: 999998;
+        transition: right 0.15s ease-out;
+        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        display: flex;
+        flex-direction: column;
+        box-shadow: -4px 0 6px -1px rgba(0, 0, 0, 0.1), -2px 0 4px -1px rgba(0, 0, 0, 0.06);
+      `;
+
+            // Header
+            const header = document.createElement('div');
+            header.style.cssText = `
+        padding: 24px;
+        border-bottom: 1px solid ${colors.border};
+        background: ${colors.card};
+      `;
+
+            const title = document.createElement('div');
+            title.style.cssText = `
+        font-size: 18px;
+        font-weight: 600;
+        color: ${colors.cardForeground};
         display: flex;
         align-items: center;
-        gap: 6px;
-        min-width: 120px;
-        justify-content: center;
+        gap: 8px;
+        margin-bottom: 2px;
+      `;
+            title.innerHTML = `CMS Error Tracker`;
+
+            const subtitle = document.createElement('div');
+            subtitle.style.cssText = `
+        font-size: 14px;
+        color: ${colors.mutedForeground};
+        font-weight: 400;
       `;
 
-            const icon = document.createElement('span');
-            icon.textContent = '🔧';
-            icon.style.fontSize = '16px';
+            header.appendChild(title);
+            header.appendChild(subtitle);
 
-            errorCountElement = document.createElement('span');
-            errorCountElement.textContent = 'Loading...';
-
-            button.appendChild(icon);
-            button.appendChild(errorCountElement);
-
-            button.addEventListener('click', toggleErrorPanel);
-            button.addEventListener('mouseenter', () => {
-                button.style.transform = 'scale(1.05)';
-                button.style.boxShadow = '0 4px 12px rgba(0,0,0,0.4)';
-            });
-            button.addEventListener('mouseleave', () => {
-                button.style.transform = 'scale(1)';
-                button.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
-            });
-
-            return button;
-        }
-
-        // Create the error panel
-        function createErrorPanel() {
-            const panel = document.createElement('div');
-            panel.style.cssText = `
-        position: fixed;
-        top: 110px;
-        right: 20px;
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        width: 400px;
-        max-height: 500px;
+            // Content area
+            const content = document.createElement('div');
+            content.style.cssText = `
+        flex: 1;
         overflow-y: auto;
-        z-index: 999998;
-        font-family: system-ui, sans-serif;
-        display: none;
       `;
 
-            updateErrorPanel(panel);
-            return panel;
+            sidebar.appendChild(header);
+            sidebar.appendChild(content);
+
+            return { sidebar, subtitle, content };
         }
 
-        // Update error count display
-        function updateErrorCount() {
-            if (errorCountElement) {
+        // Update theme
+        function updateTheme() {
+            if (!sidebarElement) return;
+
+            const colors = getThemeColors();
+
+            sidebarElement.style.background = colors.background;
+            sidebarElement.style.borderColor = colors.border;
+
+            const header = sidebarElement.querySelector('div') as HTMLElement;
+            if (header) {
+                header.style.background = colors.card;
+                header.style.borderColor = colors.border;
+
+                const title = header.querySelector('div') as HTMLElement;
+                if (title) {
+                    title.style.color = colors.cardForeground;
+                }
+            }
+
+            updateErrorDisplay();
+        }
+
+        // Update error display in sidebar
+        function updateErrorDisplay() {
+            const sidebar = sidebarElement;
+            if (!sidebar) return;
+
+            const colors = getThemeColors();
+            const header = sidebar.querySelector('div') as HTMLElement;
+            const subtitle = header?.querySelector('div:nth-child(2)') as HTMLElement;
+            const content = sidebar.querySelector('div:nth-child(2)') as HTMLElement;
+
+            if (subtitle) {
                 const count = errors.length;
                 if (count === 0) {
-                    errorCountElement.textContent = 'No Errors ✅';
-                    if (errorCountElement.parentElement) {
-                        errorCountElement.parentElement.style.background = '#22c55e';
-                    }
+                    subtitle.textContent = 'All components are working correctly';
+                    subtitle.style.color = colors.mutedForeground;
                 } else {
-                    errorCountElement.textContent = `${count} Error${count > 1 ? 's' : ''}`;
-                    if (errorCountElement.parentElement) {
-                        errorCountElement.parentElement.style.background = '#ff4444';
-                    }
+                    subtitle.textContent = `${count} component error${count > 1 ? 's' : ''} detected`;
+                    subtitle.style.color = colors.destructive;
+                }
+            }
+
+            if (content) {
+                content.innerHTML = '';
+
+                if (errors.length === 0) {
+                    const noErrors = document.createElement('div');
+                    noErrors.style.cssText = `
+            padding: 48px 24px;
+            text-align: center;
+            color: ${colors.mutedForeground};
+          `;
+                    noErrors.innerHTML = `
+            <div style="width: 48px; height: 48px; margin: 0 auto 16px; background: ${colors.muted}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">✓</div>
+            <div style="font-size: 16px; font-weight: 500; color: ${colors.cardForeground}; margin-bottom: 8px;">
+              No errors found
+            </div>
+            <div style="font-size: 14px;">
+              All components are loading correctly
+            </div>
+          `;
+                    content.appendChild(noErrors);
+                } else {
+                    errors.forEach((error, index) => {
+                        const errorCard = document.createElement('div');
+                        errorCard.style.cssText = `
+              margin: 16px 24px;
+              padding: 16px;
+              background: ${colors.card};
+              border: 1px solid ${colors.border};
+              border-radius: 8px;
+              transition: border-color 0.15s ease-in-out;
+            `;
+
+                        // Add subtle hover effect
+                        errorCard.addEventListener('mouseenter', () => {
+                            errorCard.style.borderColor = colors.ring;
+                        });
+                        errorCard.addEventListener('mouseleave', () => {
+                            errorCard.style.borderColor = colors.border;
+                        });
+
+                        errorCard.innerHTML = `
+              <div style="display: flex; align-items: flex-start; gap: 12px;">
+                <div style="width: 20px; height: 20px; background: ${colors.destructive}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: ${colors.destructiveForeground}; flex-shrink: 0; margin-top: 1px;">!</div>
+                <div style="flex: 1; min-width: 0;">
+                  <div style="font-weight: 600; font-size: 14px; color: ${colors.cardForeground}; margin-bottom: 4px;">
+                    ${error.componentName}
+                  </div>
+                  <div style="font-size: 12px; color: ${colors.mutedForeground}; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace; margin-bottom: 8px;">
+                    ${error.instanceId}
+                  </div>
+                  <div style="background: ${colors.muted}; padding: 8px; border-radius: 6px; font-size: 13px; color: ${colors.mutedForeground}; line-height: 1.4;">
+                    ${error.reason}
+                  </div>
+                  ${error.pageSlug ? `
+                    <div style="margin-top: 8px; font-size: 12px; color: ${colors.mutedForeground};">
+                      <span style="background: ${colors.accent}; padding: 1px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;">${error.pageSlug}</span>
+                    </div>
+                  ` : ''}
+                </div>
+              </div>
+            `;
+
+                        content.appendChild(errorCard);
+                    });
                 }
             }
         }
 
-        // Update error panel content
-        function updateErrorPanel(panel: HTMLElement) {
-            panel.innerHTML = '';
+        // Show/hide sidebar
+        function showSidebar() {
+            if (sidebarElement) {
+                sidebarElement.style.right = '0';
+                createOverlay();
+            }
+        }
 
-            const header = document.createElement('div');
-            header.style.cssText = `
-        padding: 16px;
-        border-bottom: 1px solid #eee;
-        background: #f8f9fa;
-        border-radius: 8px 8px 0 0;
-        font-weight: bold;
-        font-size: 16px;
-        color: #333;
+        function hideSidebar() {
+            if (sidebarElement) {
+                sidebarElement.style.right = '-420px';
+                removeOverlay();
+            }
+        }
+
+        // Create overlay
+        function createOverlay() {
+            const overlay = document.createElement('div');
+            overlay.id = 'cms-error-tracker-overlay';
+            overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 999997;
+        transition: opacity 0.15s ease-out;
+        opacity: 0;
       `;
-            header.textContent = `Component Errors (${errors.length})`;
-            panel.appendChild(header);
 
-            if (errors.length === 0) {
-                const noErrors = document.createElement('div');
-                noErrors.style.cssText = `
-          padding: 32px 16px;
-          text-align: center;
-          color: #666;
-          font-size: 14px;
-        `;
-                noErrors.innerHTML = `
-          <div style="font-size: 32px; margin-bottom: 12px;">✅</div>
-          <div>No component errors detected!</div>
-          <div style="font-size: 12px; margin-top: 8px; opacity: 0.7;">
-            All components are loading correctly.
-          </div>
-        `;
-                panel.appendChild(noErrors);
-            } else {
-                errors.forEach((error, index) => {
-                    const errorItem = document.createElement('div');
-                    errorItem.style.cssText = `
-            padding: 16px;
-            border-bottom: 1px solid #eee;
-            ${index === errors.length - 1 ? 'border-bottom: none; border-radius: 0 0 8px 8px;' : ''}
-          `;
+            overlay.addEventListener('click', hideSidebar);
+            canvas.appendChild(overlay);
 
-                    errorItem.innerHTML = `
-            <div style="font-weight: bold; color: #dc2626; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 16px;">❌</span>
-              <span>${error.componentName}</span>
-            </div>
-            <div style="font-size: 12px; color: #666; margin-bottom: 4px;">
-              Instance ID: <code style="background: #f3f4f6; padding: 2px 4px; border-radius: 3px;">${error.instanceId}</code>
-            </div>
-            ${error.pageSlug ? `
-              <div style="font-size: 12px; color: #666; margin-bottom: 8px;">
-                Page: <code style="background: #f3f4f6; padding: 2px 4px; border-radius: 3px;">${error.pageSlug}</code>
-              </div>
-            ` : ''}
-            <div style="font-size: 13px; color: #dc2626; padding: 8px; background: #fef2f2; border-radius: 4px; border-left: 3px solid #dc2626;">
-              ${error.reason}
-            </div>
-          `;
+            // Fade in
+            requestAnimationFrame(() => {
+                overlay.style.opacity = '1';
+            });
+        }
 
-                    panel.appendChild(errorItem);
-                });
+        // Remove overlay
+        function removeOverlay() {
+            const overlay = canvas.querySelector('#cms-error-tracker-overlay');
+            if (overlay) {
+                overlay.remove();
             }
         }
 
-        // Toggle error panel visibility
-        function toggleErrorPanel() {
-            if (errorPanelElement) {
-                isExpanded = !isExpanded;
-                errorPanelElement.style.display = isExpanded ? 'block' : 'none';
-            }
-        }
-
-        // Scan for component errors on the page
+        // Scan for component errors
         function scanForErrors() {
             const newErrors: ComponentError[] = [];
 
-            // Look for component error elements that were rendered by the site
             const errorElements = document.querySelectorAll('.component-error[data-instance-id]');
 
             errorElements.forEach((element) => {
                 const instanceId = element.getAttribute('data-instance-id');
                 const errorText = element.querySelector('p')?.textContent || '';
 
-                // Extract component name from error message
                 const componentNameMatch = errorText.match(/Component '([^']+)' not found/);
                 const componentName = componentNameMatch ? componentNameMatch[1] : 'Unknown';
 
@@ -201,56 +294,62 @@ export default defineToolbarApp({
                 }
             });
 
-            // Update errors array
             errors.length = 0;
             errors.push(...newErrors);
 
-            // Update UI
-            updateErrorCount();
-            if (errorPanelElement) {
-                updateErrorPanel(errorPanelElement);
-            }
+            updateErrorDisplay();
         }
 
-        // Initialize the toolbar
+        // Initialize
         function initToolbar() {
-            const button = createToolbarButton();
-            errorPanelElement = createErrorPanel();
+            detectTheme();
 
-            canvas.appendChild(button);
-            canvas.appendChild(errorPanelElement);
+            const { sidebar, subtitle, content } = createSidebar();
+            sidebarElement = sidebar;
+
+            canvas.appendChild(sidebar);
 
             // Initial scan
             scanForErrors();
 
-            // Scan for errors periodically and on page changes
+            // Periodic scanning
             setInterval(scanForErrors, 2000);
 
-            // Listen for navigation changes
+            // Navigation detection
             let lastPath = window.location.pathname;
             setInterval(() => {
                 if (window.location.pathname !== lastPath) {
                     lastPath = window.location.pathname;
-                    setTimeout(scanForErrors, 500); // Give time for new content to load
+                    setTimeout(scanForErrors, 500);
                 }
             }, 100);
         }
 
-        // Handle app toggle
+        // Handle app toggle - sidebar opens/closes instantly with dev toolbar toggle
         app.onToggled(({ state }) => {
             if (state) {
-                // App is being turned on
                 scanForErrors();
+                showSidebar();
             } else {
-                // App is being turned off
-                isExpanded = false;
-                if (errorPanelElement) {
-                    errorPanelElement.style.display = 'none';
+                hideSidebar();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Check if the toolbar app is active
+            const toolbarApp = document.querySelector('[data-app-id="cms-error-tracker"]');
+            const isActive = toolbarApp?.getAttribute('data-app-active') === 'true';
+
+            if (e.key === 'Escape' && isActive) {
+                hideSidebar();
+                // Also disable the toolbar app
+                if (toolbarApp) {
+                    (toolbarApp as HTMLElement).click();
                 }
             }
         });
 
-        // Initialize when app loads
         initToolbar();
     },
 });
