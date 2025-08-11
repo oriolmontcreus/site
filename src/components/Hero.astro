@@ -1,6 +1,7 @@
 ---
 import { AnimatedText } from "./AnimatedText";
-import { MoveRight, PhoneCall } from "lucide-react";
+import { ArrowRight, MoveRight, PhoneCall } from "lucide-react";
+import { Button } from "./Button";
 
 export interface Props {
   title?: string;
@@ -15,11 +16,14 @@ const { title = "This is something", "flip-words": flipWords = [] } =
   <div class="container mx-auto">
     <div class="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col">
       <div>
-        <button
-          class="gap-4 flex items-center bg-slate-800/50 hover:bg-slate-700/50 text-slate-200 px-4 py-2 rounded-lg border border-slate-600/50 transition-colors"
+        <Button
+          effect="expandIcon"
+          icon={ArrowRight}
+          iconPlacement="right"
+          className="items-center bg-slate-800/50 hover:bg-slate-700/50 text-slate-200 px-4 py-2 rounded-lg border border-slate-600/50 transition-colors cursor-pointer"
         >
-          Read our launch article <MoveRight className="w-4 h-4" />
-        </button>
+          Join the waitlist
+        </Button>
       </div>
       <div class="flex gap-4 flex-col">
         <h1

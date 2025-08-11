@@ -5,6 +5,35 @@
     --font-serif: 'Merriweather', 'serif';
 }
 
+/* Button animation keyframes - only for the specified effects */
+@keyframes shine {
+    0% {
+        background-position: 200% 0;
+    }
+
+    25% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes gradient-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 body {
     font-family: "Merriweather-sans", sans-serif;
     font-display: swap;
