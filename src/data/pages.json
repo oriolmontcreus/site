@@ -119,11 +119,28 @@
           "title": "EXCALIBUR",
           "docsUrl": "",
           "githubUrl": "",
+          "flip-words": [
+            "fast",
+            "intuiative",
+            "flexible",
+            "open source",
+            "modular"
+          ],
           "translations": {
+            "en-US": {
+              "flip-words_0": {},
+              "flip-words_1": {},
+              "flip-words_2": {}
+            },
             "es-ES": {
-              "title": "Excalibur",
+              "title": "EXCALIBUR",
               "docsUrl": "",
-              "githubUrl": ""
+              "githubUrl": "",
+              "flip-words": [
+                "fast",
+                "intuiative",
+                "flexible"
+              ]
             }
           }
         }
@@ -138,19 +155,21 @@
           "title": "",
           "docsUrl": "",
           "githubUrl": "",
+          "flip-words": [],
           "translations": {
             "es-ES": {
               "email": "",
               "heroSections": [],
               "title": "",
               "docsUrl": "",
-              "githubUrl": ""
+              "githubUrl": "",
+              "flip-words": []
             }
           }
         }
       }
     ],
     "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-10T15:12:05.623Z"
+    "updatedAt": "2025-08-11T09:35:24.943Z"
   }
 ]
