@@ -117,10 +117,11 @@
         "displayName": "HERO SECTION",
         "formData": {
           "title": "EXCALIBUR",
+          "subtitle": "The blade that empowers both builders and rulers.",
           "docsUrl": "https://docs.excalibur.dev",
           "demoUrl": "https://demo.excalibur.dev",
           "githubUrl": "https://github.excalibur.dev",
-          "flip-words": [
+          "flipWords": [
             "fast",
             "intuiative",
             "flexible",
@@ -129,18 +130,19 @@
           ],
           "translations": {
             "en-US": {
-              "flip-words_0": {},
-              "flip-words_1": {},
-              "flip-words_2": {},
-              "flip-words_3": {},
-              "flip-words_4": {}
+              "flipWords_0": {},
+              "flipWords_1": {},
+              "flipWords_2": {},
+              "flipWords_3": {},
+              "flipWords_4": {}
             },
             "es-ES": {
               "title": "EXCALIBUR",
+              "subtitle": "",
               "docsUrl": "https://docs.excalibur.dev",
               "demoUrl": "https://demo.excalibur.dev",
               "githubUrl": "https://github.excalibur.dev",
-              "flip-words": [
+              "flipWords": [
                 "fast",
                 "intuiative",
                 "flexible",
@@ -158,26 +160,20 @@
         "formData": {
           "email": "",
           "heroSections": [],
-          "title": "",
-          "docsUrl": "",
-          "demoUrl": "",
-          "githubUrl": "",
-          "flip-words": [],
+          "hero": "",
+          "flipWords": [],
           "translations": {
             "es-ES": {
               "email": "",
               "heroSections": [],
-              "title": "",
-              "docsUrl": "",
-              "demoUrl": "",
-              "githubUrl": "",
-              "flip-words": []
+              "hero": "",
+              "flipWords": []
             }
           }
         }
       }
     ],
     "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-11T11:37:56.589Z"
+    "updatedAt": "2025-08-11T12:59:52.096Z"
   }
 ]
