@@ -36,9 +36,8 @@ try {
 ---
 
 <Layout title={page?.title || "Excalibur CMS - The Modern Content Management System"}>
-    <!-- Dynamic CMS Content (if available) -->
-    {resolvedComponents.length > 0 && (
-        <div>
+    {(
+        <div class="relative" style="background: radial-gradient(ellipse 1200px 800px at 50% 0%, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0.08) 40%, rgba(59,130,246,0.02) 70%, transparent 100%);">
             {resolvedComponents.map(
                 ({ Component, props, instanceId, componentName }) => {
                     if (!Component) {
