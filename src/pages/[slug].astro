@@ -55,8 +55,12 @@ const resolvedComponents = await Promise.all(
         ({ Component, props, instanceId, componentName }) => {
           if (!Component) {
             return (
-              <div class="component-error" data-instance-id={instanceId}>
-                <p>⚠️ Component '{componentName}' not found</p>
+              <div
+                class="component-error"
+                data-instance-id={instanceId}
+                style="display: none;"
+              >
+                <p>Component '{componentName}' not found</p>
               </div>
             );
           }

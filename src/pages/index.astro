@@ -36,8 +36,9 @@ const resolvedComponents = await Promise.all(
                             <div
                                 class="component-error"
                                 data-instance-id={instanceId}
+                                style="display: none;"
                             >
-                                <p>⚠️ Component '{componentName}' not found.</p>
+                                <p>Component '{componentName}' not found.</p>
                             </div>
                         );
                     }
