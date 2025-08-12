@@ -10,7 +10,8 @@ const { className = "" } = Astro.props;
 ---
 
 <header
-    class={`fixed top-0 left-0 right-0 z-50 bg-[#04060b]/80 backdrop-blur-md border-b border-white/10 ${className}`}
+    class={`fixed top-0 left-0 right-0 z-50 border-b border-white/10 ${className}`}
+    style="background: rgba(32, 32, 32, 0.2); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);"
 >
     <nav class="container mx-auto px-4">
         <div class="flex items-center justify-between h-16">
@@ -72,10 +73,3 @@ const { className = "" } = Astro.props;
         </div>
     </nav>
 </header>
-
-<!-- Add padding to body to account for fixed header -->
-<style>
-    body {
-        padding-top: 4rem;
-    }
-</style>
