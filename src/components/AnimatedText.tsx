@@ -21,7 +21,7 @@ function AnimatedText({ words, interval = 2000 }: AnimatedTextProps) {
     }, [currentIndex, words, interval]);
 
     return (
-        <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+        <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 select-none">
             &nbsp;
             {words.map((word, index) => (
                 <motion.span

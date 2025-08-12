@@ -23,13 +23,7 @@ const { title } = Astro.props;
 	<body class="min-h-screen w-full bg-[#04060b] relative">
 		<Navigation />
 		<!-- Blue Radial Glow Background -->
-		<div
-			class="absolute inset-0 z-0"
-			style="background-image: radial-gradient(circle 600px at 50% 50%, rgba(59,130,246,0.3), transparent);"
-		>
-		</div>
-		<!-- Your Content/Components -->
-		<div class="relative z-10 pt-16">
+		<div class="relative z-10">
 			<slot />
 		</div>
 		<style is:global>

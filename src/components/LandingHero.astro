@@ -1,0 +1,89 @@
+---
+import { AnimatedText } from "./AnimatedText";
+import { Button } from "./Button";
+import { Github, BookOpen, Sparkles } from "lucide-react";
+
+const stats = [
+    { number: "100%", label: "Type Safe" },
+    { number: "<50ms", label: "API Response" },
+    { number: "Modern", label: "Tech Stack" },
+    { number: "Open", label: "Source" },
+];
+---
+
+<section class="relative py-20 lg:py-32">
+    <div class="container mx-auto px-4">
+        <div
+            class="flex flex-col items-center justify-center text-center space-y-8 max-w-5xl mx-auto"
+        >
+            <!-- Badge -->
+            <div
+                class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-300 text-sm font-medium"
+            >
+                <Sparkles className="w-4 h-4 mr-2" />
+                Now in Development
+            </div>
+
+            <!-- Main Title -->
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight"
+            >
+                <span class="text-white">EXCALIBUR</span>
+                <div class="mt-2">
+                    <AnimatedText
+                        words={["CMS", "ADMIN", "BUILDER", "PLATFORM"]}
+                        client:load
+                    />
+                </div>
+            </h1>
+
+            <!-- Subtitle -->
+            <p
+                class="text-xl md:text-2xl leading-relaxed text-slate-300 max-w-3xl"
+            >
+                The modern content management system that empowers both <span
+                    class="text-blue-400 font-semibold">builders</span
+                > and <span class="text-blue-400 font-semibold">rulers</span>.
+                Inspired by Filament v3, built for the future.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                <Button
+                    effect="expandIcon"
+                    icon={Github}
+                    iconPlacement="right"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-colors"
+                >
+                    View on GitHub
+                </Button>
+                <Button
+                    effect="expandIcon"
+                    icon={BookOpen}
+                    iconPlacement="right"
+                    className="bg-transparent hover:bg-white/10 text-white px-8 py-4 text-lg font-medium rounded-lg border border-white/20 hover:border-white/40 transition-colors"
+                >
+                    Documentation
+                </Button>
+            </div>
+
+            <!-- Stats -->
+            <div
+                class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/10"
+            >
+                {
+                    stats.map((stat, index) => (
+                        <div class="text-center">
+                            <div class="text-2xl md:text-3xl font-bold text-blue-400">
+                                {stat.number}
+                            </div>
+                            <div class="text-slate-400 text-sm mt-1">
+                                {stat.label}
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </div>
+</section>
