@@ -3,8 +3,9 @@ import Layout from "../layouts/Layout.astro";
 import { resolveComponent } from "../utils/component-resolver";
 import { getPageData } from "../utils/dev-data-fetcher";
 import "../styles/global.css";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoadingCarousel } from "@/components/LoadingCarousel";
 
-// Get the root page data (slug = "/")
 const page = await getPageData("/");
 
 if (!page) {
@@ -50,33 +51,44 @@ const resolvedComponents = await Promise.all(
             )
         }
 
-        {
-            page.content && !resolvedComponents.length && (
-                <div class="fallback-content">
-                    <p>{page.content}</p>
-                </div>
-            )
-        }
+        <div class="space-y-8 p-4 w-full">
+            <div class="w-full">
+                <CardHeader>
+                    <CardTitle>Default LoadingCarousel</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <LoadingCarousel client:load />
+                </CardContent>
+            </div>
+
+            {
+                page.content && !resolvedComponents.length && (
+                    <div class="fallback-content">
+                        <p>{page.content}</p>
+                    </div>
+                )
+            }
+        </div>
     </div>
+
+    <style>
+        .component-error {
+            background-color: #fee;
+            border: 1px solid #fcc;
+            padding: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .component-error p {
+            margin: 0;
+            color: #c00;
+        }
+
+        .fallback-content {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
 </Layout>
-
-<style>
-    .component-error {
-        background-color: #fee;
-        border: 1px solid #fcc;
-        padding: 1rem;
-        border-radius: 4px;
-        margin: 1rem 0;
-    }
-
-    .component-error p {
-        margin: 0;
-        color: #c00;
-    }
-
-    .fallback-content {
-        text-align: center;
-        color: #666;
-        font-style: italic;
-    }
-</style>
