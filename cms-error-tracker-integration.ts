@@ -7,8 +7,8 @@ export default {
         'astro:config:setup': ({ addDevToolbarApp }) => {
             addDevToolbarApp({
                 id: "cms-error-tracker",
-                name: "CMS Error Tracker",
-                icon: "🔧",
+                name: "Excalibur CMS",
+                icon: "EX",
                 entrypoint: fileURLToPath(new URL('./cms-error-tracker.ts', import.meta.url))
             });
         },

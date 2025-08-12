@@ -179,8 +179,8 @@ export default defineToolbarApp({
                     errors.forEach((error, index) => {
                         const errorCard = document.createElement('div');
                         errorCard.style.cssText = `
-              margin: 16px 24px;
-              padding: 16px;
+              padding: 12px;
+              margin-top: 12px;
               background: ${colors.card};
               border: 1px solid ${colors.border};
               border-radius: 8px;
