@@ -25,25 +25,25 @@ export default defineToolbarApp({
             });
         }
 
-        // Minimal shadcn-style theme colors
+        // Apply your custom color scheme
         function getThemeColors() {
             return {
-                background: isDarkMode ? 'hsl(224 71% 4%)' : 'hsl(0 0% 100%)',
-                card: isDarkMode ? 'hsl(224 71% 4%)' : 'hsl(0 0% 100%)',
-                cardForeground: isDarkMode ? 'hsl(213 31% 91%)' : 'hsl(224 71% 4%)',
-                muted: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
-                mutedForeground: isDarkMode ? 'hsl(217 33% 64%)' : 'hsl(220 9% 46%)',
-                border: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 13% 91%)',
-                input: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 13% 91%)',
-                primary: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(224 71% 4%)',
-                primaryForeground: isDarkMode ? 'hsl(222.2 84% 4.9%)' : 'hsl(210 40% 98%)',
-                secondary: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
-                secondaryForeground: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(220 9% 46%)',
-                destructive: isDarkMode ? 'hsl(0 63% 31%)' : 'hsl(0 84% 60%)',
-                destructiveForeground: 'hsl(210 40% 98%)',
-                ring: isDarkMode ? 'hsl(216 34% 17%)' : 'hsl(215 20% 65%)',
-                accent: isDarkMode ? 'hsl(215 28% 17%)' : 'hsl(220 14% 96%)',
-                accentForeground: isDarkMode ? 'hsl(210 40% 98%)' : 'hsl(220 9% 46%)',
+                background: isDarkMode ? 'oklch(0.1450 0 0)' : 'oklch(0.9612 0 0)',
+                card: isDarkMode ? 'oklch(0.2046 0 0)' : 'oklch(0.9911 0 0)',
+                cardForeground: isDarkMode ? 'oklch(0.9288 0.0126 255.5078)' : 'oklch(0.2046 0 0)',
+                muted: isDarkMode ? 'oklch(0.2393 0 0)' : 'oklch(0.9461 0 0)',
+                mutedForeground: isDarkMode ? 'oklch(0.7122 0 0)' : 'oklch(0.2435 0 0)',
+                border: isDarkMode ? 'oklch(0.2809 0 0)' : 'oklch(0.9037 0 0)',
+                input: isDarkMode ? 'oklch(0.2603 0 0)' : '#dbdbdb',
+                primary: isDarkMode ? 'oklch(0.4365 0.1044 156.7556)' : 'oklch(0.7611 0.1735 156.3879)',
+                primaryForeground: isDarkMode ? 'oklch(0.9213 0.0135 167.1556)' : 'oklch(0.2626 0.0147 166.4589)',
+                secondary: isDarkMode ? 'oklch(0.2603 0 0)' : 'oklch(0.9189 0 0)',
+                secondaryForeground: isDarkMode ? 'oklch(0.9851 0 0)' : 'oklch(0.2046 0 0)',
+                destructive: isDarkMode ? 'oklch(0.5523 0.1927 32.7272)' : 'oklch(0.5523 0.1927 32.7272)',
+                destructiveForeground: isDarkMode ? 'oklch(0.9368 0.0045 34.3092)' : 'oklch(0.9934 0.0032 17.2118)',
+                ring: isDarkMode ? 'oklch(0.8003 0.1821 151.7110)' : 'oklch(0.7611 0.1735 156.3879)',
+                accent: isDarkMode ? 'oklch(0.3132 0 0)' : 'oklch(0.9461 0 0)',
+                accentForeground: isDarkMode ? 'oklch(0.9851 0 0)' : 'oklch(0.2435 0 0)',
             };
         }
 
@@ -62,10 +62,10 @@ export default defineToolbarApp({
         border-left: 1px solid ${colors.border};
         z-index: 999998;
         transition: right 0.15s ease-out;
-        font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
         display: flex;
         flex-direction: column;
-        box-shadow: -4px 0 6px -1px rgba(0, 0, 0, 0.1), -2px 0 4px -1px rgba(0, 0, 0, 0.06);
+        box-shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
       `;
 
             // Header
@@ -183,7 +183,7 @@ export default defineToolbarApp({
               margin-top: 12px;
               background: ${colors.card};
               border: 1px solid ${colors.border};
-              border-radius: 8px;
+              border-radius: 0.5rem;
               transition: border-color 0.15s ease-in-out;
             `;
 
@@ -205,12 +205,12 @@ export default defineToolbarApp({
                   <div style="font-size: 12px; color: ${colors.mutedForeground}; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace; margin-bottom: 8px;">
                     ${issue.instanceId}
                   </div>
-                  <div style="background: ${colors.muted}; padding: 8px; border-radius: 6px; font-size: 13px; color: ${colors.mutedForeground}; line-height: 1.4;">
+                  <div style="background: ${colors.muted}; padding: 8px; border-radius: 0.375rem; font-size: 13px; color: ${colors.mutedForeground}; line-height: 1.4;">
                     ${issue.reason}
                   </div>
                   ${issue.pageSlug ? `
                     <div style="margin-top: 8px; font-size: 12px; color: ${colors.mutedForeground};">
-                      <span style="background: ${colors.accent}; padding: 1px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;">${issue.pageSlug}</span>
+                      <span style="background: ${colors.accent}; padding: 1px 6px; border-radius: 0.25rem; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;">${issue.pageSlug}</span>
                     </div>
                   ` : ''}
                 </div>
