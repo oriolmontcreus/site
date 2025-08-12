@@ -254,7 +254,10 @@ export default defineToolbarApp({
         opacity: 0;
       `;
 
-            overlay.addEventListener('click', hideSidebar);
+            overlay.addEventListener('click', () => {
+                hideSidebar();
+                app.toggleState({ state: false });
+            });
             canvas.appendChild(overlay);
 
             // Fade in
@@ -337,19 +340,31 @@ export default defineToolbarApp({
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Check if the toolbar app is active
-            const toolbarApp = document.querySelector('[data-app-id="excalibur-cms-devtool"]');
-            const isActive = toolbarApp?.getAttribute('data-app-active') === 'true';
+            // Check if the dev toolbar app is active by checking our sidebar visibility
+            const sidebarVisible = sidebarElement && sidebarElement.style.right === '0px';
 
-            if (e.key === 'Escape' && isActive) {
+            if (e.key === 'Escape' && sidebarVisible) {
                 hideSidebar();
-                // Also disable the toolbar app
-                if (toolbarApp) {
-                    (toolbarApp as HTMLElement).click();
-                }
+                app.toggleState({ state: false });
             }
         });
 
         initToolbar();
+    },
+
+    beforeTogglingOff() {
+        // Ensure sidebar is hidden when the app is being toggled off
+        const sidebarElement = document.querySelector('#excalibur-cms-devtool-overlay')?.parentElement?.querySelector('div[style*="position: fixed"][style*="right:"]') as HTMLElement;
+        if (sidebarElement && sidebarElement.style.right === '0px') {
+            sidebarElement.style.right = '-420px';
+        }
+        
+        // Remove overlay if it exists
+        const overlay = document.querySelector('#excalibur-cms-devtool-overlay');
+        if (overlay) {
+            overlay.remove();
+        }
+        
+        return true;
     },
 });
