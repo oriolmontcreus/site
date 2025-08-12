@@ -2,14 +2,14 @@ import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
 export default {
-    name: 'cms-error-tracker',
+    name: 'excalibur-cms-devtool',
     hooks: {
         'astro:config:setup': ({ addDevToolbarApp }) => {
             addDevToolbarApp({
-                id: "cms-error-tracker",
+                id: "excalibur-cms-devtool",
                 name: "Excalibur CMS",
                 icon: "EX",
-                entrypoint: fileURLToPath(new URL('./cms-error-tracker.ts', import.meta.url))
+                entrypoint: fileURLToPath(new URL('./excalibur-cms-devtool.ts', import.meta.url))
             });
         },
     },

@@ -1,6 +1,6 @@
 import { defineToolbarApp } from "astro/toolbar";
 
-interface ComponentError {
+interface ComponentIssue {
     componentName: string;
     instanceId: string;
     reason: string;
@@ -9,7 +9,7 @@ interface ComponentError {
 
 export default defineToolbarApp({
     init(canvas, app, server) {
-        const errors: ComponentError[] = [];
+        const issues: ComponentIssue[] = [];
         let sidebarElement: HTMLElement;
         let isDarkMode = false;
 
@@ -86,7 +86,7 @@ export default defineToolbarApp({
         gap: 8px;
         margin-bottom: 2px;
       `;
-            title.innerHTML = `CMS Error Tracker`;
+            title.innerHTML = `Excalibur CMS DevTool`;
 
             const subtitle = document.createElement('div');
             subtitle.style.cssText = `
@@ -131,11 +131,11 @@ export default defineToolbarApp({
                 }
             }
 
-            updateErrorDisplay();
+            updateIssueDisplay();
         }
 
-        // Update error display in sidebar
-        function updateErrorDisplay() {
+        // Update issue display in sidebar
+        function updateIssueDisplay() {
             const sidebar = sidebarElement;
             if (!sidebar) return;
 
@@ -145,12 +145,12 @@ export default defineToolbarApp({
             const content = sidebar.querySelector('div:nth-child(2)') as HTMLElement;
 
             if (subtitle) {
-                const count = errors.length;
+                const count = issues.length;
                 if (count === 0) {
                     subtitle.textContent = 'All components are working correctly';
                     subtitle.style.color = colors.mutedForeground;
                 } else {
-                    subtitle.textContent = `${count} component error${count > 1 ? 's' : ''} detected`;
+                    subtitle.textContent = `${count} component issue${count > 1 ? 's' : ''} detected`;
                     subtitle.style.color = colors.destructive;
                 }
             }
@@ -158,27 +158,27 @@ export default defineToolbarApp({
             if (content) {
                 content.innerHTML = '';
 
-                if (errors.length === 0) {
-                    const noErrors = document.createElement('div');
-                    noErrors.style.cssText = `
+                if (issues.length === 0) {
+                    const noIssues = document.createElement('div');
+                    noIssues.style.cssText = `
             padding: 48px 24px;
             text-align: center;
             color: ${colors.mutedForeground};
           `;
-                    noErrors.innerHTML = `
+                    noIssues.innerHTML = `
             <div style="width: 48px; height: 48px; margin: 0 auto 16px; background: ${colors.muted}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px;">✓</div>
             <div style="font-size: 16px; font-weight: 500; color: ${colors.cardForeground}; margin-bottom: 8px;">
-              No errors found
+              No issues found
             </div>
             <div style="font-size: 14px;">
               All components are loading correctly
             </div>
           `;
-                    content.appendChild(noErrors);
+                    content.appendChild(noIssues);
                 } else {
-                    errors.forEach((error, index) => {
-                        const errorCard = document.createElement('div');
-                        errorCard.style.cssText = `
+                    issues.forEach((issue, index) => {
+                        const issueCard = document.createElement('div');
+                        issueCard.style.cssText = `
               padding: 12px;
               margin-top: 12px;
               background: ${colors.card};
@@ -188,36 +188,36 @@ export default defineToolbarApp({
             `;
 
                         // Add subtle hover effect
-                        errorCard.addEventListener('mouseenter', () => {
-                            errorCard.style.borderColor = colors.ring;
+                        issueCard.addEventListener('mouseenter', () => {
+                            issueCard.style.borderColor = colors.ring;
                         });
-                        errorCard.addEventListener('mouseleave', () => {
-                            errorCard.style.borderColor = colors.border;
+                        issueCard.addEventListener('mouseleave', () => {
+                            issueCard.style.borderColor = colors.border;
                         });
 
-                        errorCard.innerHTML = `
+                        issueCard.innerHTML = `
               <div style="display: flex; align-items: flex-start; gap: 12px;">
                 <div style="width: 20px; height: 20px; background: ${colors.destructive}; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: ${colors.destructiveForeground}; flex-shrink: 0; margin-top: 1px;">!</div>
                 <div style="flex: 1; min-width: 0;">
                   <div style="font-weight: 600; font-size: 14px; color: ${colors.cardForeground}; margin-bottom: 4px;">
-                    ${error.componentName}
+                    ${issue.componentName}
                   </div>
                   <div style="font-size: 12px; color: ${colors.mutedForeground}; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace; margin-bottom: 8px;">
-                    ${error.instanceId}
+                    ${issue.instanceId}
                   </div>
                   <div style="background: ${colors.muted}; padding: 8px; border-radius: 6px; font-size: 13px; color: ${colors.mutedForeground}; line-height: 1.4;">
-                    ${error.reason}
+                    ${issue.reason}
                   </div>
-                  ${error.pageSlug ? `
+                  ${issue.pageSlug ? `
                     <div style="margin-top: 8px; font-size: 12px; color: ${colors.mutedForeground};">
-                      <span style="background: ${colors.accent}; padding: 1px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;">${error.pageSlug}</span>
+                      <span style="background: ${colors.accent}; padding: 1px 6px; border-radius: 4px; font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;">${issue.pageSlug}</span>
                     </div>
                   ` : ''}
                 </div>
               </div>
             `;
 
-                        content.appendChild(errorCard);
+                        content.appendChild(issueCard);
                     });
                 }
             }
@@ -241,7 +241,7 @@ export default defineToolbarApp({
         // Create overlay
         function createOverlay() {
             const overlay = document.createElement('div');
-            overlay.id = 'cms-error-tracker-overlay';
+            overlay.id = 'excalibur-cms-devtool-overlay';
             overlay.style.cssText = `
         position: fixed;
         top: 0;
@@ -265,15 +265,15 @@ export default defineToolbarApp({
 
         // Remove overlay
         function removeOverlay() {
-            const overlay = canvas.querySelector('#cms-error-tracker-overlay');
+            const overlay = canvas.querySelector('#excalibur-cms-devtool-overlay');
             if (overlay) {
                 overlay.remove();
             }
         }
 
-        // Scan for component errors
-        function scanForErrors() {
-            const newErrors: ComponentError[] = [];
+        // Scan for component issues
+        function scanForIssues() {
+            const newIssues: ComponentIssue[] = [];
 
             const errorElements = document.querySelectorAll('.component-error[data-instance-id]');
 
@@ -285,7 +285,7 @@ export default defineToolbarApp({
                 const componentName = componentNameMatch ? componentNameMatch[1] : 'Unknown';
 
                 if (instanceId) {
-                    newErrors.push({
+                    newIssues.push({
                         componentName,
                         instanceId,
                         reason: errorText,
@@ -294,10 +294,10 @@ export default defineToolbarApp({
                 }
             });
 
-            errors.length = 0;
-            errors.push(...newErrors);
+            issues.length = 0;
+            issues.push(...newIssues);
 
-            updateErrorDisplay();
+            updateIssueDisplay();
         }
 
         // Initialize
@@ -310,17 +310,17 @@ export default defineToolbarApp({
             canvas.appendChild(sidebar);
 
             // Initial scan
-            scanForErrors();
+            scanForIssues();
 
             // Periodic scanning
-            setInterval(scanForErrors, 2000);
+            setInterval(scanForIssues, 2000);
 
             // Navigation detection
             let lastPath = window.location.pathname;
             setInterval(() => {
                 if (window.location.pathname !== lastPath) {
                     lastPath = window.location.pathname;
-                    setTimeout(scanForErrors, 500);
+                    setTimeout(scanForIssues, 500);
                 }
             }, 100);
         }
@@ -328,7 +328,7 @@ export default defineToolbarApp({
         // Handle app toggle - sidebar opens/closes instantly with dev toolbar toggle
         app.onToggled(({ state }) => {
             if (state) {
-                scanForErrors();
+                scanForIssues();
                 showSidebar();
             } else {
                 hideSidebar();
@@ -338,7 +338,7 @@ export default defineToolbarApp({
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             // Check if the toolbar app is active
-            const toolbarApp = document.querySelector('[data-app-id="cms-error-tracker"]');
+            const toolbarApp = document.querySelector('[data-app-id="excalibur-cms-devtool"]');
             const isActive = toolbarApp?.getAttribute('data-app-active') === 'true';
 
             if (e.key === 'Escape' && isActive) {
