@@ -1,0 +1,143 @@
+---
+import { Github, Twitter, Heart } from "lucide-react";
+
+export interface Props {
+    className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<footer class={`bg-slate-900/50 border-t border-white/10 ${className}`}>
+    <div class="container mx-auto px-4 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+            <!-- Logo & Description -->
+            <div class="md:col-span-2">
+                <div class="flex items-center space-x-2 mb-4">
+                    <div
+                        class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                    >
+                        <span class="text-white font-bold text-sm">EX</span>
+                    </div>
+                    <span class="text-white font-semibold text-lg"
+                        >Excalibur CMS</span
+                    >
+                </div>
+                <p class="text-slate-400 max-w-md mb-6">
+                    The modern content management system built for developers
+                    who want power and simplicity. Inspired by Filament v3,
+                    powered by modern web technologies.
+                </p>
+                <div class="flex space-x-4">
+                    <a
+                        href="https://github.com/excalibur-cms"
+                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
+                        aria-label="GitHub"
+                    >
+                        <Github className="w-5 h-5" />
+                    </a>
+                    <a
+                        href="https://twitter.com/excalibur_cms"
+                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
+                        aria-label="Twitter"
+                    >
+                        <Twitter className="w-5 h-5" />
+                    </a>
+                </div>
+            </div>
+
+            <!-- Documentation -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Documentation</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="/docs/getting-started"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Getting Started</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/docs/installation"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Installation</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/docs/components"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Components</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/docs/api"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >API Reference</a
+                        >
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Community -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Community</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a
+                            href="/community"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Join Community</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/contributing"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Contributing</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/changelog"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Changelog</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="/roadmap"
+                            class="text-slate-400 hover:text-white transition-colors"
+                            >Roadmap</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div
+            class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
+        >
+            <p class="text-slate-400 text-sm mb-4 md:mb-0">
+                © 2025 Excalibur CMS. Built with <Heart
+                    className="inline w-4 h-4 text-red-500"
+                /> and modern web technologies.
+            </p>
+            <div class="flex space-x-6 text-sm">
+                <a
+                    href="/privacy"
+                    class="text-slate-400 hover:text-white transition-colors"
+                    >Privacy Policy</a
+                >
+                <a
+                    href="/terms"
+                    class="text-slate-400 hover:text-white transition-colors"
+                    >Terms of Service</a
+                >
+            </div>
+        </div>
+    </div>
+</footer>

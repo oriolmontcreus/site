@@ -3,34 +3,97 @@ import Layout from "../layouts/Layout.astro";
 import { resolveComponent } from "../utils/component-resolver";
 import { getPageData } from "../utils/dev-data-fetcher";
 import "../styles/global.css";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LoadingCarousel } from "@/components/LoadingCarousel";
+import { AnimatedText } from "../components/AnimatedText";
+import { Button } from "../components/Button";
+import Footer from "../components/Footer.astro";
+import { 
+    ArrowRight, 
+    Code2, 
+    Database, 
+    Users, 
+    Zap, 
+    Shield, 
+    Palette,
+    GitBranch,
+    Clock,
+    Star,
+    Github,
+    BookOpen,
+    Sparkles,
+    Eye
+} from "lucide-react";
 
-const page = await getPageData("/");
+// Try to get page data, but fall back to static content
+let page: any = null;
+let resolvedComponents: any[] = [];
 
-if (!page) {
-    throw new Error(
-        "Root page not found. Make sure a page with slug '/' exists in pages.json",
-    );
+try {
+    page = await getPageData("/");
+    if (page && page.components) {
+        resolvedComponents = await Promise.all(
+            page.components.map(async (component: any) => {
+                const Component = await resolveComponent(component.componentName);
+                return {
+                    Component,
+                    props: component.formData,
+                    instanceId: component.instanceId,
+                    componentName: component.componentName,
+                };
+            }),
+        );
+    }
+} catch (error) {
+    console.log("Using static fallback content for landing page");
+    page = { title: "Excalibur CMS - The Modern Content Management System" };
 }
 
-const resolvedComponents = await Promise.all(
-    page.components.map(async (component) => {
-        const Component = await resolveComponent(component.componentName);
-        return {
-            Component,
-            props: component.formData,
-            instanceId: component.instanceId,
-            componentName: component.componentName,
-        };
-    }),
-);
+// Landing page data
+const features = [
+    {
+        icon: Code2,
+        title: "Modern Stack",
+        description: "Built with SvelteKit, MongoDB, and HonoJS for maximum performance"
+    },
+    {
+        icon: Database,
+        title: "Powerful Admin",
+        description: "Inspired by Filament v3 with shadcn-svelte components"
+    },
+    {
+        icon: Users,
+        title: "Developer First",
+        description: "Type-safe APIs, excellent DX, and extensive customization"
+    },
+    {
+        icon: Zap,
+        title: "Blazing Fast",
+        description: "Optimized for performance with modern web technologies"
+    },
+    {
+        icon: Shield,
+        title: "Secure by Default",
+        description: "Built-in authentication, authorization, and security best practices"
+    },
+    {
+        icon: Palette,
+        title: "Beautiful UI",
+        description: "Modern, responsive design with dark mode support"
+    }
+];
+
+const stats = [
+    { number: "100%", label: "Type Safe" },
+    { number: "<50ms", label: "API Response" },
+    { number: "Modern", label: "Tech Stack" },
+    { number: "Open", label: "Source" }
+];
 ---
 
-<Layout title={page.title}>
-    <div>
-        {
-            resolvedComponents.map(
+<Layout title={page?.title || "Excalibur CMS - The Modern Content Management System"}>
+    <!-- Dynamic CMS Content (if available) -->
+    {resolvedComponents.length > 0 && (
+        <div>
+            {resolvedComponents.map(
                 ({ Component, props, instanceId, componentName }) => {
                     if (!Component) {
                         return (
@@ -43,40 +106,250 @@ const resolvedComponents = await Promise.all(
                             </div>
                         );
                     }
-
                     return (
                         <Component data-instance-id={instanceId} {...props} />
                     );
-                },
-            )
-        }
-
-        <div class="space-y-8 p-4 w-full">
-            <div class="w-full">
-                <CardContent>
-                    <LoadingCarousel client:load />
-                </CardContent>
-            </div>
-
-            {
-                page.content && !resolvedComponents.length && (
-                    <div class="fallback-content">
-                        <p>{page.content}</p>
-                    </div>
-                )
-            }
+                }
+            )}
         </div>
-    </div>
+    )}
+
+    <!-- Static Landing Page Content -->
+    {(
+        <div class="relative">
+            <!-- Hero Section -->
+            <section class="relative py-20 lg:py-32">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col items-center justify-center text-center space-y-8 max-w-5xl mx-auto">
+                        <!-- Badge -->
+                        <div class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600/20 border border-blue-500/30 text-blue-300 text-sm font-medium">
+                            <Sparkles className="w-4 h-4 mr-2" />
+                            Now in Development
+                        </div>
+
+                        <!-- Main Title -->
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight">
+                            <span class="text-white">EXCALIBUR</span>
+                            <div class="mt-2">
+                                <AnimatedText 
+                                    words={["CMS", "ADMIN", "BUILDER", "PLATFORM"]} 
+                                    client:load 
+                                />
+                            </div>
+                        </h1>
+
+                        <!-- Subtitle -->
+                        <p class="text-xl md:text-2xl leading-relaxed text-slate-300 max-w-3xl">
+                            The modern content management system that empowers both <span class="text-blue-400 font-semibold">builders</span> and <span class="text-blue-400 font-semibold">rulers</span>. 
+                            Inspired by Filament v3, built for the future.
+                        </p>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                            <Button
+                                effect="expandIcon"
+                                icon={Github}
+                                iconPlacement="right"
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-colors"
+                            >
+                                View on GitHub
+                            </Button>
+                            <Button
+                                effect="expandIcon"
+                                icon={BookOpen}
+                                iconPlacement="right"
+                                className="bg-transparent hover:bg-white/10 text-white px-8 py-4 text-lg font-medium rounded-lg border border-white/20 hover:border-white/40 transition-colors"
+                            >
+                                Documentation
+                            </Button>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/10">
+                            {stats.map((stat, index) => (
+                                <div class="text-center">
+                                    <div class="text-2xl md:text-3xl font-bold text-blue-400">{stat.number}</div>
+                                    <div class="text-slate-400 text-sm mt-1">{stat.label}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="py-20 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                            Built for Modern Development
+                        </h2>
+                        <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                            Everything you need to build powerful, scalable web applications with a beautiful admin interface
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {features.map((feature, index) => (
+                            <div class="group p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:bg-white/10">
+                                <feature.icon className="w-8 h-8 text-blue-400 mb-4 group-hover:scale-110 transition-transform" />
+                                <h3 class="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                                <p class="text-slate-300 leading-relaxed">{feature.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technology Stack Section -->
+            <section id="tech-stack" class="py-20 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                            Modern Tech Stack
+                        </h2>
+                        <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                            Built with the latest and greatest technologies for optimal performance
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        <div class="text-center p-8 rounded-xl bg-gradient-to-b from-orange-600/20 to-orange-800/20 border border-orange-500/30">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-orange-600 rounded-lg flex items-center justify-center">
+                                <Code2 className="w-8 h-8 text-white" />
+                            </div>
+                            <h3 class="text-xl font-semibold text-white mb-2">SvelteKit</h3>
+                            <p class="text-slate-300">Frontend framework with exceptional performance</p>
+                        </div>
+
+                        <div class="text-center p-8 rounded-xl bg-gradient-to-b from-green-600/20 to-green-800/20 border border-green-500/30">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-green-600 rounded-lg flex items-center justify-center">
+                                <Database className="w-8 h-8 text-white" />
+                            </div>
+                            <h3 class="text-xl font-semibold text-white mb-2">MongoDB</h3>
+                            <p class="text-slate-300">Flexible, scalable NoSQL database</p>
+                        </div>
+
+                        <div class="text-center p-8 rounded-xl bg-gradient-to-b from-purple-600/20 to-purple-800/20 border border-purple-500/30">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-purple-600 rounded-lg flex items-center justify-center">
+                                <Zap className="w-8 h-8 text-white" />
+                            </div>
+                            <h3 class="text-xl font-semibold text-white mb-2">HonoJS</h3>
+                            <p class="text-slate-300">Ultra-fast web framework for APIs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Preview Section -->
+            <section id="admin" class="py-20 relative">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                            Beautiful Admin Interface
+                        </h2>
+                        <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+                            Inspired by Filament v3, built with modern design principles and shadcn components
+                        </p>
+                    </div>
+
+                    <div class="max-w-6xl mx-auto">
+                        <div class="relative rounded-2xl bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm border border-white/10 p-8">
+                            <div class="grid md:grid-cols-2 gap-12 items-center">
+                                <div class="space-y-6">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    </div>
+                                    <h3 class="text-2xl font-semibold text-white">Dashboard Preview</h3>
+                                    <p class="text-slate-300">
+                                        Clean, intuitive interface with powerful features for content management, 
+                                        user administration, and system configuration.
+                                    </p>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center text-sm text-slate-400">
+                                            <div class="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                                            Form Builder & Components
+                                        </div>
+                                        <div class="flex items-center text-sm text-slate-400">
+                                            <div class="w-2 h-2 bg-green-400 rounded-full mr-3"></div>
+                                            Dynamic Page Management
+                                        </div>
+                                        <div class="flex items-center text-sm text-slate-400">
+                                            <div class="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
+                                            User & Role Management
+                                        </div>
+                                        <div class="flex items-center text-sm text-slate-400">
+                                            <div class="w-2 h-2 bg-orange-400 rounded-full mr-3"></div>
+                                            Media Library & Assets
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="relative">
+                                    <div class="bg-slate-900 rounded-lg border border-slate-700 p-4">
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-sm text-slate-300">Excalibur CMS Admin</div>
+                                                <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+                                            </div>
+                                            <div class="space-y-2">
+                                                <div class="h-6 bg-blue-600 rounded w-3/4"></div>
+                                                <div class="h-4 bg-slate-700 rounded w-full"></div>
+                                                <div class="h-4 bg-slate-700 rounded w-2/3"></div>
+                                                <div class="grid grid-cols-3 gap-2 mt-4">
+                                                    <div class="h-16 bg-slate-800 rounded"></div>
+                                                    <div class="h-16 bg-slate-800 rounded"></div>
+                                                    <div class="h-16 bg-slate-800 rounded"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="py-20 relative">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                            Ready to Build Something Great?
+                        </h2>
+                        <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+                            Join the development journey and help shape the future of content management systems.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button
+                                effect="shine"
+                                icon={Star}
+                                iconPlacement="left"
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-medium rounded-lg transition-all duration-300"
+                            >
+                                Star on GitHub
+                            </Button>
+                            <Button
+                                effect="expandIcon"
+                                icon={ArrowRight}
+                                iconPlacement="right"
+                                className="bg-transparent hover:bg-white/10 text-white px-8 py-4 text-lg font-medium rounded-lg border border-white/20 hover:border-white/40 transition-colors"
+                            >
+                                Get Started
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    )}
+
+    <!-- Footer -->
+    <Footer />
 
     <style>
-        .component-error {
-            background-color: #fee;
-            border: 1px solid #fcc;
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-        }
-
         .component-error p {
             margin: 0;
             color: #c00;
@@ -86,6 +359,16 @@ const resolvedComponents = await Promise.all(
             text-align: center;
             color: #666;
             font-style: italic;
+        }
+        
+        /* Smooth animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
         }
     </style>
 </Layout>

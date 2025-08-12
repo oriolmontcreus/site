@@ -1,0 +1,81 @@
+---
+import { Button } from "./Button";
+import { Github, Menu, X } from "lucide-react";
+
+export interface Props {
+    className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<header
+    class={`fixed top-0 left-0 right-0 z-50 bg-[#04060b]/80 backdrop-blur-md border-b border-white/10 ${className}`}
+>
+    <nav class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <div
+                    class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                >
+                    <span class="text-white font-bold text-sm">EX</span>
+                </div>
+                <span class="text-white font-semibold text-lg"
+                    >Excalibur CMS</span
+                >
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a
+                    href="#features"
+                    class="text-slate-300 hover:text-white transition-colors"
+                    >Features</a
+                >
+                <a
+                    href="#tech-stack"
+                    class="text-slate-300 hover:text-white transition-colors"
+                    >Tech Stack</a
+                >
+                <a
+                    href="#admin"
+                    class="text-slate-300 hover:text-white transition-colors"
+                    >Admin</a
+                >
+                <a
+                    href="https://docs.excalibur.cms"
+                    class="text-slate-300 hover:text-white transition-colors"
+                    >Docs</a
+                >
+            </div>
+
+            <!-- CTA Button -->
+            <div class="hidden md:flex items-center space-x-4">
+                <Button
+                    effect="expandIcon"
+                    icon={Github}
+                    iconPlacement="right"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+                >
+                    GitHub
+                </Button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button
+                class="md:hidden p-2 text-slate-300 hover:text-white transition-colors"
+                aria-label="Toggle menu"
+            >
+                <Menu className="w-6 h-6" />
+            </button>
+        </div>
+    </nav>
+</header>
+
+<!-- Add padding to body to account for fixed header -->
+<style>
+    body {
+        padding-top: 4rem;
+    }
+</style>
