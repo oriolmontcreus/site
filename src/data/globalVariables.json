@@ -1,39 +1,15 @@
 {
-  "siteName": "site name test",
+  "siteName": "EXCALIBUR",
   "siteDescription": "site description",
   "siteUrl": "",
   "contactEmail": "",
-  "metaDescription": "",
-  "metaKeywords": "",
-  "ogTitle": "",
-  "ogDescription": "",
-  "primaryColor": "",
-  "secondaryColor": "",
-  "accentColor": "",
-  "maxContentWidth": null,
-  "googleAnalyticsId": "",
-  "googleTagManagerId": "",
-  "enableCookieConsent": false,
-  "customTrackingCode": "",
   "translations": {
-    "es-ES": {
+    "en-US": {
       "siteName": "site name test",
       "siteDescription": "site description",
       "siteUrl": "",
-      "contactEmail": "",
-      "metaDescription": "",
-      "metaKeywords": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "primaryColor": "",
-      "secondaryColor": "",
-      "accentColor": "",
-      "maxContentWidth": null,
-      "googleAnalyticsId": "",
-      "googleTagManagerId": "",
-      "enableCookieConsent": false,
-      "customTrackingCode": ""
+      "contactEmail": ""
     }
   },
-  "updatedAt": "2025-08-13T10:55:02.905Z"
+  "updatedAt": "2025-08-15T19:41:35.320Z"
 }
