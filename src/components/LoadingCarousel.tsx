@@ -1,7 +1,3 @@
-// npm i embla-carousel-autoplay framer-motion lucide-react
-// npx shadcn@latest add carousel
-"use client"
-
 import React, { useCallback, useEffect, useState, useMemo, type JSX } from "react"
 import Autoplay from "embla-carousel-autoplay"
 import { ChevronRight } from "lucide-react"
