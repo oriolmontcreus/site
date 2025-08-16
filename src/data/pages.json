@@ -141,15 +141,15 @@
         "formData": {
           "slides": [
             {
-              "text": "test",
+              "text": "pepe pipo papa popo pupu pipi",
               "image": {
-                "id": "02131b32-6ac8-486c-b822-8ede945d943e",
+                "id": "f04465e7-da66-4b01-aa85-5a1e2416a7ba",
                 "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
-                "fileName": "02131b32-6ac8-486c-b822-8ede945d943e.jpg",
+                "fileName": "f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
                 "mimeType": "image/jpeg",
                 "size": 17974,
-                "path": "uploads\\02131b32-6ac8-486c-b822-8ede945d943e.jpg",
-                "uploadedAt": "2025-08-16T09:38:32.904Z"
+                "path": "uploads\\f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
+                "uploadedAt": "2025-08-16T14:21:16.180Z"
               },
               "url": ""
             }
@@ -169,7 +169,21 @@
           "animateText": false,
           "translations": {
             "en-US": {
-              "slides": "",
+              "slides": [
+                {
+                  "text": "pepe pipo papa popo pupu pipi",
+                  "image": {
+                    "id": "f04465e7-da66-4b01-aa85-5a1e2416a7ba",
+                    "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
+                    "fileName": "f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
+                    "mimeType": "image/jpeg",
+                    "size": 17974,
+                    "path": "uploads\\f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
+                    "uploadedAt": "2025-08-16T14:21:16.180Z"
+                  },
+                  "url": ""
+                }
+              ],
               "text": "",
               "image": "",
               "url": "",
@@ -183,12 +197,15 @@
               "backgroundGradient": false,
               "shuffleTips": false,
               "animateText": false
+            },
+            "es-ES": {
+              "slides_0": {}
             }
           }
         }
       }
     ],
     "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-16T09:38:32.918Z"
+    "updatedAt": "2025-08-16T14:21:21.896Z"
   }
 ]
