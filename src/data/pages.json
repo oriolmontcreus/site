@@ -121,6 +121,7 @@
           "docsUrl": "https://docs.excalibur.dev",
           "demoUrl": "https://demo.excalibur.dev",
           "githubUrl": "https://github.excalibur.dev",
+          "image": null,
           "flipWords": [
             "fast",
             "intuiative",
@@ -130,11 +131,27 @@
           ],
           "translations": {
             "es-ES": {
-              "subtitle": "La espada que empodera tanto a desarrolladores como a clientes",
-              "flipWords": []
+              "flipWords_0": {},
+              "flipWords_1": {},
+              "flipWords_2": {},
+              "flipWords_3": {},
+              "flipWords_4": {}
             },
             "en-US": {
+              "title": "{{siteName}}",
               "subtitle": "The blade that empowers both developers and clients.",
+              "docsUrl": "https://docs.excalibur.dev",
+              "demoUrl": "https://demo.excalibur.dev",
+              "githubUrl": "https://github.excalibur.dev",
+              "image": {
+                "id": "db9270d5-a899-4bd2-9969-f9d0c627ee33",
+                "originalName": "Template 7.png",
+                "fileName": "db9270d5-a899-4bd2-9969-f9d0c627ee33.png",
+                "mimeType": "image/png",
+                "size": 277002,
+                "path": "uploads\\db9270d5-a899-4bd2-9969-f9d0c627ee33.png",
+                "uploadedAt": "2025-08-16T08:32:56.523Z"
+              },
               "flipWords": [
                 "fast",
                 "intuiative",
@@ -155,11 +172,18 @@
           "image": "",
           "caption": "",
           "altText": "",
-          "translations": {}
+          "translations": {
+            "en-US": {
+              "slides": [],
+              "image": "",
+              "caption": "",
+              "altText": ""
+            }
+          }
         }
       }
     ],
     "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-15T19:32:08.142Z"
+    "updatedAt": "2025-08-16T08:33:04.533Z"
   }
 ]

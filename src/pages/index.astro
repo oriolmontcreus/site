@@ -4,7 +4,6 @@ import { resolveComponent } from "../utils/component-resolver";
 import { getPageData } from "../utils/dev-data-fetcher";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
-import LandingHero from "../components/LandingHero.astro";
 import FeaturesSection from "../components/FeaturesSection.astro";
 import TechStackSection from "../components/TechStackSection.astro";
 import AdminPreviewSection from "../components/AdminPreviewSection.astro";
@@ -62,8 +61,6 @@ try {
     <!-- Static Landing Page Content -->
     {(
         <div class="relative">
-            <!-- Hero Section -->
-            <LandingHero />
 
             <!-- Features Section -->
             <FeaturesSection />
