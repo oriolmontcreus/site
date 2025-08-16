@@ -14,6 +14,7 @@ import {
 } from "motion/react"
 
 import { cn } from "@/lib/utils"
+import { resolveImageUrl, type CmsFileObject } from "@/utils"
 import {
     Carousel,
     CarouselContent,
@@ -25,7 +26,7 @@ import {
 
 interface Slide {
     text: string
-    image: string
+    image: string | CmsFileObject | null | undefined
     url?: string
 }
 
@@ -203,9 +204,9 @@ export function LoadingCarousel({
                                         className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
                                     >
                                         <img
-                                            src={slide.image}
+                                            src={resolveImageUrl(slide.image, '/placeholder-image.jpg', 'LoadingCarousel')}
                                             alt={`Visual representation for slide: ${slide.text}`}
-                                            className="object-cover"
+                                            className="object-cover w-full h-full"
                                         />
                                         {backgroundGradient && (
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />

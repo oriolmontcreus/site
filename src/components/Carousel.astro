@@ -1,10 +1,11 @@
 ---
 import { LoadingCarousel } from "./LoadingCarousel";
+import type { CmsFileObject } from "@/utils";
 
 export interface Props {
     slides?: Array<{
         text: string;
-        image: string;
+        image: string | CmsFileObject | null | undefined;
         url?: string;
     }>;
     autoplayInterval?: number;
