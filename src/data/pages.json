@@ -88,7 +88,7 @@
           "image": "",
           "url": "",
           "autoplayInterval": 4500,
-          "aspectRatio": "square",
+          "aspectRatio": "wide",
           "textPosition": "bottom",
           "showNavigation": false,
           "showIndicators": true,
@@ -140,7 +140,7 @@
               "showNavigation": false,
               "showIndicators": true,
               "showProgress": false,
-              "backgroundTips": true,
+              "backgroundTips": false,
               "backgroundGradient": true,
               "shuffleTips": false,
               "animateText": true
@@ -150,6 +150,6 @@
       }
     ],
     "createdAt": "2025-08-16T14:46:49.466Z",
-    "updatedAt": "2025-08-16T15:20:06.259Z"
+    "updatedAt": "2025-08-16T17:23:43.319Z"
   }
 ]
