@@ -2,7 +2,7 @@
 // npx shadcn@latest add carousel
 "use client"
 
-import React, { useCallback, useEffect, useState, type JSX } from "react"
+import React, { useCallback, useEffect, useState, useMemo, type JSX } from "react"
 import Autoplay from "embla-carousel-autoplay"
 import { ChevronRight } from "lucide-react"
 import {
@@ -99,14 +99,26 @@ export function LoadingCarousel({
     // Since we now handle empty arrays at the Astro level, tips should always have content
     const slides = tips || [];
 
+    // Memoize the display slides to avoid recalculation
+    // Use JSON.stringify to create a stable dependency for array contents
+    const displaySlides = useMemo(() =>
+        shuffleTips ? shuffleArray(slides) : slides,
+        [JSON.stringify(slides), shuffleTips]
+    );
+
+    // Memoize resolved image URLs to prevent repeated calls to resolveImageUrl
+    // Use a more stable dependency based on the actual image data
+    const resolvedImageUrls = useMemo(() => {
+        return displaySlides.map(slide =>
+            resolveImageUrl(slide.image, '/placeholder-image.jpg', 'LoadingCarousel')
+        );
+    }, [JSON.stringify(displaySlides.map(slide => slide.image))]);
+
     const [progress, setProgress] = useState(0)
     const [api, setApi] = useState<CarouselApi>()
     const [current, setCurrent] = useState(0)
     const [direction, setDirection] = useState(0)
     const controls = useAnimation()
-    const [displaySlides] = useState(() =>
-        shuffleTips ? shuffleArray(slides) : slides
-    )
 
     const autoplay = Autoplay({
         delay: autoplayInterval,
@@ -204,7 +216,7 @@ export function LoadingCarousel({
                                         className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
                                     >
                                         <img
-                                            src={resolveImageUrl(slide.image, '/placeholder-image.jpg', 'LoadingCarousel')}
+                                            src={resolvedImageUrls[index]}
                                             alt={`Visual representation for slide: ${slide.text}`}
                                             className="object-cover w-full h-full"
                                         />

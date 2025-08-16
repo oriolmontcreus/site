@@ -106,10 +106,6 @@ export function resolveCmsImageUrl(path: string, componentName?: string): string
         const backendUrl = getCmsBackendUrl();
         const fullUrl = `${backendUrl}/${webPath}`;
 
-        if (componentName) {
-            console.log(`${componentName}: Generated CMS image URL:`, fullUrl);
-        }
-
         return fullUrl;
     }
 
@@ -119,14 +115,15 @@ export function resolveCmsImageUrl(path: string, componentName?: string): string
 
 /**
  * Gets the CMS backend URL from environment variables with fallback
+ * Cached at module level to avoid repeated environment variable access
  * 
  * @returns CMS backend URL
  */
-export function getCmsBackendUrl(): string {
-    return import.meta.env.PUBLIC_CMS_BACKEND_URL || 'http://localhost:3001';
-}
+const CACHED_BACKEND_URL = import.meta.env.PUBLIC_CMS_BACKEND_URL || 'http://localhost:3001';
 
-/**
+export function getCmsBackendUrl(): string {
+    return CACHED_BACKEND_URL;
+}/**
  * Validates if an image object has the required properties
  * 
  * @param image - Image object to validate
