@@ -14,7 +14,7 @@ let page: any = null;
 let resolvedComponents: any[] = [];
 
 try {
-    page = await getPageData("/");
+    page = await getPageData("index");
     if (page && page.components) {
         resolvedComponents = await Promise.all(
             page.components.map(async (component: any) => {

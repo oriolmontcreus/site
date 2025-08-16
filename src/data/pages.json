@@ -1,12 +1,12 @@
 [
   {
-    "_id": "6855a62cc9146371b38a2fd5",
+    "_id": "page_1755355609466_p01vkmg3p",
     "title": "Home",
-    "slug": "home",
+    "slug": "index",
     "content": "",
     "config": {
       "title": "Home",
-      "slug": "home"
+      "slug": "index"
     },
     "components": [
       {
@@ -14,121 +14,25 @@
         "instanceId": "hero-main",
         "displayName": "HERO SECTION",
         "formData": {
-          "title": "Hero title test",
-          "title2": "test save",
-          "subtitle": "This is the subtitle in english",
-          "image": null,
-          "backgroundColor": "#EF4444",
-          "textColor": "#000000",
-          "showButton": false,
-          "autoSave": false,
-          "debugInfo": "",
-          "featureCards": [
-            {
-              "icon": null,
-              "title": "test title 1",
-              "subtitle": "test subtitledfgfd 1"
-            },
-            {
-              "icon": null,
-              "title": "test title 2",
-              "subtitle": "test subtitle 2"
-            }
-          ],
-          "icon": "",
-          "accentColor": "#000000",
-          "translations": {
-            "es-ES": {
-              "title": "Hero title test",
-              "subtitle": "This is the subtitle in english"
-            },
-            "en-US": {
-              "title": "",
-              "subtitle": "",
-              "featureCards_0": {
-                "title": "",
-                "subtitle": ""
-              },
-              "featureCards_1": {
-                "title": "",
-                "subtitle": ""
-              }
-            }
-          }
-        }
-      },
-      {
-        "componentName": "Contact information",
-        "instanceId": "contact-info",
-        "displayName": "CONTACT INFORMATION",
-        "formData": {
-          "email": "",
-          "heroSections": [
-            {
-              "image": null,
-              "featureCards": [
-                {
-                  "icon": null,
-                  "title": "Feature card title inside the Hero component that its inside the Contact Info component...",
-                  "subtitle": "subtitle test"
-                },
-                {
-                  "icon": null
-                }
-              ],
-              "title": "Hero title inside the Hero component that its inside the Contact Info component"
-            }
-          ],
-          "title": "",
-          "hero-tabs": "",
-          "translations": {
-            "es-ES": {
-              "title": ""
-            },
-            "en-US": {
-              "title": "",
-              "heroSections": [
-                {
-                  "title": "",
-                  "subtitle": ""
-                }
-              ]
-            }
-          }
-        }
-      }
-    ],
-    "createdAt": "2025-06-20T18:19:24.464Z",
-    "updatedAt": "2025-08-08T09:52:49.395Z"
-  },
-  {
-    "_id": "page_1754822703113_c2ypafm8v",
-    "title": "Home",
-    "slug": "/",
-    "content": "",
-    "config": {
-      "title": "Home",
-      "slug": "/"
-    },
-    "components": [
-      {
-        "componentName": "Hero",
-        "instanceId": "hero-main",
-        "displayName": "HERO SECTION",
-        "formData": {
-          "title": "",
-          "subtitle": "",
+          "title": "{{siteName}}",
+          "subtitle": "The blade that empowers both developers and clients",
           "docsUrl": "",
           "demoUrl": "",
           "githubUrl": "",
-          "flipWords": [],
+          "flipWords": [
+            "fast",
+            "intuitive",
+            "flexible",
+            "open source",
+            "modular"
+          ],
           "translations": {
+            "es-ES": {
+              "subtitle": "La espada que empodera tanto a desarrolladores como a clientes",
+              "flipWords": []
+            },
             "en-US": {
-              "title": "",
               "subtitle": "",
-              "docsUrl": "",
-              "demoUrl": "",
-              "githubUrl": "",
               "flipWords": []
             }
           }
@@ -139,21 +43,7 @@
         "instanceId": "carousel-main",
         "displayName": "CAROUSEL SECTION",
         "formData": {
-          "slides": [
-            {
-              "text": "pepe pipo papa popo pupu pipi",
-              "image": {
-                "id": "f04465e7-da66-4b01-aa85-5a1e2416a7ba",
-                "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
-                "fileName": "f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
-                "mimeType": "image/jpeg",
-                "size": 17974,
-                "path": "uploads\\f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
-                "uploadedAt": "2025-08-16T14:21:16.180Z"
-              },
-              "url": ""
-            }
-          ],
+          "slides": [],
           "text": "",
           "image": "",
           "url": "",
@@ -168,44 +58,17 @@
           "shuffleTips": false,
           "animateText": false,
           "translations": {
-            "en-US": {
-              "slides": [
-                {
-                  "text": "pepe pipo papa popo pupu pipi",
-                  "image": {
-                    "id": "f04465e7-da66-4b01-aa85-5a1e2416a7ba",
-                    "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
-                    "fileName": "f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
-                    "mimeType": "image/jpeg",
-                    "size": 17974,
-                    "path": "uploads\\f04465e7-da66-4b01-aa85-5a1e2416a7ba.jpg",
-                    "uploadedAt": "2025-08-16T14:21:16.180Z"
-                  },
-                  "url": ""
-                }
-              ],
-              "text": "",
-              "image": "",
-              "url": "",
-              "autoplayInterval": "",
-              "aspectRatio": "",
-              "textPosition": "",
-              "showNavigation": false,
-              "showIndicators": false,
-              "showProgress": false,
-              "backgroundTips": false,
-              "backgroundGradient": false,
-              "shuffleTips": false,
-              "animateText": false
-            },
             "es-ES": {
-              "slides_0": {}
+              "text": ""
+            },
+            "en-US": {
+              "text": ""
             }
           }
         }
       }
     ],
-    "createdAt": "2025-08-10T10:45:03.114Z",
-    "updatedAt": "2025-08-16T14:21:21.896Z"
+    "createdAt": "2025-08-16T14:46:49.466Z",
+    "updatedAt": "2025-08-16T14:48:12.109Z"
   }
 ]

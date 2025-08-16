@@ -14,7 +14,7 @@ export async function getStaticPaths() {
   // Filter out invalid slugs: root page, empty, null, undefined, or containing special characters
   const filteredPages = pages.filter((page) => {
     if (!page.slug) return false;
-    if (page.slug === "/") return false; // Root page handled by index.astro
+    if (page.slug === "index") return false; // Root page handled by index.astro
     if (typeof page.slug !== "string") return false;
     if (page.slug.trim() === "") return false;
     return true;
