@@ -1,0 +1,59 @@
+---
+import { LoadingCarousel } from "./LoadingCarousel";
+
+export interface Props {
+    slides?: Array<{
+        text: string;
+        image: string;
+        url?: string;
+    }>;
+    autoplayInterval?: number;
+    showNavigation?: boolean;
+    showIndicators?: boolean;
+    showProgress?: boolean;
+    aspectRatio?: "video" | "square" | "wide";
+    textPosition?: "top" | "bottom";
+    backgroundTips?: boolean;
+    backgroundGradient?: boolean;
+    shuffleTips?: boolean;
+    animateText?: boolean;
+}
+
+const {
+    slides = [],
+    autoplayInterval = 4500,
+    showNavigation = false,
+    showIndicators = true,
+    showProgress = true,
+    aspectRatio = "video",
+    textPosition = "bottom",
+    backgroundTips = false,
+    backgroundGradient = false,
+    shuffleTips = false,
+    animateText = true,
+} = Astro.props;
+
+// Don't render the component if there are no slides
+if (!slides || slides.length === 0) {
+    return null;
+}
+---
+
+<div class="w-full py-12">
+    <div class="container mx-auto">
+        <LoadingCarousel
+            tips={slides}
+            autoplayInterval={autoplayInterval}
+            showNavigation={showNavigation}
+            showIndicators={showIndicators}
+            showProgress={showProgress}
+            aspectRatio={aspectRatio}
+            textPosition={textPosition}
+            backgroundTips={backgroundTips}
+            backgroundGradient={backgroundGradient}
+            shuffleTips={shuffleTips}
+            animateText={animateText}
+            client:load
+        />
+    </div>
+</div>

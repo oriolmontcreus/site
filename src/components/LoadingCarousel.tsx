@@ -23,14 +23,14 @@ import {
     type CarouselApi,
 } from "@/components/ui/carousel"
 
-interface Tip {
+interface Slide {
     text: string
     image: string
     url?: string
 }
 
 interface LoadingCarouselProps {
-    tips?: Tip[]
+    tips?: Slide[] // Keep tips as prop name for backward compatibility but treat as slides
     className?: string
     autoplayInterval?: number
     showNavigation?: boolean
@@ -38,40 +38,12 @@ interface LoadingCarouselProps {
     showProgress?: boolean
     aspectRatio?: "video" | "square" | "wide"
     textPosition?: "top" | "bottom"
-    onTipChange?: (index: number) => void
-    backgroundTips?: boolean
+    onSlideChange?: (index: number) => void
+    backgroundTips?: boolean // Keep naming for consistency with existing usage
     backgroundGradient?: boolean
-    shuffleTips?: boolean
+    shuffleTips?: boolean // Keep naming for consistency with existing usage
     animateText?: boolean
 }
-
-const defaultTips: Tip[] = [
-    {
-        text: "Backend snippets. Shadcn style headless components.. but for your backend.",
-        image: "/placeholders/cult-snips.png",
-        url: "https://www.newcult.co/backend",
-    },
-    {
-        text: "Create your first directory app today. AI batch scripts to process 100s of urls in seconds.",
-        image: "/placeholders/cult-dir.png",
-        url: "https://www.newcult.co/templates/cult-seo",
-    },
-    {
-        text: "Cult landing page template. Framer motion, shadcn, and tailwind.",
-        image: "/placeholders/cult-rune.png",
-        url: "https://www.newcult.co/templates/cult-landing-page",
-    },
-    {
-        text: "Vector embeddings, semantic search, and chat based vector retrieval on easy mode.",
-        image: "/placeholders/cult-manifest.png",
-        url: "https://www.newcult.co/templates/manifest",
-    },
-    {
-        text: "SEO analysis app. Scraping, analysis, insights, and AI recommendations.",
-        image: "/placeholders/cult-seo.png",
-        url: "https://www.newcult.co/templates/cult-seo",
-    },
-]
 
 function shuffleArray<T>(array: T[]): T[] {
     const shuffled = [...array]
@@ -109,9 +81,9 @@ const aspectRatioClasses = {
 }
 
 export function LoadingCarousel({
-    onTipChange,
+    onSlideChange,
     className,
-    tips = defaultTips,
+    tips = [], // Keep tips as prop name but use slides logic
     showProgress = true,
     aspectRatio = "video",
     showNavigation = false,
@@ -123,13 +95,16 @@ export function LoadingCarousel({
     shuffleTips = false,
     animateText = true,
 }: LoadingCarouselProps) {
+    // Since we now handle empty arrays at the Astro level, tips should always have content
+    const slides = tips || [];
+
     const [progress, setProgress] = useState(0)
     const [api, setApi] = useState<CarouselApi>()
     const [current, setCurrent] = useState(0)
     const [direction, setDirection] = useState(0)
     const controls = useAnimation()
-    const [displayTips] = useState(() =>
-        shuffleTips ? shuffleArray(tips) : tips
+    const [displaySlides] = useState(() =>
+        shuffleTips ? shuffleArray(slides) : slides
     )
 
     const autoplay = Autoplay({
@@ -138,9 +113,7 @@ export function LoadingCarousel({
     })
 
     useEffect(() => {
-        if (!api) {
-            return
-        }
+        if (!api) return
 
         setCurrent(api.selectedScrollSnap())
         setDirection(
@@ -151,7 +124,7 @@ export function LoadingCarousel({
             const newIndex = api.selectedScrollSnap()
             setCurrent(newIndex)
             setDirection(api.scrollSnapList().indexOf(newIndex) - current)
-            onTipChange?.(newIndex)
+            onSlideChange?.(newIndex)
         }
 
         api.on("select", onSelect)
@@ -159,7 +132,7 @@ export function LoadingCarousel({
         return () => {
             api.off("select", onSelect)
         }
-    }, [api, current, onTipChange])
+    }, [api, current, onSlideChange])
 
     useEffect(() => {
         if (!showProgress) return
@@ -218,7 +191,7 @@ export function LoadingCarousel({
                 >
                     <CarouselContent>
                         <AnimatePresence initial={false} custom={direction}>
-                            {(displayTips || []).map((tip, index) => (
+                            {(displaySlides || []).map((slide, index) => (
                                 <CarouselItem key={index}>
                                     <motion.div
                                         variants={carouselVariants}
@@ -230,8 +203,8 @@ export function LoadingCarousel({
                                         className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
                                     >
                                         <img
-                                            src={tip.image}
-                                            alt={`Visual representation for tip: ${tip.text}`}
+                                            src={slide.image}
+                                            alt={`Visual representation for slide: ${slide.text}`}
                                             className="object-cover"
                                         />
                                         {backgroundGradient && (
@@ -246,19 +219,19 @@ export function LoadingCarousel({
                                                 className={`absolute ${textPosition === "top" ? "top-0" : "bottom-0"
                                                     } left-0 right-0 p-4 sm:p-6 md:p-8`}
                                             >
-                                                {displayTips[current]?.url ? (
+                                                {displaySlides[current]?.url ? (
                                                     <a
-                                                        href={displayTips[current]?.url}
+                                                        href={displaySlides[current]?.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                     >
                                                         <p className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed">
-                                                            {tip.text}
+                                                            {displaySlides[current]?.text || "Loading..."}
                                                         </p>
                                                     </a>
                                                 ) : (
                                                     <p className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed">
-                                                        {tip.text}
+                                                        {displaySlides[current]?.text || "Loading..."}
                                                     </p>
                                                 )}
                                             </motion.div>
@@ -291,7 +264,7 @@ export function LoadingCarousel({
                     >
                         {showIndicators && (
                             <div className="flex space-x-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto">
-                                {(displayTips || []).map((_, index) => (
+                                {(displaySlides || []).map((_, index) => (
                                     <motion.button
                                         key={index}
                                         className={`h-1 w-8 flex-shrink-0 rounded-full ${index === current ? "bg-muted" : "bg-primary"
@@ -303,7 +276,7 @@ export function LoadingCarousel({
                                         }}
                                         transition={{ duration: 0.5 }}
                                         onClick={() => handleSelect(index)}
-                                        aria-label={`Go to tip ${index + 1}`}
+                                        aria-label={`Go to slide ${index + 1}`}
                                     />
                                 ))}
                             </div>
@@ -311,41 +284,41 @@ export function LoadingCarousel({
                         <div className="flex items-center space-x-2 text-primary whitespace-nowrap">
                             {backgroundTips ? (
                                 <span className="text-sm font-medium">
-                                    Tip {current + 1}/{displayTips?.length || 0}
+                                    Slide {current + 1}/{displaySlides?.length || 0}
                                 </span>
                             ) : (
                                 <div className="flex flex-col">
-                                    {displayTips[current]?.url ? (
+                                    {displaySlides[current]?.url ? (
                                         <a
-                                            href={displayTips[current]?.url}
+                                            href={displaySlides[current]?.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
                                         >
                                             {animateText ? (
                                                 <TextScramble
-                                                    key={displayTips[current]?.text}
+                                                    key={displaySlides[current]?.text || "default-1"}
                                                     duration={1.2}
                                                     characterSet=". "
                                                 >
-                                                    {displayTips[current]?.text}
+                                                    {displaySlides[current]?.text || "Loading..."}
                                                 </TextScramble>
                                             ) : (
-                                                displayTips[current]?.text
+                                                displaySlides[current]?.text || "Loading..."
                                             )}
                                         </a>
                                     ) : (
                                         <span className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium">
                                             {animateText ? (
                                                 <TextScramble
-                                                    key={displayTips[current]?.text}
+                                                    key={displaySlides[current]?.text || "default-2"}
                                                     duration={1.2}
                                                     characterSet=". "
                                                 >
-                                                    {displayTips[current]?.text}
+                                                    {displaySlides[current]?.text || "Loading..."}
                                                 </TextScramble>
                                             ) : (
-                                                displayTips[current]?.text
+                                                displaySlides[current]?.text || "Loading..."
                                             )}
                                         </span>
                                     )}
@@ -398,12 +371,12 @@ function TextScramble({
     const MotionComponent = motion.create(
         Component as keyof JSX.IntrinsicElements
     )
-    const [displayText, setDisplayText] = useState(children)
+    const [displayText, setDisplayText] = useState(children || "")
     const [isAnimating, setIsAnimating] = useState(false)
-    const text = children
+    const text = children || ""
 
     const scramble = async () => {
-        if (isAnimating) return
+        if (isAnimating || !text || text.length === 0) return
         setIsAnimating(true)
 
         const steps = duration / speed
@@ -440,10 +413,10 @@ function TextScramble({
     }
 
     useEffect(() => {
-        if (!trigger) return
+        if (!trigger || !text) return
 
         scramble()
-    }, [trigger])
+    }, [trigger, text])
 
     return (
         <MotionComponent className={className} {...props}>
