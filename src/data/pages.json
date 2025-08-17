@@ -59,28 +59,12 @@
           "slides": [
             {
               "text": "test hdaihdas dajsid dasj ihas das jasidjasidj iasdj",
-              "image": {
-                "id": "844a1a20-d1fe-41bc-8a1c-cdd999020d4f",
-                "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
-                "fileName": "844a1a20-d1fe-41bc-8a1c-cdd999020d4f.jpg",
-                "mimeType": "image/jpeg",
-                "size": 17974,
-                "path": "uploads\\844a1a20-d1fe-41bc-8a1c-cdd999020d4f.jpg",
-                "uploadedAt": "2025-08-16T14:53:05.757Z"
-              },
+              "image": null,
               "url": ""
             },
             {
               "text": "uygdfast kdjasu hooasdjasuh oadksai",
-              "image": {
-                "id": "33b1d7a3-c111-4717-a9f5-a9d3484e705c",
-                "originalName": "notion-avatar-1751829906720.png",
-                "fileName": "33b1d7a3-c111-4717-a9f5-a9d3484e705c.png",
-                "mimeType": "image/png",
-                "size": 19768,
-                "path": "uploads\\33b1d7a3-c111-4717-a9f5-a9d3484e705c.png",
-                "uploadedAt": "2025-08-16T14:53:05.763Z"
-              },
+              "image": null,
               "url": ""
             }
           ],
@@ -113,7 +97,8 @@
                     "mimeType": "image/jpeg",
                     "size": 17974,
                     "path": "uploads\\844a1a20-d1fe-41bc-8a1c-cdd999020d4f.jpg",
-                    "uploadedAt": "2025-08-16T14:53:05.757Z"
+                    "uploadedAt": "2025-08-16T14:53:05.757Z",
+                    "_markedForDeletion": true
                   },
                   "url": ""
                 },
@@ -126,7 +111,8 @@
                     "mimeType": "image/png",
                     "size": 19768,
                     "path": "uploads\\33b1d7a3-c111-4717-a9f5-a9d3484e705c.png",
-                    "uploadedAt": "2025-08-16T14:53:05.763Z"
+                    "uploadedAt": "2025-08-16T14:53:05.763Z",
+                    "_markedForDeletion": true
                   },
                   "url": ""
                 }
@@ -135,7 +121,7 @@
               "image": "",
               "url": "",
               "autoplayInterval": 4500,
-              "aspectRatio": "square",
+              "aspectRatio": "wide",
               "textPosition": "bottom",
               "showNavigation": false,
               "showIndicators": true,
@@ -150,6 +136,6 @@
       }
     ],
     "createdAt": "2025-08-16T14:46:49.466Z",
-    "updatedAt": "2025-08-16T17:23:43.319Z"
+    "updatedAt": "2025-08-17T08:49:55.403Z"
   }
 ]

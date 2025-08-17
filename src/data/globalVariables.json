@@ -1,9 +1,11 @@
 {
   "siteName": "EXCALIBUR",
+  "autoplayDelay": 4500,
   "translations": {
     "en-US": {
-      "siteName": "EXCALIBURrrr"
+      "siteName": "EXCALIBUR",
+      "autoplayDelay": ""
     }
   },
-  "updatedAt": "2025-08-15T19:42:54.155Z"
+  "updatedAt": "2025-08-16T17:41:05.398Z"
 }

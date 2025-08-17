@@ -1,10 +1,7 @@
 const componentCache = new Map();
 
-// Explicitly import all components to avoid dynamic import issues
-const componentModules = {
-  Hero: () => import('../components/Hero.astro'),
-  Carousel: () => import('../components/Carousel.astro'),
-};
+// Import all components using Vite's glob import
+const componentModules = import.meta.glob('../components/*.{astro,tsx,ts,jsx,js}', { eager: false });
 
 export async function resolveComponent(componentName: string) {
   // Check cache first
@@ -12,24 +9,33 @@ export async function resolveComponent(componentName: string) {
     return componentCache.get(componentName);
   }
 
-  // Try to find the component using explicit imports
-  const importFn = componentModules[componentName as keyof typeof componentModules];
+  try {
+    // Find the component by matching the filename
+    const matchingPath = Object.keys(componentModules).find(path => {
+      const filename = path.split('/').pop()?.replace(/\.(astro|tsx|ts|jsx|js)$/, '');
+      return filename === componentName;
+    });
 
-  if (importFn) {
-    try {
-      const component = await importFn();
-      const resolvedComponent = component.default || component;
+    if (matchingPath) {
+      const importedModule = await componentModules[matchingPath]() as any;
+      const component = importedModule.default || importedModule;
 
       // Cache the resolved component
-      componentCache.set(componentName, resolvedComponent);
-      return resolvedComponent;
-    } catch (error) {
-      console.error(`Error importing component '${componentName}':`, error);
-    }
-  }
+      componentCache.set(componentName, component);
+      return component;
+    } else {
+      // List available components for debugging
+      const availableComponents = Object.keys(componentModules).map(path => {
+        return path.split('/').pop()?.replace(/\.(astro|tsx|ts|jsx|js)$/, '');
+      }).filter(Boolean);
 
-  console.warn(`Component '${componentName}' not found. Available components: ${Object.keys(componentModules).join(', ')}`);
-  return null;
+      console.error(`Component '${componentName}' not found. Available components: ${availableComponents.join(', ')}`);
+      return null;
+    }
+  } catch (error) {
+    console.error(`Error resolving component '${componentName}':`, error);
+    return null;
+  }
 }
 
 export function clearComponentCache() {
