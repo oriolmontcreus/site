@@ -15,7 +15,9 @@
         "displayName": "HERO SECTION",
         "formData": {
           "title": "{{siteName}}",
-          "subtitle": "The blade that empowers both developers and clients",
+          "subtitle": "The blade that empowers both developers and clients ",
+          "contactEmail": "test@gmail.com",
+          "description": "test",
           "docsUrl": "",
           "demoUrl": "",
           "githubUrl": "",
@@ -28,6 +30,8 @@
           ],
           "translations": {
             "es-ES": {
+              "subtitle": "",
+              "flipWords": [],
               "flipWords_0": {},
               "flipWords_1": {},
               "flipWords_2": {},
@@ -35,18 +39,20 @@
               "flipWords_4": {}
             },
             "en-US": {
-              "title": "{{siteName}}",
-              "subtitle": "The blade that empowers both developers and clients",
-              "docsUrl": "",
-              "demoUrl": "",
-              "githubUrl": "",
+              "subtitle": "The blade that empowers both developers and clients ",
               "flipWords": [
                 "fast",
                 "intuitive",
                 "flexible",
                 "open source",
                 "modular"
-              ]
+              ],
+              "title": "{{siteName}}",
+              "contactEmail": "test@gmail.com",
+              "description": "test",
+              "docsUrl": "",
+              "demoUrl": "",
+              "githubUrl": ""
             }
           }
         }
@@ -83,41 +89,28 @@
           "animateText": true,
           "translations": {
             "es-ES": {
-              "slides_0": {},
-              "slides_1": {}
+              "text": "",
+              "slides_0": {
+                "text": ""
+              },
+              "slides_1": {
+                "text": ""
+              }
             },
             "en-US": {
+              "text": "",
               "slides": [
                 {
                   "text": "test hdaihdas dajsid dasj ihas das jasidjasidj iasdj",
-                  "image": {
-                    "id": "844a1a20-d1fe-41bc-8a1c-cdd999020d4f",
-                    "originalName": "c89141249ec76948bc5691aacae2c3c6.jpg",
-                    "fileName": "844a1a20-d1fe-41bc-8a1c-cdd999020d4f.jpg",
-                    "mimeType": "image/jpeg",
-                    "size": 17974,
-                    "path": "uploads\\844a1a20-d1fe-41bc-8a1c-cdd999020d4f.jpg",
-                    "uploadedAt": "2025-08-16T14:53:05.757Z",
-                    "_markedForDeletion": true
-                  },
+                  "image": null,
                   "url": ""
                 },
                 {
                   "text": "uygdfast kdjasu hooasdjasuh oadksai",
-                  "image": {
-                    "id": "33b1d7a3-c111-4717-a9f5-a9d3484e705c",
-                    "originalName": "notion-avatar-1751829906720.png",
-                    "fileName": "33b1d7a3-c111-4717-a9f5-a9d3484e705c.png",
-                    "mimeType": "image/png",
-                    "size": 19768,
-                    "path": "uploads\\33b1d7a3-c111-4717-a9f5-a9d3484e705c.png",
-                    "uploadedAt": "2025-08-16T14:53:05.763Z",
-                    "_markedForDeletion": true
-                  },
+                  "image": null,
                   "url": ""
                 }
               ],
-              "text": "",
               "image": "",
               "url": "",
               "autoplayInterval": 4500,
@@ -136,6 +129,6 @@
       }
     ],
     "createdAt": "2025-08-16T14:46:49.466Z",
-    "updatedAt": "2025-08-17T08:49:55.403Z"
+    "updatedAt": "2025-08-18T17:46:43.103Z"
   }
 ]
