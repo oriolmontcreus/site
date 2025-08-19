@@ -1,435 +1,484 @@
-import React, { useCallback, useEffect, useState, useMemo, type JSX } from "react"
-import Autoplay from "embla-carousel-autoplay"
-import { ChevronRight } from "lucide-react"
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useMemo,
+  type JSX,
+} from "react";
+import Autoplay from "embla-carousel-autoplay";
+import { ChevronRight } from "lucide-react";
 import {
-    AnimatePresence,
-    type MotionProps,
-    type Variants,
-    motion,
-    useAnimation,
-} from "motion/react"
+  AnimatePresence,
+  type MotionProps,
+  type Variants,
+  motion,
+  useAnimation,
+} from "motion/react";
 
-import { cn } from "@/lib/utils"
-import { resolveImageUrl, type CmsFileObject } from "@/utils"
+import { cn } from "@/lib/utils";
+import { resolveImageUrl, type CmsFileObject } from "@/utils";
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
-    type CarouselApi,
-} from "@/components/ui/carousel"
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 interface Slide {
-    text: string
-    image: string | CmsFileObject | null | undefined
-    url?: string
+  text: string;
+  image: string | CmsFileObject | null | undefined;
+  url?: string;
 }
 
 interface LoadingCarouselProps {
-    tips?: Slide[] // Keep tips as prop name for backward compatibility but treat as slides
-    className?: string
-    autoplayInterval?: number
-    showNavigation?: boolean
-    showIndicators?: boolean
-    showProgress?: boolean
-    aspectRatio?: "video" | "square" | "wide"
-    textPosition?: "top" | "bottom"
-    onSlideChange?: (index: number) => void
-    backgroundTips?: boolean // Keep naming for consistency with existing usage
-    backgroundGradient?: boolean
-    shuffleTips?: boolean // Keep naming for consistency with existing usage
-    animateText?: boolean
+  tips?: Slide[]; // Keep tips as prop name for backward compatibility but treat as slides
+  className?: string;
+  autoplayInterval?: number;
+  showNavigation?: boolean;
+  showIndicators?: boolean;
+  showProgress?: boolean;
+  aspectRatio?: "video" | "square" | "wide";
+  textPosition?: "top" | "bottom";
+  onSlideChange?: (index: number) => void;
+  backgroundTips?: boolean; // Keep naming for consistency with existing usage
+  backgroundGradient?: boolean;
+  shuffleTips?: boolean; // Keep naming for consistency with existing usage
+  animateText?: boolean;
 }
 
 function shuffleArray<T>(array: T[]): T[] {
-    const shuffled = [...array]
-    for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-            ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-    }
-    return shuffled
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
 }
 
 const carouselVariants: Variants = {
-    enter: (direction: number) => ({
-        x: direction > 0 ? "100%" : "-100%",
-        opacity: 0,
-    }),
-    center: {
-        x: 0,
-        opacity: 1,
-    },
-    exit: (direction: number) => ({
-        x: direction < 0 ? "100%" : "-100%",
-        opacity: 0,
-    }),
-}
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+};
 
 const textVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.5 } },
-}
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.5 } },
+};
 
 const aspectRatioClasses = {
-    video: "aspect-video",
-    square: "aspect-square",
-    wide: "aspect-[2/1]",
-}
+  video: "aspect-video",
+  square: "aspect-square",
+  wide: "aspect-[2/1]",
+};
 
 export function LoadingCarousel({
-    onSlideChange,
-    className,
-    tips = [], // Keep tips as prop name but use slides logic
-    showProgress = true,
-    aspectRatio = "video",
-    showNavigation = false,
-    showIndicators = true,
-    backgroundTips = false,
-    textPosition = "bottom",
-    autoplayInterval = 4500,
-    backgroundGradient = false,
-    shuffleTips = false,
-    animateText = true,
+  onSlideChange,
+  className,
+  tips = [], // Keep tips as prop name but use slides logic
+  showProgress = true,
+  aspectRatio = "video",
+  showNavigation = false,
+  showIndicators = true,
+  backgroundTips = false,
+  textPosition = "bottom",
+  autoplayInterval = 4500,
+  backgroundGradient = false,
+  shuffleTips = false,
+  animateText = true,
 }: LoadingCarouselProps) {
-    // Since we now handle empty arrays at the Astro level, tips should always have content
-    const slides = tips || [];
+  // Since we now handle empty arrays at the Astro level, tips should always have content
+  const slides = tips || [];
 
-    // Memoize the display slides to avoid recalculation
-    // Use JSON.stringify to create a stable dependency for array contents
-    const displaySlides = useMemo(() =>
-        shuffleTips ? shuffleArray(slides) : slides,
-        [JSON.stringify(slides), shuffleTips]
+  // Memoize the display slides to avoid recalculation
+  // Use JSON.stringify to create a stable dependency for array contents
+  const displaySlides = useMemo(
+    () => (shuffleTips ? shuffleArray(slides) : slides),
+    [JSON.stringify(slides), shuffleTips],
+  );
+
+  // Memoize resolved image URLs to prevent repeated calls to resolveImageUrl
+  // Use a more stable dependency based on the actual image data
+  const resolvedImageUrls = useMemo(() => {
+    return displaySlides.map((slide) =>
+      resolveImageUrl(slide.image, "/placeholder-image.jpg", "LoadingCarousel"),
+    );
+  }, [JSON.stringify(displaySlides.map((slide) => slide.image))]);
+
+  const [progress, setProgress] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const controls = useAnimation();
+
+  const autoplay = Autoplay({
+    delay: autoplayInterval,
+    stopOnInteraction: false,
+  });
+
+  useEffect(() => {
+    if (!api) return;
+
+    setCurrent(api.selectedScrollSnap());
+    setDirection(
+      api.scrollSnapList().indexOf(api.selectedScrollSnap()) - current,
     );
 
-    // Memoize resolved image URLs to prevent repeated calls to resolveImageUrl
-    // Use a more stable dependency based on the actual image data
-    const resolvedImageUrls = useMemo(() => {
-        return displaySlides.map(slide =>
-            resolveImageUrl(slide.image, '/placeholder-image.jpg', 'LoadingCarousel')
-        );
-    }, [JSON.stringify(displaySlides.map(slide => slide.image))]);
+    const onSelect = () => {
+      const newIndex = api.selectedScrollSnap();
+      setCurrent(newIndex);
+      setDirection(api.scrollSnapList().indexOf(newIndex) - current);
+      onSlideChange?.(newIndex);
+    };
 
-    const [progress, setProgress] = useState(0)
-    const [api, setApi] = useState<CarouselApi>()
-    const [current, setCurrent] = useState(0)
-    const [direction, setDirection] = useState(0)
-    const controls = useAnimation()
+    api.on("select", onSelect);
 
-    const autoplay = Autoplay({
-        delay: autoplayInterval,
-        stopOnInteraction: false,
-    })
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api, current, onSlideChange]);
 
-    useEffect(() => {
-        if (!api) return
+  useEffect(() => {
+    if (!showProgress) return;
 
-        setCurrent(api.selectedScrollSnap())
-        setDirection(
-            api.scrollSnapList().indexOf(api.selectedScrollSnap()) - current
-        )
-
-        const onSelect = () => {
-            const newIndex = api.selectedScrollSnap()
-            setCurrent(newIndex)
-            setDirection(api.scrollSnapList().indexOf(newIndex) - current)
-            onSlideChange?.(newIndex)
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          return 0;
         }
+        const diff = 2; // Constant increment for smoother progress
+        return Math.min(oldProgress + diff, 100);
+      });
+    }, autoplayInterval / 50);
 
-        api.on("select", onSelect)
+    return () => {
+      clearInterval(timer);
+    };
+  }, [showProgress, autoplayInterval]);
 
-        return () => {
-            api.off("select", onSelect)
-        }
-    }, [api, current, onSlideChange])
+  useEffect(() => {
+    if (progress === 100) {
+      controls.start({ scaleX: 0 }).then(() => {
+        setProgress(0);
+        controls.set({ scaleX: 1 });
+      });
+    } else {
+      controls.start({ scaleX: progress / 100 });
+    }
+  }, [progress, controls]);
 
-    useEffect(() => {
-        if (!showProgress) return
+  const handleSelect = useCallback(
+    (index: number) => {
+      api?.scrollTo(index);
+    },
+    [api],
+  );
 
-        const timer = setInterval(() => {
-            setProgress((oldProgress) => {
-                if (oldProgress === 100) {
-                    return 0
-                }
-                const diff = 2 // Constant increment for smoother progress
-                return Math.min(oldProgress + diff, 100)
-            })
-        }, autoplayInterval / 50)
-
-        return () => {
-            clearInterval(timer)
-        }
-    }, [showProgress, autoplayInterval])
-
-    useEffect(() => {
-        if (progress === 100) {
-            controls.start({ scaleX: 0 }).then(() => {
-                setProgress(0)
-                controls.set({ scaleX: 1 })
-            })
-        } else {
-            controls.start({ scaleX: progress / 100 })
-        }
-    }, [progress, controls])
-
-    const handleSelect = useCallback(
-        (index: number) => {
-            api?.scrollTo(index)
-        },
-        [api]
-    )
-
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className={cn(
-                "w-full max-w-6xl mx-auto rounded-lg bg-muted shadow-[0px_1px_1px_0px_rgba(0,0,0,0.05),0px_1px_1px_0px_rgba(255,252,240,0.5)_inset,0px_0px_0px_1px_hsla(0,0%,100%,0.1)_inset,0px_0px_1px_0px_rgba(28,27,26,0.5)]",
-                className
-            )}
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={cn(
+        "w-full max-w-6xl mx-auto rounded-lg bg-muted shadow-[0px_1px_1px_0px_rgba(0,0,0,0.05),0px_1px_1px_0px_rgba(255,252,240,0.5)_inset,0px_0px_0px_1px_hsla(0,0%,100%,0.1)_inset,0px_0px_1px_0px_rgba(28,27,26,0.5)]",
+        className,
+      )}
+      data-oid="k45mrcl"
+    >
+      <div className="w-full overflow-hidden rounded-lg" data-oid="onio554">
+        <Carousel
+          setApi={setApi}
+          plugins={[autoplay]}
+          className="w-full relative"
+          opts={{
+            loop: true,
+          }}
+          data-oid="wv83l4c"
         >
-            <div className="w-full overflow-hidden rounded-lg">
-                <Carousel
-                    setApi={setApi}
-                    plugins={[autoplay]}
-                    className="w-full relative"
-                    opts={{
-                        loop: true,
-                    }}
-                >
-                    <CarouselContent>
-                        <AnimatePresence initial={false} custom={direction}>
-                            {(displaySlides || []).map((slide, index) => (
-                                <CarouselItem key={index}>
-                                    <motion.div
-                                        variants={carouselVariants}
-                                        initial="enter"
-                                        animate="center"
-                                        exit="exit"
-                                        custom={direction}
-                                        transition={{ duration: 0.8, ease: "easeInOut" }}
-                                        className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
-                                    >
-                                        <img
-                                            src={resolvedImageUrls[index]}
-                                            alt={`Visual representation for slide: ${slide.text}`}
-                                            className="object-cover w-full h-full"
-                                        />
-                                        {backgroundGradient && (
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                                        )}
+          <CarouselContent data-oid="29s.4ew">
+            <AnimatePresence
+              initial={false}
+              custom={direction}
+              data-oid="ne-nno2"
+            >
+              {(displaySlides || []).map((slide, index) => (
+                <CarouselItem key={index} data-oid="aklaff4">
+                  <motion.div
+                    variants={carouselVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    custom={direction}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
+                    data-oid="i810_3s"
+                  >
+                    <img
+                      src={resolvedImageUrls[index]}
+                      alt={`Visual representation for slide: ${slide.text}`}
+                      className="object-cover w-full h-full"
+                      data-oid="q1e0584"
+                    />
 
-                                        {backgroundTips ? (
-                                            <motion.div
-                                                variants={textVariants}
-                                                initial="hidden"
-                                                animate="visible"
-                                                className={`absolute ${textPosition === "top" ? "top-0" : "bottom-0"
-                                                    } left-0 right-0 p-4 sm:p-6 md:p-8`}
-                                            >
-                                                {displaySlides[current]?.url ? (
-                                                    <a
-                                                        href={displaySlides[current]?.url}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                    >
-                                                        <p className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed">
-                                                            {displaySlides[current]?.text || "Loading..."}
-                                                        </p>
-                                                    </a>
-                                                ) : (
-                                                    <p className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed">
-                                                        {displaySlides[current]?.text || "Loading..."}
-                                                    </p>
-                                                )}
-                                            </motion.div>
-                                        ) : null}
-                                    </motion.div>
-                                </CarouselItem>
-                            ))}
-                        </AnimatePresence>
-                    </CarouselContent>
-                    {showNavigation && (
-                        <>
-                            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2" />
-                            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2" />
-                        </>
+                    {backgroundGradient && (
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
+                        data-oid="3-c40yq"
+                      />
                     )}
-                </Carousel>
-                <div
-                    className={cn(
-                        "bg-muted p-4 ",
-                        showIndicators && !backgroundTips ? "lg:py-2 lg:px-4 " : ""
-                    )}
-                >
-                    <div
-                        className={cn(
-                            "flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0",
-                            showIndicators && !backgroundTips
-                                ? "sm:flex-col space-y-2 items-start gap-3"
-                                : ""
+
+                    {backgroundTips ? (
+                      <motion.div
+                        variants={textVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className={`absolute ${textPosition === "top" ? "top-0" : "bottom-0"} left-0 right-0 p-4 sm:p-6 md:p-8`}
+                        data-oid="by9y2f_"
+                      >
+                        {displaySlides[current]?.url ? (
+                          <a
+                            href={displaySlides[current]?.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            data-oid="bh2suuk"
+                          >
+                            <p
+                              className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed"
+                              data-oid="0bmt1_2"
+                            >
+                              {displaySlides[current]?.text || "Loading..."}
+                            </p>
+                          </a>
+                        ) : (
+                          <p
+                            className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed"
+                            data-oid="0xjj8t4"
+                          >
+                            {displaySlides[current]?.text || "Loading..."}
+                          </p>
                         )}
+                      </motion.div>
+                    ) : null}
+                  </motion.div>
+                </CarouselItem>
+              ))}
+            </AnimatePresence>
+          </CarouselContent>
+          {showNavigation && (
+            <>
+              <CarouselPrevious
+                className="absolute left-2 top-1/2 -translate-y-1/2"
+                data-oid="kcri8a0"
+              />
+
+              <CarouselNext
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+                data-oid="p6:7hml"
+              />
+            </>
+          )}
+        </Carousel>
+        <div
+          className={cn(
+            "bg-muted p-4 ",
+            showIndicators && !backgroundTips ? "lg:py-2 lg:px-4 " : "",
+          )}
+          data-oid="0h_3llt"
+        >
+          <div
+            className={cn(
+              "flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0",
+              showIndicators && !backgroundTips
+                ? "sm:flex-col space-y-2 items-start gap-3"
+                : "",
+            )}
+            data-oid="xd_ljkr"
+          >
+            {showIndicators && (
+              <div
+                className="flex space-x-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto"
+                data-oid="209x8zr"
+              >
+                {(displaySlides || []).map((_, index) => (
+                  <motion.button
+                    key={index}
+                    className={`h-1 w-8 flex-shrink-0 rounded-full ${index === current ? "bg-muted" : "bg-primary"}`}
+                    initial={false}
+                    animate={{
+                      backgroundColor:
+                        index === current ? "#3D3D3E" : "#E6E6E4",
+                    }}
+                    transition={{ duration: 0.5 }}
+                    onClick={() => handleSelect(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                    data-oid="rd:mt7v"
+                  />
+                ))}
+              </div>
+            )}
+            <div
+              className="flex items-center space-x-2 text-primary whitespace-nowrap"
+              data-oid="v-mmfmb"
+            >
+              {backgroundTips ? (
+                <span className="text-sm font-medium" data-oid="jhmr.kl">
+                  Slide {current + 1}/{displaySlides?.length || 0}
+                </span>
+              ) : (
+                <div className="flex flex-col" data-oid="oibvg4y">
+                  {displaySlides[current]?.url ? (
+                    <a
+                      href={displaySlides[current]?.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
+                      data-oid="owfrl0l"
                     >
-                        {showIndicators && (
-                            <div className="flex space-x-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto">
-                                {(displaySlides || []).map((_, index) => (
-                                    <motion.button
-                                        key={index}
-                                        className={`h-1 w-8 flex-shrink-0 rounded-full ${index === current ? "bg-muted" : "bg-primary"
-                                            }`}
-                                        initial={false}
-                                        animate={{
-                                            backgroundColor:
-                                                index === current ? "#3D3D3E" : "#E6E6E4",
-                                        }}
-                                        transition={{ duration: 0.5 }}
-                                        onClick={() => handleSelect(index)}
-                                        aria-label={`Go to slide ${index + 1}`}
-                                    />
-                                ))}
-                            </div>
-                        )}
-                        <div className="flex items-center space-x-2 text-primary whitespace-nowrap">
-                            {backgroundTips ? (
-                                <span className="text-sm font-medium">
-                                    Slide {current + 1}/{displaySlides?.length || 0}
-                                </span>
-                            ) : (
-                                <div className="flex flex-col">
-                                    {displaySlides[current]?.url ? (
-                                        <a
-                                            href={displaySlides[current]?.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
-                                        >
-                                            {animateText ? (
-                                                <TextScramble
-                                                    key={displaySlides[current]?.text || "default-1"}
-                                                    duration={1.2}
-                                                    characterSet=". "
-                                                >
-                                                    {displaySlides[current]?.text || "Loading..."}
-                                                </TextScramble>
-                                            ) : (
-                                                displaySlides[current]?.text || "Loading..."
-                                            )}
-                                        </a>
-                                    ) : (
-                                        <span className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium">
-                                            {animateText ? (
-                                                <TextScramble
-                                                    key={displaySlides[current]?.text || "default-2"}
-                                                    duration={1.2}
-                                                    characterSet=". "
-                                                >
-                                                    {displaySlides[current]?.text || "Loading..."}
-                                                </TextScramble>
-                                            ) : (
-                                                displaySlides[current]?.text || "Loading..."
-                                            )}
-                                        </span>
-                                    )}
-                                </div>
-                            )}
-                            {backgroundTips && <ChevronRight className="w-4 h-4" />}
-                        </div>
-                    </div>
-                    {showProgress && (
-                        <motion.div
-                            initial={{ scaleX: 0 }}
-                            animate={controls}
-                            transition={{ duration: 0.5, ease: "linear" }}
-                            className="h-1 bg-muted origin-left mt-2"
-                        />
-                    )}
+                      {animateText ? (
+                        <TextScramble
+                          key={displaySlides[current]?.text || "default-1"}
+                          duration={1.2}
+                          characterSet=". "
+                          data-oid="5ijdezn"
+                        >
+                          {displaySlides[current]?.text || "Loading..."}
+                        </TextScramble>
+                      ) : (
+                        displaySlides[current]?.text || "Loading..."
+                      )}
+                    </a>
+                  ) : (
+                    <span
+                      className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
+                      data-oid="6.d9t2d"
+                    >
+                      {animateText ? (
+                        <TextScramble
+                          key={displaySlides[current]?.text || "default-2"}
+                          duration={1.2}
+                          characterSet=". "
+                          data-oid="kk:e9_j"
+                        >
+                          {displaySlides[current]?.text || "Loading..."}
+                        </TextScramble>
+                      ) : (
+                        displaySlides[current]?.text || "Loading..."
+                      )}
+                    </span>
+                  )}
                 </div>
+              )}
+              {backgroundTips && (
+                <ChevronRight className="w-4 h-4" data-oid="qc8e_et" />
+              )}
             </div>
-        </motion.div>
-    )
+          </div>
+          {showProgress && (
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={controls}
+              transition={{ duration: 0.5, ease: "linear" }}
+              className="h-1 bg-muted origin-left mt-2"
+              data-oid="bwl0mzq"
+            />
+          )}
+        </div>
+      </div>
+    </motion.div>
+  );
 }
 
 // Credit -> https://motion-primitives.com/docs/text-scramble
 // https://x.com/Ibelick
 type TextScrambleProps = {
-    children: string
-    duration?: number
-    speed?: number
-    characterSet?: string
-    as?: React.ElementType
-    className?: string
-    trigger?: boolean
-    onScrambleComplete?: () => void
-} & MotionProps
+  children: string;
+  duration?: number;
+  speed?: number;
+  characterSet?: string;
+  as?: React.ElementType;
+  className?: string;
+  trigger?: boolean;
+  onScrambleComplete?: () => void;
+} & MotionProps;
 
 const defaultChars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 function TextScramble({
-    children,
-    duration = 0.8,
-    speed = 0.04,
-    characterSet = defaultChars,
-    className,
-    as: Component = "p",
-    trigger = true,
-    onScrambleComplete,
-    ...props
+  children,
+  duration = 0.8,
+  speed = 0.04,
+  characterSet = defaultChars,
+  className,
+  as: Component = "p",
+  trigger = true,
+  onScrambleComplete,
+  ...props
 }: TextScrambleProps) {
-    const MotionComponent = motion.create(
-        Component as keyof JSX.IntrinsicElements
-    )
-    const [displayText, setDisplayText] = useState(children || "")
-    const [isAnimating, setIsAnimating] = useState(false)
-    const text = children || ""
+  const MotionComponent = motion.create(
+    Component as keyof JSX.IntrinsicElements,
+  );
+  const [displayText, setDisplayText] = useState(children || "");
+  const [isAnimating, setIsAnimating] = useState(false);
+  const text = children || "";
 
-    const scramble = async () => {
-        if (isAnimating || !text || text.length === 0) return
-        setIsAnimating(true)
+  const scramble = async () => {
+    if (isAnimating || !text || text.length === 0) return;
+    setIsAnimating(true);
 
-        const steps = duration / speed
-        let step = 0
+    const steps = duration / speed;
+    let step = 0;
 
-        const interval = setInterval(() => {
-            let scrambled = ""
-            const progress = step / steps
+    const interval = setInterval(() => {
+      let scrambled = "";
+      const progress = step / steps;
 
-            for (let i = 0; i < text.length; i++) {
-                if (text[i] === " ") {
-                    scrambled += " "
-                    continue
-                }
+      for (let i = 0; i < text.length; i++) {
+        if (text[i] === " ") {
+          scrambled += " ";
+          continue;
+        }
 
-                if (progress * text.length > i) {
-                    scrambled += text[i]
-                } else {
-                    scrambled +=
-                        characterSet[Math.floor(Math.random() * characterSet.length)]
-                }
-            }
+        if (progress * text.length > i) {
+          scrambled += text[i];
+        } else {
+          scrambled +=
+            characterSet[Math.floor(Math.random() * characterSet.length)];
+        }
+      }
 
-            setDisplayText(scrambled)
-            step++
+      setDisplayText(scrambled);
+      step++;
 
-            if (step > steps) {
-                clearInterval(interval)
-                setDisplayText(text)
-                setIsAnimating(false)
-                onScrambleComplete?.()
-            }
-        }, speed * 1000)
-    }
+      if (step > steps) {
+        clearInterval(interval);
+        setDisplayText(text);
+        setIsAnimating(false);
+        onScrambleComplete?.();
+      }
+    }, speed * 1000);
+  };
 
-    useEffect(() => {
-        if (!trigger || !text) return
+  useEffect(() => {
+    if (!trigger || !text) return;
 
-        scramble()
-    }, [trigger, text])
+    scramble();
+  }, [trigger, text]);
 
-    return (
-        <MotionComponent className={className} {...props}>
-            {displayText}
-        </MotionComponent>
-    )
+  return (
+    <MotionComponent className={className} {...props} data-oid="wgg_hh7">
+      {displayText}
+    </MotionComponent>
+  );
 }
