@@ -1,42 +1,37 @@
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Toggle } from "@/components/ui/toggle";
 
 export function ModeToggle() {
-    const [theme, setThemeState] = React.useState<"theme-light" | "dark" | "system">("theme-light");
+    const [isDark, setIsDark] = React.useState(false);
 
     React.useEffect(() => {
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        setThemeState(isDarkMode ? "dark" : "theme-light");
+        setIsDark(document.documentElement.classList.contains("dark"));
     }, []);
 
-    React.useEffect(() => {
-        const isDark =
-            theme === "dark" ||
-            (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-    }, [theme]);
+    const handleToggle = () => {
+        const newIsDark = !isDark;
+        setIsDark(newIsDark);
+        document.documentElement.classList[newIsDark ? "add" : "remove"]("dark");
+        if (typeof localStorage !== "undefined") {
+            localStorage.setItem("theme", newIsDark ? "dark" : "light");
+        }
+    };
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
-                    <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                    <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-                    <span className="sr-only">Toggle theme</span>
-                </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setThemeState("theme-light")}>Light</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setThemeState("dark")}>Dark</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setThemeState("system")}>System</DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+        <Toggle
+            aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+            pressed={isDark}
+            onPressedChange={handleToggle}
+            variant="outline"
+            size="sm"
+        >
+            {isDark ? (
+                <Moon className="h-[1.2rem] w-[1.2rem]" />
+            ) : (
+                <Sun className="h-[1.2rem] w-[1.2rem]" />
+            )}
+            <span className="sr-only">Toggle theme</span>
+        </Toggle>
     );
 }
