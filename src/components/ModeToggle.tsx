@@ -24,10 +24,11 @@ export function ModeToggle() {
             pressed={isDark}
             onPressedChange={handleToggle}
             variant="outline"
+            className="bg-white cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 dark:bg-gray-800 transition-colors duration-200 ease-in-out"
             size="sm"
         >
             {isDark ? (
-                <Moon className="h-[1.2rem] w-[1.2rem]" />
+                <Moon className="h-[1.2rem] w-[1.2rem] text-white" />
             ) : (
                 <Sun className="h-[1.2rem] w-[1.2rem]" />
             )}
