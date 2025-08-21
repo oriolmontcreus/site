@@ -8,6 +8,7 @@ import FeaturesSection from "../components/FeaturesSection.astro";
 import TechStackSection from "../components/TechStackSection.astro";
 import AdminPreviewSection from "../components/AdminPreviewSection.astro";
 import CTASection from "../components/CTASection.astro";
+import FeaturesBento from "@/components/FeaturesBento";
 
 // Try to get page data, but fall back to static content
 let page: any = null;
@@ -62,6 +63,7 @@ try {
     {(
         <div class="relative">
 
+      <FeaturesBento />
             <!-- Features Section -->
             <FeaturesSection />
 
