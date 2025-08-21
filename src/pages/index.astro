@@ -4,9 +4,6 @@ import { resolveComponent } from "../utils/component-resolver";
 import { getPageData } from "../utils/dev-data-fetcher";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
-import FeaturesSection from "../components/FeaturesSection.astro";
-import TechStackSection from "../components/TechStackSection.astro";
-import AdminPreviewSection from "../components/AdminPreviewSection.astro";
 import CTASection from "../components/CTASection.astro";
 import FeaturesBento from "@/components/FeaturesBento";
 
@@ -64,15 +61,6 @@ try {
         <div class="relative">
 
       <FeaturesBento />
-            <!-- Features Section -->
-            <FeaturesSection />
-
-            <!-- Technology Stack Section -->
-            <TechStackSection />
-
-            <!-- Admin Preview Section -->
-            <AdminPreviewSection />
-
             <!-- CTA Section -->
             <CTASection />
         </div>
