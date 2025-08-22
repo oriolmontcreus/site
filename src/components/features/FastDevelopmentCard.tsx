@@ -16,7 +16,7 @@ export default function FastDevelopmentCard() {
                     Hybrid storage approach: database, Redis cache, JSON files, and localStorage for optimal speed
                 </CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-center py-4">
+            <CardContent className="flex justify-center pt-18 pb-6">
                 <Folder />
             </CardContent>
         </Card>

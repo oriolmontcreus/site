@@ -106,10 +106,11 @@ const Folder: React.FC<FolderProps> = ({
 
     const scaleStyle = { transform: `scale(${size})` };
 
+    // Increase separation between papers
     const getOpenTransform = (index: number) => {
-        if (index === 0) return "translate(-120%, -70%) rotate(-15deg)";
-        if (index === 1) return "translate(10%, -70%) rotate(15deg)";
-        if (index === 2) return "translate(-50%, -100%) rotate(5deg)";
+        if (index === 0) return "translate(-160%, -80%) rotate(-18deg)";
+        if (index === 1) return "translate(40%, -80%) rotate(18deg)";
+        if (index === 2) return "translate(-60%, -120%) rotate(8deg)";
         return "";
     };
 
@@ -149,7 +150,7 @@ const Folder: React.FC<FolderProps> = ({
                                 onMouseLeave={(e) => handlePaperMouseLeave(e, i)}
                                 className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out ${!open
                                     ? "transform -translate-x-1/2 translate-y-[10%] group-hover:translate-y-0"
-                                    : "hover:scale-110"
+                                    : ""
                                     } ${sizeClasses}`}
                                 style={{
                                     ...(!open ? {} : { transform: transformStyle }),
