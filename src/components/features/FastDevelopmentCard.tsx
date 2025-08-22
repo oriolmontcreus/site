@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Rocket } from "lucide-react"
+import Folder from "../Folder"
 
 export default function FastDevelopmentCard() {
     return (
@@ -15,13 +16,8 @@ export default function FastDevelopmentCard() {
                     Hybrid storage approach: database, Redis cache, JSON files, and localStorage for optimal speed
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                <div className="space-y-1 text-xs text-muted-foreground">
-                    <div>• Database for persistence</div>
-                    <div>• Redis for caching</div>
-                    <div>• JSON for structure</div>
-                    <div>• LocalStorage for preferences</div>
-                </div>
+            <CardContent className="flex justify-center py-4">
+                <Folder />
             </CardContent>
         </Card>
     )
