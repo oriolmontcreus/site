@@ -23,12 +23,36 @@
     }
 }
 
+@keyframes hover-wave {
+    0% {
+        background-color: hsl(var(--card));
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        background-color: var(--hover-color);
+        transform: scale(1.02);
+        opacity: 0.8;
+    }
+
+    100% {
+        background-color: hsl(var(--card));
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
 .animate-highlight {
     animation: highlight 0.6s ease forwards;
 }
 
 .animate-flash {
     animation: flash 0.6s ease forwards;
+}
+
+.animate-hover-wave {
+    animation: hover-wave 1.2s ease-in-out infinite;
 }
 
 @import "tailwindcss";

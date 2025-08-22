@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 
-export const CommitsGrid = ({ text }: { text: string }) => {
+export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHovered?: boolean }) => {
     const cleanString = (str: string): string => {
         const upperStr = str.toUpperCase();
         const allowedChars = Object.keys(letterPatterns);
@@ -51,28 +51,50 @@ export const CommitsGrid = ({ text }: { text: string }) => {
         shouldFlash: boolean;
         animationDelay: string;
         highlightColor: string;
+        hoverAnimationDelay: string;
     };
 
     const commitColors = ["#48d55d", "#016d32", "#0d4429"];
+    const hoverColors = ["#e2f8e7", "#cef2d7", "#b8ecc5"]; // Light, subtle colors for hover
 
     const [cells, setCells] = useState<CellData[]>([]);
+
+    // Generate deterministic pattern based on index to avoid hydration issues
+    const getDeterministicDelay = (index: number) => {
+        return `${((index * 0.05) % 0.6).toFixed(1)}s`;
+    };
+
+    const getDeterministicHoverDelay = (index: number) => {
+        return `${((index * 0.08) % 1.2).toFixed(1)}s`;
+    };
+
+    const getDeterministicColor = (index: number, colors: string[]) => {
+        return colors[index % colors.length];
+    };
+
+    const shouldCellFlash = (index: number) => {
+        // Use a deterministic pattern instead of random
+        return (index * 7 + 13) % 10 < 3; // Roughly 30% of cells will flash
+    };
+
+    // Pre-generate all cell data deterministically
+    const generateCellData = (width: number, height: number): CellData[] => {
+        return Array.from({ length: width * height }).map((_, index) => {
+            const isHighlighted = highlightedCells.includes(index);
+            const shouldFlash = !isHighlighted && shouldCellFlash(index);
+            const animationDelay = getDeterministicDelay(index);
+            const hoverAnimationDelay = getDeterministicHoverDelay(index);
+            const highlightColor = getDeterministicColor(index, commitColors);
+            return { isHighlighted, shouldFlash, animationDelay, highlightColor, hoverAnimationDelay };
+        });
+    };
 
 
     // Only generate animation data once on mount
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            const arr: CellData[] = Array.from({ length: gridWidth * gridHeight }).map((_, index) => {
-                const isHighlighted = highlightedCells.includes(index);
-                const shouldFlash = !isHighlighted && Math.random() < 0.3;
-                const animationDelay = `${(Math.random() * 0.6).toFixed(1)}s`;
-                const highlightColor = commitColors[Math.floor(Math.random() * commitColors.length)];
-                return { isHighlighted, shouldFlash, animationDelay, highlightColor };
-            });
-            setCells(arr);
-        }, 500);
-        return () => clearTimeout(timeout);
+        setCells(generateCellData(gridWidth, gridHeight));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // Only run once on mount
+    }, [gridWidth, gridHeight]); // Re-run when grid dimensions change
 
     return (
         <section
@@ -87,14 +109,16 @@ export const CommitsGrid = ({ text }: { text: string }) => {
                     <div
                         key={index}
                         className={cn(
-                            `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px]`,
+                            `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
                             cell.isHighlighted ? "animate-highlight" : "",
                             cell.shouldFlash ? "animate-flash" : "",
+                            isHovered ? "animate-hover-wave" : "",
                             !cell.isHighlighted && !cell.shouldFlash ? "bg-card" : ""
                         )}
                         style={{
-                            animationDelay: cell.animationDelay,
+                            animationDelay: isHovered ? cell.hoverAnimationDelay : cell.animationDelay,
                             "--highlight": cell.highlightColor,
+                            "--hover-color": getDeterministicColor(index, hoverColors),
                         } as CSSProperties}
                     />
                 ))
@@ -102,10 +126,15 @@ export const CommitsGrid = ({ text }: { text: string }) => {
                     <div
                         key={index}
                         className={cn(
-                            `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px]`,
+                            `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
                             highlightedCells.includes(index) ? "animate-highlight" : "",
+                            isHovered ? "animate-hover-wave" : "",
                             "bg-card"
                         )}
+                        style={{
+                            animationDelay: isHovered ? getDeterministicHoverDelay(index) : "0s",
+                            "--hover-color": getDeterministicColor(index, hoverColors),
+                        } as CSSProperties}
                     />
                 ))}
         </section>
