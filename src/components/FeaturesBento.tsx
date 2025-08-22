@@ -22,6 +22,8 @@ import { ReactIcon } from "./icons/ReactIcon"
 import { SvelteIcon } from "./icons/SvelteIcon"
 import { VueIcon } from "./icons/VueIcon"
 import { PreactIcon } from "./icons/PreactIcon"
+import { SolidIcon } from "./icons/SolidIcon"
+import { AlpineIcon } from "./icons/AlpineIcon"
 
 export default function FeaturesBento() {
     return (
@@ -94,8 +96,10 @@ export default function FeaturesBento() {
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <ReactIcon />
                                     <VueIcon />
-                                    <SvelteIcon/>
+                                    <SvelteIcon />
                                     <PreactIcon />
+                                    <SolidIcon />
+                                    <AlpineIcon />
                                 </div>
                             </CardContent>
                         </Card>
