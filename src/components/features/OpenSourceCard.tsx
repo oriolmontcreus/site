@@ -4,7 +4,7 @@ import { CommitsGrid } from "../CommitsGrid"
 
 export default function OpenSourceCard() {
     return (
-        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-3 hover:shadow-lg transition-shadow duration-300">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-slate-100 dark:bg-slate-900/20 rounded-lg">
@@ -17,12 +17,7 @@ export default function OpenSourceCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="space-y-1 text-xs text-muted-foreground">
-                    <div>• Transparent development</div>
-                    <div>• Community contributions</div>
-                    <div>• Free forever</div>
-                </div>
-                <CommitsGrid text="test" />
+                <CommitsGrid text="OPEN SOURCE" />
             </CardContent>
         </Card>
     )
