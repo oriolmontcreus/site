@@ -22,7 +22,7 @@ const navigationLinks = [
 
 export default function Component() {
     return (
-        <header className="border-b border-neutral-400 px-4 md:px-6">
+        <header className="border-b border-neutral-400 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-4 md:px-6">
             <div className="flex h-16 items-center justify-between gap-4">
                 {/* Left side */}
                 <div className="flex items-center gap-2">
@@ -84,16 +84,15 @@ export default function Component() {
                         <a href="#" className="text-primary hover:text-primary/90">
                             <div className="flex items-center gap-1">
                                 <div className="flex size-6 items-center justify-center rounded-md">
-                                    <div className="bg-neutral-700 rounded-sm size-6">
+                                    <div className="bg-neutral-700 dark:bg-neutral-200 rounded-sm size-6">
                                         <span
-                                            className="flex justify-center text-sm h-full items-center text-neutral-200"
+                                            className="flex justify-center text-sm h-full items-center text-neutral-200 dark:text-neutral-800"
                                         >EX</span>
                                     </div>
                                 </div>
 
-                                <span className="text-neutral-200 font-light text-md">CALIBUR CMS</span>
+                                <span className="text-neutral-800 dark:text-neutral-100 font-light text-md">CALIBUR CMS</span>
                             </div>
-
                         </a>
                         {/* Navigation menu */}
                         <NavigationMenu className="max-md:hidden">
@@ -115,10 +114,10 @@ export default function Component() {
                 </div>
                 {/* Right side */}
                 <div className="flex items-center gap-2">
-                    <Button asChild variant="ghost" size="sm" className="text-sm">
+                    <Button asChild variant="ghost" size="sm" className="text-sm dark:text-neutral-100">
                         <a href="#">Sign In</a>
                     </Button>
-                    <Button asChild size="sm" className="text-sm">
+                    <Button asChild size="sm" className="text-sm dark:text-neutral-900">
                         <a href="#">Get Started</a>
                     </Button>
                     <ModeToggle />
