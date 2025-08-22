@@ -1,3 +1,36 @@
+/* CommitsGrid animation keyframes and classes */
+@keyframes highlight {
+    0% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: var(--highlight);
+    }
+}
+
+@keyframes flash {
+    0% {
+        background-color: hsl(var(--card));
+    }
+
+    50% {
+        background-color: var(--highlight);
+    }
+
+    100% {
+        background-color: hsl(var(--card));
+    }
+}
+
+.animate-highlight {
+    animation: highlight 0.6s ease forwards;
+}
+
+.animate-flash {
+    animation: flash 0.6s ease forwards;
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -150,10 +183,11 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+    * {
+        @apply border-border outline-ring/50;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
     }
 }
