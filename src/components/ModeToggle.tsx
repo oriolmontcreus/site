@@ -20,6 +20,7 @@ export function ModeToggle() {
         <div>
             <Toggle
                 variant="outline"
+                size="sm"
                 className="group data-[state=on]:hover:bg-muted text-muted-foreground data-[state=on]:text-muted-foreground data-[state=on]:hover:text-foreground size-8 rounded-full border-none shadow-none data-[state=on]:bg-transparent cursor-pointer flex-shrink-0"
                 pressed={theme === "dark"}
                 onPressedChange={() =>
@@ -39,6 +40,6 @@ export function ModeToggle() {
                 />
                 <span className="sr-only">Toggle theme</span>
             </Toggle>
-        </div>
+        </div >
     );
 }
