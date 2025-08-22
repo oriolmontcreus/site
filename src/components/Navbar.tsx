@@ -82,11 +82,11 @@ export default function Component() {
                     {/* Main nav */}
                     <div className="flex items-center gap-6">
                         <a href="#" className="text-primary hover:text-primary/90">
-                            <div className="flex items-center gap-1">
+                            <div className="flex items-center gap-1 group">
                                 <div className="flex size-6 items-center justify-center rounded-md">
-                                    <div className="bg-neutral-700 dark:bg-neutral-200 rounded-sm size-6">
+                                    <div className="bg-neutral-700 dark:bg-neutral-200 rounded-sm size-6 transition-colors duration-300 group-hover:bg-neutral-200 group-hover:dark:bg-neutral-700">
                                         <span
-                                            className="flex justify-center text-sm h-full items-center text-neutral-200 dark:text-neutral-800"
+                                            className="flex justify-center text-sm h-full items-center text-neutral-200 dark:text-neutral-800 transition-colors duration-300 group-hover:text-neutral-800 group-hover:dark:text-neutral-200"
                                         >EX</span>
                                     </div>
                                 </div>
