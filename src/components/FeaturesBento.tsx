@@ -25,6 +25,8 @@ import { PreactIcon } from "./icons/PreactIcon"
 import { SolidIcon } from "./icons/SolidIcon"
 import { AlpineIcon } from "./icons/AlpineIcon"
 
+import { ImageComparison } from "./features/ImageComparison";
+
 export default function FeaturesBento() {
     return (
         <main className="min-h-screen bg-background">
@@ -162,11 +164,14 @@ export default function FeaturesBento() {
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm">
-                                    <div className="text-purple-600 dark:text-purple-400">Textarea('subtitle')</div>
-                                    <div className="text-muted-foreground ml-4">.label('Subtitle')</div>
-                                    <div className="text-muted-foreground ml-4">.required()</div>
-                                    <div className="text-muted-foreground ml-4">.translatable()</div>
+                                <div className="py-4">
+                                    {/* ImageComparison: left is Fluent API code, right is generated UI */}
+                                    <ImageComparison
+                                        leftImageSrc="/images/fluent-api-code.png"
+                                        leftImageAlt="Fluent API code example"
+                                        rightImageSrc="/images/fluent-api-ui.png"
+                                        rightImageAlt="Generated UI from Fluent API"
+                                    />
                                 </div>
                             </CardContent>
                         </Card>
