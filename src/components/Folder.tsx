@@ -8,6 +8,7 @@ interface FolderProps {
     size?: number;
     items?: React.ReactNode[];
     className?: string;
+    open?: boolean;
 }
 
 const darkenColor = (hex: string, percent: number): string => {
@@ -31,12 +32,7 @@ const darkenColor = (hex: string, percent: number): string => {
     );
 };
 
-const Folder: React.FC<FolderProps> = ({
-    color = "#51a2ff",
-    size = 1,
-    items = [],
-    className = "",
-}) => {
+const Folder: React.FC<FolderProps> = ({ color = "#51a2ff", size = 1, items = [], className = "", open = false }) => {
     const maxItems = 3;
     // Place icons on the papers
     const papers = [
@@ -51,7 +47,6 @@ const Folder: React.FC<FolderProps> = ({
         </div>,
     ];
 
-    const [open, setOpen] = useState(false);
     const [paperOffsets, setPaperOffsets] = useState<{ x: number; y: number }[]>(
         Array.from({ length: maxItems }, () => ({ x: 0, y: 0 }))
     );
@@ -61,12 +56,14 @@ const Folder: React.FC<FolderProps> = ({
     const paper2 = darkenColor("#ffffff", 0.05);
     const paper3 = "#ffffff";
 
-    const handleClick = () => {
-        setOpen((prev) => !prev);
-        if (open) {
-            setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })));
+
+    // Reset paper offsets when closed
+    React.useEffect(() => {
+        if (!open) {
+            setPaperOffsets(Array.from({ length: maxItems }, () => ({ x: 0, y: 0 })))
         }
-    };
+    }, [open]);
+
 
     const handlePaperMouseMove = (
         e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -81,17 +78,6 @@ const Folder: React.FC<FolderProps> = ({
         setPaperOffsets((prev) => {
             const newOffsets = [...prev];
             newOffsets[index] = { x: offsetX, y: offsetY };
-            return newOffsets;
-        });
-    };
-
-    const handlePaperMouseLeave = (
-        e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-        index: number
-    ) => {
-        setPaperOffsets((prev) => {
-            const newOffsets = [...prev];
-            newOffsets[index] = { x: 0, y: 0 };
             return newOffsets;
         });
     };
@@ -117,13 +103,11 @@ const Folder: React.FC<FolderProps> = ({
     return (
         <div style={scaleStyle} className={className}>
             <div
-                className={`group relative w-fit transition-all duration-200 ease-in cursor-pointer ${!open ? "hover:-translate-y-2" : ""
-                    }`}
+                className={`group relative w-fit transition-all duration-200 ease-in ${!open ? "hover:-translate-y-2" : ""}`}
                 style={{
                     ...folderStyle,
                     transform: open ? "translateY(-8px)" : undefined,
                 }}
-                onClick={handleClick}
             >
                 <div
                     className="relative w-[100px] h-[80px] rounded-tl-0 rounded-tr-[10px] rounded-br-[10px] rounded-bl-[10px]"
@@ -147,7 +131,6 @@ const Folder: React.FC<FolderProps> = ({
                             <div
                                 key={i}
                                 onMouseMove={(e) => handlePaperMouseMove(e, i)}
-                                onMouseLeave={(e) => handlePaperMouseLeave(e, i)}
                                 className={`absolute z-20 bottom-[10%] left-1/2 transition-all duration-300 ease-in-out ${!open
                                     ? "transform -translate-x-1/2 translate-y-[10%] group-hover:translate-y-0"
                                     : ""
@@ -163,8 +146,7 @@ const Folder: React.FC<FolderProps> = ({
                         );
                     })}
                     <div
-                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? "group-hover:[transform:skew(15deg)_scaleY(0.6)]" : ""
-                            }`}
+                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? "group-hover:[transform:skew(15deg)_scaleY(0.6)]" : ""}`}
                         style={{
                             backgroundColor: color,
                             borderRadius: "5px 10px 10px 10px",
@@ -172,8 +154,7 @@ const Folder: React.FC<FolderProps> = ({
                         }}
                     ></div>
                     <div
-                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? "group-hover:[transform:skew(-15deg)_scaleY(0.6)]" : ""
-                            }`}
+                        className={`absolute z-30 w-full h-full origin-bottom transition-all duration-300 ease-in-out ${!open ? "group-hover:[transform:skew(-15deg)_scaleY(0.6)]" : ""}`}
                         style={{
                             backgroundColor: color,
                             borderRadius: "5px 10px 10px 10px",
