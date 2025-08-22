@@ -20,6 +20,8 @@ import {
 } from "lucide-react"
 import { ReactIcon } from "./icons/ReactIcon"
 import { SvelteIcon } from "./icons/SvelteIcon"
+import { VueIcon } from "./icons/VueIcon"
+import { PreactIcon } from "./icons/PreactIcon"
 
 export default function FeaturesBento() {
     return (
@@ -91,10 +93,9 @@ export default function FeaturesBento() {
                             <CardContent>
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <ReactIcon />
-                                    <Badge variant="outline" className="text-xs">
-                                        Vue
-                                    </Badge>
+                                    <VueIcon />
                                     <SvelteIcon/>
+                                    <PreactIcon />
                                 </div>
                             </CardContent>
                         </Card>
