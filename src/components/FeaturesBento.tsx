@@ -18,6 +18,8 @@ import {
     Rocket,
     Upload,
 } from "lucide-react"
+import { ReactIcon } from "./icons/ReactIcon"
+import { SvelteIcon } from "./icons/SvelteIcon"
 
 export default function FeaturesBento() {
     return (
@@ -88,15 +90,11 @@ export default function FeaturesBento() {
                             </CardHeader>
                             <CardContent>
                                 <div className="flex items-center gap-2 flex-wrap">
-                                    <Badge variant="outline" className="text-xs">
-                                        React
-                                    </Badge>
+                                    <ReactIcon />
                                     <Badge variant="outline" className="text-xs">
                                         Vue
                                     </Badge>
-                                    <Badge variant="outline" className="text-xs">
-                                        Svelte
-                                    </Badge>
+                                    <SvelteIcon />
                                 </div>
                             </CardContent>
                         </Card>
