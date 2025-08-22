@@ -94,7 +94,7 @@ export default function FeaturesBento() {
                                     <Badge variant="outline" className="text-xs">
                                         Vue
                                     </Badge>
-                                    <SvelteIcon />
+                                    <SvelteIcon/>
                                 </div>
                             </CardContent>
                         </Card>
