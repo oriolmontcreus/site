@@ -5,7 +5,7 @@ import { getPageData } from "../utils/dev-data-fetcher";
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import CTASection from "../components/CTASection.astro";
-import FeaturesBento from "@/components/FeaturesBento";
+import FeaturesBento from "@/components/FeaturesBento.astro";
 
 // Try to get page data, but fall back to static content
 let page: any = null;
@@ -61,7 +61,7 @@ try {
         <div class="relative">
 
 <!--//TODO THIS SHOULDNT ALL LOAD ON CLIENT -->
-      <FeaturesBento client:load />
+      <FeaturesBento />
             <!-- CTA Section -->
             <CTASection />
         </div>
