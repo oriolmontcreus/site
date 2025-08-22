@@ -36,13 +36,13 @@ const Folder: React.FC<FolderProps> = ({ color = "#51a2ff", size = 1, items = []
     const maxItems = 3;
     // Place icons on the papers
     const papers = [
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} className="border border-neutral-400 rounded-md">
             <JsonIcon size={32} />
         </div>,
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} className="border border-neutral-200 rounded-md">
             <MongodbIcon size={32} />
         </div>,
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }} className="border border-neutral-300 rounded-md">
             <RedisIcon size={32} />
         </div>,
     ];
