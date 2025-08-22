@@ -19,8 +19,8 @@ export default function FullyExtensibleCard() {
                     development
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                Fully <TextSlider width={200} />
+            <CardContent className="px-6 py-8">
+                <TextSlider />
             </CardContent>
         </Card>
     )

@@ -10,16 +10,34 @@ const SIN_THETA = Math.sin(THETA);
 const clamp = (v: number, min: number, max: number): number => Math.min(Math.max(v, min), max);
 
 interface TextSliderProps {
-    width: number;
+    width?: number;
     height?: number;
     handleSize?: number;
     onChange?: (range: { left: number; right: number; range: number }) => void;
 }
 
 function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChange }: TextSliderProps): React.JSX.Element {
-    // Adjusted height to better accommodate larger text
-    const width = initialWidth > 0 ? initialWidth + 35 : 0;
+    // Use a ref to measure the container width if not provided
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [measuredWidth, setMeasuredWidth] = useState<number>(initialWidth ? initialWidth + 35 : 0);
 
+    useEffect(() => {
+        if (!initialWidth && containerRef.current) {
+            const resizeObserver = new window.ResizeObserver(() => {
+                const w = containerRef.current?.getBoundingClientRect().width || 0;
+                setMeasuredWidth(w > 0 ? w : 0);
+            });
+            resizeObserver.observe(containerRef.current);
+            // Initial measure
+            const w = containerRef.current?.getBoundingClientRect().width || 0;
+            setMeasuredWidth(w > 0 ? w : 0);
+            return () => resizeObserver.disconnect();
+        } else if (initialWidth) {
+            setMeasuredWidth(initialWidth + 35);
+        }
+    }, [initialWidth]);
+
+    const width = measuredWidth;
     const [left, setLeft] = useState<number>(0);
     const [right, setRight] = useState<number>(width);
     const [draggingHandle, setDraggingHandle] = useState<"left" | "right" | null>(null);
@@ -120,8 +138,9 @@ function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChang
 
     return (
         <div
+            ref={containerRef}
             className="relative select-none transition-transform duration-300 ease-out"
-            style={{ width, height, transform: `rotate(${dynamicRotation}deg)` }}
+            style={{ width: initialWidth ? width : "100%", height, transform: `rotate(${dynamicRotation}deg)` }}
         >
             <div className="absolute inset-0 rounded-2xl border border-yellow-500 pointer-events-none" />
             {(["left", "right"] as Array<"left" | "right">).map((handle) => {
@@ -147,7 +166,7 @@ function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChang
                 className="flex z-10 items-center justify-center w-full h-full px-4 overflow-hidden pointer-events-none font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl"
                 style={{ clipPath: `inset(0 ${width - right}px 0 ${left}px round 1rem)` }}
             >
-                Video Editor
+                Extensibleeeeee
             </div>
         </div>
     );
