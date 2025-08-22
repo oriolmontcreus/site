@@ -55,46 +55,31 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
     };
 
     const commitColors = ["#48d55d", "#016d32", "#0d4429"];
-    const hoverColors = ["#e2f8e7", "#cef2d7", "#b8ecc5"]; // Light, subtle colors for hover
+    const hoverColors = [
+        "hsla(142, 71%, 45%, 0.4)", // Green with opacity
+        "hsla(142, 76%, 36%, 0.5)", // Darker green
+        "hsla(142, 72%, 29%, 0.6)"  // Even darker green
+    ];
 
     const [cells, setCells] = useState<CellData[]>([]);
-
-    // Generate deterministic pattern based on index to avoid hydration issues
-    const getDeterministicDelay = (index: number) => {
-        return `${((index * 0.05) % 0.6).toFixed(1)}s`;
-    };
-
-    const getDeterministicHoverDelay = (index: number) => {
-        return `${((index * 0.08) % 1.2).toFixed(1)}s`;
-    };
-
-    const getDeterministicColor = (index: number, colors: string[]) => {
-        return colors[index % colors.length];
-    };
-
-    const shouldCellFlash = (index: number) => {
-        // Use a deterministic pattern instead of random
-        return (index * 7 + 13) % 10 < 3; // Roughly 30% of cells will flash
-    };
-
-    // Pre-generate all cell data deterministically
-    const generateCellData = (width: number, height: number): CellData[] => {
-        return Array.from({ length: width * height }).map((_, index) => {
-            const isHighlighted = highlightedCells.includes(index);
-            const shouldFlash = !isHighlighted && shouldCellFlash(index);
-            const animationDelay = getDeterministicDelay(index);
-            const hoverAnimationDelay = getDeterministicHoverDelay(index);
-            const highlightColor = getDeterministicColor(index, commitColors);
-            return { isHighlighted, shouldFlash, animationDelay, highlightColor, hoverAnimationDelay };
-        });
-    };
 
 
     // Only generate animation data once on mount
     useEffect(() => {
-        setCells(generateCellData(gridWidth, gridHeight));
+        const timeout = setTimeout(() => {
+            const arr: CellData[] = Array.from({ length: gridWidth * gridHeight }).map((_, index) => {
+                const isHighlighted = highlightedCells.includes(index);
+                const shouldFlash = !isHighlighted && Math.random() < 0.3;
+                const animationDelay = `${(Math.random() * 0.6).toFixed(1)}s`;
+                const hoverAnimationDelay = `${(Math.random() * 1.2).toFixed(1)}s`;
+                const highlightColor = commitColors[Math.floor(Math.random() * commitColors.length)];
+                return { isHighlighted, shouldFlash, animationDelay, highlightColor, hoverAnimationDelay };
+            });
+            setCells(arr);
+        }, 500);
+        return () => clearTimeout(timeout);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [gridWidth, gridHeight]); // Re-run when grid dimensions change
+    }, []); // Only run once on mount
 
     return (
         <section
@@ -118,7 +103,7 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
                         style={{
                             animationDelay: isHovered ? cell.hoverAnimationDelay : cell.animationDelay,
                             "--highlight": cell.highlightColor,
-                            "--hover-color": getDeterministicColor(index, hoverColors),
+                            "--hover-color": hoverColors[Math.floor(Math.random() * hoverColors.length)],
                         } as CSSProperties}
                     />
                 ))
@@ -132,8 +117,8 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
                             "bg-card"
                         )}
                         style={{
-                            animationDelay: isHovered ? getDeterministicHoverDelay(index) : "0s",
-                            "--hover-color": getDeterministicColor(index, hoverColors),
+                            animationDelay: isHovered ? `${(Math.random() * 1.2).toFixed(1)}s` : "0s",
+                            "--hover-color": hoverColors[Math.floor(Math.random() * hoverColors.length)],
                         } as CSSProperties}
                     />
                 ))}
