@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Puzzle } from "lucide-react"
+import TextSlider from "../TextSlider"
 
 export default function FullyExtensibleCard() {
     return (
@@ -19,26 +20,7 @@ export default function FullyExtensibleCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="flex items-center gap-2 flex-wrap">
-                    <Badge
-                        variant="outline"
-                        className="text-xs bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400"
-                    >
-                        Svelte
-                    </Badge>
-                    <Badge
-                        variant="outline"
-                        className="text-xs bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
-                    >
-                        HonoJs
-                    </Badge>
-                    <Badge
-                        variant="outline"
-                        className="text-xs bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400"
-                    >
-                        MongoDB
-                    </Badge>
-                </div>
+                Fully <TextSlider width={200} />
             </CardContent>
         </Card>
     )

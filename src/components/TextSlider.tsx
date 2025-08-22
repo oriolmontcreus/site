@@ -1,88 +1,40 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
+import type { PointerEvent, KeyboardEvent } from "react";
 
-/**
- * Slider constants
- */
 const MIN_RANGE = 50; // px – minimum gap between the two handles
 const ROTATION_DEG = -2.76; // matches CSS transform
 const THETA = ROTATION_DEG * (Math.PI / 180);
 const COS_THETA = Math.cos(THETA);
 const SIN_THETA = Math.sin(THETA);
 
-/** Utility */
-const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+const clamp = (v: number, min: number, max: number): number => Math.min(Math.max(v, min), max);
 
-/**
- * The visible heading that houses the range‑slider.
- * Width is measured from an off‑screen copy of the text so that the label
- * always clips precisely, regardless of font‑loading or window size.
- */
-function ExtensibleText() {
-    const measureRef = useRef(null);
-    const [textWidth, setTextWidth] = useState(408); // sensible default until measured
-
-    // Re‑measure whenever fonts load or the viewport resizes
-    useEffect(() => {
-        const measure = () => setTextWidth(measureRef.current?.clientWidth ?? 408);
-        measure();
-        window.addEventListener("resize", measure);
-        const ro = new ResizeObserver(measure);
-        if (measureRef.current) ro.observe(measureRef.current);
-        return () => {
-            window.removeEventListener("resize", measure);
-            ro.disconnect();
-        };
-    }, []);
-
-    return (
-        <div className="w-full min-h-screen bg-white dark:bg-black text-white flex flex-col items-center justify-center text-center p-4 font-sans">
-            <div className="max-w-5xl">
-                <h1 className="font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl">
-                    The Open Source
-                </h1>
-
-                {/* Hidden copy for width‑measurement. Font size must match the visible text in the slider. */}
-                <span
-                    ref={measureRef}
-                    className="absolute -left-[9999px] px-4 whitespace-nowrap font-bold tracking-tighter text-5xl text-black dark:text-white md:text-7xl"
-                >
-                    Video Editor
-                </span>
-
-                {/* Range‑slider container */}
-                <div className="flex justify-center gap-4 mt-4 md:mt-6">
-                    <OpenSourceSlider width={textWidth} />
-                </div>
-
-                {/* Subheading */}
-                <p className="mt-8 text-lg md:text-xl max-w-2xl mx-auto text-gray-400">
-                    An intuitive, powerful, and free video editor for everyone. Create stunning videos with professional tools, right from your browser.
-                </p>
-
-                {/* "Get Started Now" button has been removed */}
-            </div>
-        </div>
-    );
+interface TextSliderProps {
+    width: number;
+    height?: number;
+    handleSize?: number;
+    onChange?: (range: { left: number; right: number; range: number }) => void;
 }
 
-/**
- * A two‑handle slider that is itself rotated.
- * The rotation angle now changes dynamically based on handle positions.
- * Dragging is projected on to this rotated axis so the handles feel natural.
- */
-function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, onChange }) {
+function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChange }: TextSliderProps): React.JSX.Element {
     // Adjusted height to better accommodate larger text
     const width = initialWidth > 0 ? initialWidth + 35 : 0;
 
-    const [left, setLeft] = useState(0);
-    const [right, setRight] = useState(width);
-    const [draggingHandle, setDraggingHandle] = useState(null);
+    const [left, setLeft] = useState<number>(0);
+    const [right, setRight] = useState<number>(width);
+    const [draggingHandle, setDraggingHandle] = useState<"left" | "right" | null>(null);
     // State to hold the dynamic rotation angle
-    const [dynamicRotation, setDynamicRotation] = useState(ROTATION_DEG);
+    const [dynamicRotation, setDynamicRotation] = useState<number>(ROTATION_DEG);
 
-    const leftRef = useRef(left);
-    const rightRef = useRef(right);
-    const dragRef = useRef(null);
+    const leftRef = useRef<number>(left);
+    const rightRef = useRef<number>(right);
+    const dragRef = useRef<{
+        handle: "left" | "right";
+        startX: number;
+        startY: number;
+        initialLeft: number;
+        initialRight: number;
+    } | null>(null);
 
     useEffect(() => {
         leftRef.current = left;
@@ -107,7 +59,7 @@ function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, o
 
     useEffect(() => setRight(width), [width]);
 
-    const startDrag = (handle, e) => {
+    const startDrag = (handle: "left" | "right", e: PointerEvent<HTMLButtonElement>) => {
         e.preventDefault();
         e.currentTarget.setPointerCapture(e.pointerId);
         dragRef.current = {
@@ -121,7 +73,7 @@ function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, o
     };
 
     const moveDrag = useCallback(
-        (e) => {
+        (e: PointerEvent | globalThis.PointerEvent) => {
             if (!dragRef.current) return;
             const { handle, startX, startY, initialLeft, initialRight } = dragRef.current;
             const dX = e.clientX - startX;
@@ -155,7 +107,7 @@ function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, o
         };
     }, [moveDrag, endDrag]);
 
-    const nudgeHandle = (handle) => (e) => {
+    const nudgeHandle = (handle: "left" | "right") => (e: KeyboardEvent<HTMLButtonElement>) => {
         if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
         e.preventDefault();
         const delta = e.key === "ArrowLeft" ? -10 : 10;
@@ -172,7 +124,7 @@ function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, o
             style={{ width, height, transform: `rotate(${dynamicRotation}deg)` }}
         >
             <div className="absolute inset-0 rounded-2xl border border-yellow-500 pointer-events-none" />
-            {(["left", "right"]).map((handle) => {
+            {(["left", "right"] as Array<"left" | "right">).map((handle) => {
                 const x = handle === "left" ? left : right - handleSize;
                 const scaleClass = draggingHandle === handle ? "scale-125" : "hover:scale-110";
 
@@ -201,4 +153,4 @@ function OpenSourceSlider({ width: initialWidth, height = 70, handleSize = 28, o
     );
 }
 
-export ExtensibleText };
+export default TextSlider;
