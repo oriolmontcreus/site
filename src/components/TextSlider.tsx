@@ -39,7 +39,8 @@ function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChang
 
     const width = measuredWidth;
     const [left, setLeft] = useState<number>(0);
-    const [right, setRight] = useState<number>(width);
+    // Initialize right handle at 70% of the width
+    const [right, setRight] = useState<number>(width * 0.7);
     const [draggingHandle, setDraggingHandle] = useState<"left" | "right" | null>(null);
     // State to hold the dynamic rotation angle
     const [dynamicRotation, setDynamicRotation] = useState<number>(ROTATION_DEG);
@@ -75,7 +76,8 @@ function TextSlider({ width: initialWidth, height = 70, handleSize = 28, onChang
         }
     }, [left, right, width]);
 
-    useEffect(() => setRight(width), [width]);
+    // When width changes, update right handle to 74% of new width
+    useEffect(() => setRight(width * 0.74), [width]);
 
     const startDrag = (handle: "left" | "right", e: PointerEvent<HTMLButtonElement>) => {
         e.preventDefault();
