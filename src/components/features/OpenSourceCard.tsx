@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github } from "lucide-react"
+import { CommitsGrid } from "../CommitsGrid"
 
 export default function OpenSourceCard() {
     return (
@@ -21,6 +22,7 @@ export default function OpenSourceCard() {
                     <div>• Community contributions</div>
                     <div>• Free forever</div>
                 </div>
+                <CommitsGrid text="test" />
             </CardContent>
         </Card>
     )
