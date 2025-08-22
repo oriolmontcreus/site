@@ -1,5 +1,3 @@
-import React from "react";
-
 export type RedisIconProps = {
     size?: number | string;
     className?: string;

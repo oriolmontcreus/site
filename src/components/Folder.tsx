@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { JsonIcon } from "./icons/JsonIcon";
+import { MongodbIcon } from "./icons/MongodbIcon";
+import { RedisIcon } from "./icons/RedisIcon";
 
 interface FolderProps {
     color?: string;
@@ -35,10 +38,18 @@ const Folder: React.FC<FolderProps> = ({
     className = "",
 }) => {
     const maxItems = 3;
-    const papers = items.slice(0, maxItems);
-    while (papers.length < maxItems) {
-        papers.push(null);
-    }
+    // Place icons on the papers
+    const papers = [
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+            <JsonIcon size={32} />
+        </div>,
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+            <MongodbIcon size={32} />
+        </div>,
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+            <RedisIcon size={32} />
+        </div>,
+    ];
 
     const [open, setOpen] = useState(false);
     const [paperOffsets, setPaperOffsets] = useState<{ x: number; y: number }[]>(
