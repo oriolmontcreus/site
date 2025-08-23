@@ -17,6 +17,19 @@ export default function TranslationModeCard() {
         { word: "안녕하세요", color: "text-fuchsia-500" }, // Korean
     ]
 
+    // Predefined sizes for each word for readability
+    const wordStyles = [
+        { fontSize: "1rem", color: "text-blue-500" }, // Bonjour
+        { fontSize: "1.7rem", color: "text-red-500" }, // Hola
+        { fontSize: "1.4rem", color: "text-green-500" }, // 你好
+        { fontSize: "1.3rem", color: "text-yellow-500" }, // Hallo
+        { fontSize: "1.2rem", color: "text-pink-500" }, // Ciao
+        { fontSize: "1rem", color: "text-purple-500" }, // Olá
+        { fontSize: "1.5rem", color: "text-orange-500" }, // Привет
+        { fontSize: "1rem", color: "text-teal-500" }, // こんにちは
+        { fontSize: "0.7rem", color: "text-fuchsia-500" }, // 안녕하세요
+    ];
+
     const [showWords, setShowWords] = useState(false)
     const [animatedWords, setAnimatedWords] = useState<Word[]>([])
     const timeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -69,14 +82,14 @@ export default function TranslationModeCard() {
                     Switch between Content and Translation modes to focus on either creating or translating
                 </CardDescription>
             </CardHeader>
-            <CardContent className="relative h-full min-h-[120px]">
+            <CardContent className="relative h-full min-h-[140px]">
                 <AnimatePresence>
                     {showWords && animatedWords.length > 0 && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="inset-0 flex flex-wrap items-center justify-center gap-4 p-4"
+                            className="w-full h-full flex flex-wrap items-center justify-center gap-x-4 gap-y-2 px-2 py-2"
                         >
                             {animatedWords.map((w, i) => (
                                 <motion.span
@@ -102,12 +115,8 @@ export default function TranslationModeCard() {
                                         damping: 25,
                                         delay: i * 0.1,
                                     }}
-                                    className={`font-bold text-lg pointer-events-none select-none ${w.color} drop-shadow-sm`}
-                                    style={{
-                                        textShadow: "0 2px 12px rgba(0,0,0,0.15)",
-                                        fontWeight: 600,
-                                        whiteSpace: "nowrap",
-                                    }}
+                                    className={`font-bold drop-shadow-sm pointer-events-none select-none ${wordStyles[i]?.color}`}
+                                    style={{ fontSize: wordStyles[i]?.fontSize, textShadow: "0 2px 12px rgba(0,0,0,0.15)", fontWeight: 600, whiteSpace: "nowrap" }}
                                 >
                                     {w.word}
                                 </motion.span>
@@ -123,7 +132,7 @@ export default function TranslationModeCard() {
                         className="absolute inset-0 flex items-center justify-center"
                     >
                         <div className="text-6xl opacity-5 dark:opacity-10">
-                            <Languages />
+                            <Languages size={40} />
                         </div>
                     </motion.div>
                 )}
