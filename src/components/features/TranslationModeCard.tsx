@@ -67,15 +67,36 @@ export default function TranslationModeCard() {
     };
 
     useEffect(() => {
-        const initial = getRandomWords();
-        setAnimatedWords(initial);
-        intervalRef.current = setInterval(() => {
-            setAnimatedWords(getRandomWords());
-        }, 5000);
-        return () => {
+        const startInterval = () => {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(() => {
+                setAnimatedWords(getRandomWords());
+            }, 5000);
+        };
+
+        const stopInterval = () => {
             if (intervalRef.current) {
                 clearInterval(intervalRef.current);
+                intervalRef.current = null;
             }
+        };
+
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                stopInterval();
+            } else {
+                setAnimatedWords(getRandomWords());
+                startInterval();
+            }
+        };
+
+        setAnimatedWords(getRandomWords());
+        startInterval();
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        return () => {
+            stopInterval();
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
         };
     }, []);
 
