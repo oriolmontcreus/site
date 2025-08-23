@@ -1,5 +1,17 @@
 import React, { useState } from "react";
 
+import { GripVertical } from "lucide-react";
+
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+
 interface ImageComparisonProps {
   leftImageSrc: string;
   leftImageAlt?: string;
@@ -7,11 +19,13 @@ interface ImageComparisonProps {
   rightImageAlt?: string;
 }
 
-import { GripVertical } from "lucide-react";
-
 function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImageAlt }: ImageComparisonProps) {
   const [inset, setInset] = useState<number>(50);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
+  // form state for right-side controls
+  const [title, setTitle] = useState<string>("");
+  const [category, setCategory] = useState<string | undefined>(undefined);
+  const [isPublic, setIsPublic] = useState<boolean>(true);
 
   // Static, hardcoded HTML-like block using divs/spans with Tailwind classes (no runtime processing)
   const StaticCodeBlock = (
@@ -53,12 +67,63 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
 
   return (
     <div className="w-full">
-      <div className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
+      <div
+        className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
         onMouseMove={onMouseMove}
         onMouseUp={() => setOnMouseDown(false)}
         onTouchMove={onMouseMove}
         onTouchEnd={() => setOnMouseDown(false)}
       >
+        {/* two-column grid: left column width follows `inset` percent, right column contains controls */}
+        <div
+          className="grid h-full w-full rounded-2xl border overflow-hidden"
+          style={{ gridTemplateColumns: `${inset}% 1fr` }}
+        >
+          <div className="bg-slate-900/80 text-sm text-slate-50 overflow-auto p-6">
+            <pre className="m-0 whitespace-pre-wrap font-mono text-sm">
+              <code className="block">{StaticCodeBlock}</code>
+            </pre>
+          </div>
+
+          <div className="bg-white/3 p-6 flex items-center">
+            <div className="w-full max-w-[200px] mx-auto flex flex-col gap-6">
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
+                <Input
+                  data-slot="input"
+                  className="w-full"
+                  placeholder="Enter the article title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
+                <Select onValueChange={(v: string) => setCategory(v)}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tech">Tech</SelectItem>
+                    <SelectItem value="cars">Cars</SelectItem>
+                    <SelectItem value="fashion">Fashion</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-slate-50">Public</div>
+                  <div className="text-xs text-muted-foreground">Makes the article public</div>
+                </div>
+                <Switch checked={isPublic} onCheckedChange={(v) => setIsPublic(Boolean(v))} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* draggable divider positioned between the two grid columns */}
         <div
           className="bg-muted h-full w-1 absolute z-20 top-0 -ml-1 select-none"
           style={{ left: inset + "%" }}
@@ -67,11 +132,11 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
             className="bg-muted rounded hover:scale-110 transition-all w-5 h-10 select-none -translate-y-1/2 absolute top-1/2 -ml-2 z-30 cursor-ew-resize flex justify-center items-center"
             onTouchStart={(e) => {
               setOnMouseDown(true);
-              onMouseMove(e);
+              onMouseMove(e as any);
             }}
             onMouseDown={(e) => {
               setOnMouseDown(true);
-              onMouseMove(e);
+              onMouseMove(e as any);
             }}
             onTouchEnd={() => setOnMouseDown(false)}
             onMouseUp={() => setOnMouseDown(false)}
@@ -79,26 +144,6 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
             <GripVertical className="h-4 w-4 select-none" />
           </button>
         </div>
-        <div
-          className="absolute left-0 top-0 z-10 w-full h-full aspect-video rounded-2xl select-none border bg-slate-900/80 text-sm text-slate-50 overflow-auto"
-          // clip the right side so the left content is visible up to `inset`%
-          style={{ clipPath: `inset(0 ${100 - inset}% 0 0)` }}
-        >
-          <pre className="m-0 p-6 whitespace-pre-wrap font-mono text-sm">
-            <code className="block">
-              {StaticCodeBlock}
-            </code>
-          </pre>
-        </div>
-        <img
-          src="../"
-          alt={rightImageAlt || "Representation of the right image"}
-          width={1920}
-          height={1080}
-          loading="lazy"
-          draggable={false}
-          className="absolute left-0 top-0 w-full h-full aspect-video rounded-2xl select-none border"
-        />
       </div>
     </div>
   );
