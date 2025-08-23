@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface ImageComparisonProps {
   leftImageSrc: string;
@@ -12,6 +12,19 @@ import { GripVertical } from "lucide-react";
 function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImageAlt }: ImageComparisonProps) {
   const [inset, setInset] = useState<number>(50);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
+
+  // Static, hardcoded HTML-like block using divs/spans with Tailwind classes (no runtime processing)
+  const StaticCodeBlock = (
+    <div>
+      <div>
+        <span className="text-purple-300">TextInput</span>(<span className="text-green-300">'title'</span>)
+      </div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Article title'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">required</span>()</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">placeholder</span>(<span className="text-green-300">'Enter the article title'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">translatable</span>(),</div>
+    </div>
+  );
 
   const onMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!onMouseDown) return;
@@ -57,18 +70,19 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
             <GripVertical className="h-4 w-4 select-none" />
           </button>
         </div>
+        <div
+          className="absolute left-0 top-0 z-10 w-full h-full aspect-video rounded-2xl select-none border bg-slate-900/80 text-sm text-slate-50 overflow-auto"
+          // clip the right side so the left content is visible up to `inset`%
+          style={{ clipPath: `inset(0 ${100 - inset}% 0 0)` }}
+        >
+          <pre className="m-0 p-6 whitespace-pre-wrap font-mono text-sm">
+            <code className="block">
+              {StaticCodeBlock}
+            </code>
+          </pre>
+        </div>
         <img
-          src={leftImageSrc}
-          alt={leftImageAlt || "Representation of the left image"}
-          width={1920}
-          height={1080}
-          loading="lazy"
-          draggable={false}
-          className="absolute left-0 top-0 z-10 w-full h-full aspect-video rounded-2xl select-none border"
-          style={{ clipPath: "inset(0 0 0 " + inset + "%)", }}
-        />
-        <img
-          src={rightImageSrc}
+          src="../"
           alt={rightImageAlt || "Representation of the right image"}
           width={1920}
           height={1080}
