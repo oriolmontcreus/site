@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import { GripVertical } from "lucide-react";
 
@@ -22,6 +22,7 @@ interface ImageComparisonProps {
 function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImageAlt }: ImageComparisonProps) {
   const [inset, setInset] = useState<number>(50);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   // form state for right-side controls
   const [title, setTitle] = useState<string>("");
   const [category, setCategory] = useState<string | undefined>(undefined);
@@ -52,22 +53,35 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
   const onMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!onMouseDown) return;
 
-    const rect = e.currentTarget.getBoundingClientRect();
-    let x = 0;
+    // Use the container ref if available to compute width/left reliably
+    const rect = containerRef.current
+      ? containerRef.current.getBoundingClientRect()
+      : (e.currentTarget as Element).getBoundingClientRect();
 
+    let x = 0;
     if ("touches" in e && e.touches.length > 0) {
       x = e.touches[0].clientX - rect.left;
     } else if ("clientX" in e) {
       x = e.clientX - rect.left;
     }
 
-    const percentage = (x / rect.width) * 100;
+    let percentage = (x / rect.width) * 100;
+
+    // enforce a minimum width (in pixels) for each side so divider can't go to edges
+    const MIN_PX = 60; // minimum pixels for each side
+    const minPercent = Math.min((MIN_PX / rect.width) * 100, 49); // at most 49%
+    percentage = Math.max(percentage, minPercent);
+    percentage = Math.min(percentage, 100 - minPercent);
+
     setInset(percentage);
   };
 
   return (
     <div className="w-full">
+      {/* scoped styles to hide scrollbar for the left panel */}
+      <style>{`.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}`}</style>
       <div
+        ref={containerRef}
         className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
         onMouseMove={onMouseMove}
         onMouseUp={() => setOnMouseDown(false)}
@@ -79,9 +93,13 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
           className="grid h-full w-full rounded-2xl border overflow-hidden"
           style={{ gridTemplateColumns: `${inset}% 1fr` }}
         >
-          <div className="bg-slate-900/80 text-sm text-slate-50 overflow-auto p-6">
-            <pre className="m-0 whitespace-pre-wrap font-mono text-sm">
-              <code className="block">{StaticCodeBlock}</code>
+          <div
+            className="bg-slate-900/80 text-sm text-slate-50 overflow-auto p-6 hide-scrollbar"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {/* prevent wrapping so content keeps its layout and only overflows/clips when inset changes */}
+            <pre className="m-0 whitespace-pre font-mono text-sm">
+              <code className="block w-max">{StaticCodeBlock}</code>
             </pre>
           </div>
 
