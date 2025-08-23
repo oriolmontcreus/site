@@ -107,21 +107,28 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
                         } as CSSProperties}
                     />
                 ))
-                : Array.from({ length: gridWidth * gridHeight }).map((_, index) => (
-                    <div
-                        key={index}
-                        className={cn(
-                            `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
-                            highlightedCells.includes(index) ? "animate-highlight" : "",
-                            isHovered ? "animate-hover-wave" : "",
-                            "bg-card"
-                        )}
-                        style={{
-                            animationDelay: isHovered ? `${(Math.random() * 1.2).toFixed(1)}s` : "0s",
-                            "--hover-color": hoverColors[Math.floor(Math.random() * hoverColors.length)],
-                        } as CSSProperties}
-                    />
-                ))}
+                : Array.from({ length: gridWidth * gridHeight }).map((_, index) => {
+                    // Use deterministic values for SSR
+                    const deterministicDelay = isHovered
+                        ? `${((index % 12) * 0.1).toFixed(1)}s`
+                        : "0s";
+                    const deterministicHoverColor = hoverColors[index % hoverColors.length];
+                    return (
+                        <div
+                            key={index}
+                            className={cn(
+                                `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
+                                highlightedCells.includes(index) ? "animate-highlight" : "",
+                                isHovered ? "animate-hover-wave" : "",
+                                "bg-card"
+                            )}
+                            style={{
+                                animationDelay: deterministicDelay,
+                                "--hover-color": deterministicHoverColor,
+                            } as CSSProperties}
+                        />
+                    );
+                })}
         </section>
     );
 };
