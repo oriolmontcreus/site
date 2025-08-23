@@ -15,6 +15,15 @@ export default function TranslationModeCard() {
         { word: "Привет", color: "text-orange-500" }, // Russian
         { word: "こんにちは", color: "text-teal-500" }, // Japanese
         { word: "안녕하세요", color: "text-fuchsia-500" }, // Korean
+        { word: "Hello", color: "text-cyan-500" }, // English
+        { word: "Merhaba", color: "text-lime-500" }, // Turkish
+        { word: "Salam", color: "text-rose-500" }, // Arabic
+        { word: "Hej", color: "text-amber-500" }, // Swedish
+        { word: "Aloha", color: "text-violet-500" }, // Hawaiian
+        { word: "Sawubona", color: "text-emerald-500" }, // Zulu
+        { word: "Shalom", color: "text-indigo-500" }, // Hebrew
+        { word: "Namaste", color: "text-gray-500" }, // Hindi
+        { word: "Sawasdee", color: "text-yellow-400" }, // Thai
     ]
 
     // Predefined sizes for each word for readability
@@ -28,48 +37,51 @@ export default function TranslationModeCard() {
         { fontSize: "1.5rem", color: "text-orange-500" }, // Привет
         { fontSize: "1rem", color: "text-teal-500" }, // こんにちは
         { fontSize: "0.7rem", color: "text-fuchsia-500" }, // 안녕하세요
+        { fontSize: "1.2rem", color: "text-cyan-500" }, // Hello
+        { fontSize: "1.1rem", color: "text-lime-500" }, // Merhaba
+        { fontSize: "1.3rem", color: "text-rose-500" }, // Salam
+        { fontSize: "1rem", color: "text-amber-500" }, // Hej
+        { fontSize: "1.2rem", color: "text-violet-500" }, // Aloha
+        { fontSize: "1.1rem", color: "text-emerald-500" }, // Sawubona
+        { fontSize: "1.2rem", color: "text-indigo-500" }, // Shalom
+        { fontSize: "1.3rem", color: "text-gray-500" }, // Namaste
+        { fontSize: "1.1rem", color: "text-yellow-400" }, // Sawasdee
     ];
 
-    const [showWords, setShowWords] = useState(false)
     const [animatedWords, setAnimatedWords] = useState<Word[]>([])
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const intervalRef = useRef<NodeJS.Timeout | null>(null)
+
+    // Helper to get a random set of 6 words, ensuring no overlap with previous set
+    const prevWordsRef = useRef<Set<string>>(new Set());
+    const getRandomWords = () => {
+        let available = words.filter(w => !prevWordsRef.current.has(w.word));
+        // If not enough available, reset previous and shuffle all
+        if (available.length < 6) {
+            prevWordsRef.current.clear();
+            available = [...words];
+        }
+        const shuffled = [...available].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 6);
+        prevWordsRef.current = new Set(selected.map(w => w.word));
+        return selected;
+    };
 
     useEffect(() => {
+        const initial = getRandomWords();
+        setAnimatedWords(initial);
+        intervalRef.current = setInterval(() => {
+            setAnimatedWords(getRandomWords());
+        }, 5000);
         return () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current)
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
             }
-        }
-    }, [])
-
-    const handleMouseEnter = () => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current)
-            timeoutRef.current = null
-        }
-
-        const shuffled = words.sort(() => 0.5 - Math.random())
-        const selected = shuffled.slice(0, 6) // Increased to 6 words since we have more space with flexbox
-        setAnimatedWords(selected)
-        setShowWords(true)
-    }
-
-    const handleMouseLeave = () => {
-        setShowWords(false)
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current)
-        }
-        timeoutRef.current = setTimeout(() => {
-            setAnimatedWords([])
-            timeoutRef.current = null
-        }, 300)
-    }
+        };
+    }, []);
 
     return (
         <Card
-            className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            className="md:col-span-1 lg:col-span-1 xl:col-span-1 transition-shadow duration-300"
         >
             <CardHeader className="pb-4">
                 <div className="flex items-center gap-3 mb-3">
@@ -84,7 +96,7 @@ export default function TranslationModeCard() {
             </CardHeader>
             <CardContent className="relative h-full min-h-[140px]">
                 <AnimatePresence>
-                    {showWords && animatedWords.length > 0 && (
+                    {animatedWords.length > 0 && (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -115,8 +127,8 @@ export default function TranslationModeCard() {
                                         damping: 25,
                                         delay: i * 0.1,
                                     }}
-                                    className={`font-bold drop-shadow-sm pointer-events-none select-none ${wordStyles[i]?.color}`}
-                                    style={{ fontSize: wordStyles[i]?.fontSize, textShadow: "0 2px 12px rgba(0,0,0,0.15)", fontWeight: 600, whiteSpace: "nowrap" }}
+                                    className={`font-bold pointer-events-none select-none ${wordStyles[i]?.color}`}
+                                    style={{ fontSize: wordStyles[i]?.fontSize, fontWeight: 600, whiteSpace: "nowrap" }}
                                 >
                                     {w.word}
                                 </motion.span>
@@ -124,8 +136,7 @@ export default function TranslationModeCard() {
                         </motion.div>
                     )}
                 </AnimatePresence>
-
-                {!showWords && (
+                {animatedWords.length === 0 && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
