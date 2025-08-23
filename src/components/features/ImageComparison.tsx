@@ -23,6 +23,15 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
       <div className="leading-6">{'    '}.<span className="text-sky-300">required</span>()</div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">placeholder</span>(<span className="text-green-300">'Enter the article title'</span>)</div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">translatable</span>(),</div>
+
+      <div className="leading-6"><br /><span className="text-purple-300">Select</span>(<span className="text-green-300">'category'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Category'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">options</span>([<span className="text-green-300">"Tech"</span>, <span className="text-green-300">"Cars"</span>, <span className="text-green-300">"Fashion"</span>]),</div>
+
+      <div className="leading-6"><br /><span className="text-purple-300">Toggle</span>(<span className="text-green-300">'isPublic'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Should be public?'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">helperText</span>(<span className="text-green-300">'Makes the article public'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">default</span>(<span className="text-green-300">true</span>),</div>
     </div>
   );
 
@@ -43,7 +52,7 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
   };
 
   return (
-    <div className="w-full py-8 lg:py-12">
+    <div className="w-full">
       <div className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
         onMouseMove={onMouseMove}
         onMouseUp={() => setOnMouseDown(false)}
