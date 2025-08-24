@@ -5,7 +5,7 @@ import { Toggle } from "@/components/ui/toggle";
 export function ModeToggle() {
     // Initialize theme from localStorage (if present) or from the document element (set by Layout script)
     const [theme, setTheme] = React.useState<string>(() => {
-        if (typeof window === "undefined") return "light";
+        if (typeof window === "undefined") return "dark";
         try {
             const stored = localStorage.getItem("theme");
             if (stored === "dark" || stored === "light") return stored;
