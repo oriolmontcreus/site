@@ -1,11 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Code2 } from "lucide-react"
-import { ImageComparison } from "../features/ImageComparison"
+import { Comparison } from "./Comparison"
 
 export default function FluentAPICard() {
     return (
-        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-2 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-2">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
@@ -20,13 +20,7 @@ export default function FluentAPICard() {
             </CardHeader>
             <CardContent>
                 <div className="py-4">
-                    {/* ImageComparison: left is Fluent API code, right is generated UI */}
-                    <ImageComparison
-                        leftImageSrc="/images/fluent-api-code.png"
-                        leftImageAlt="Fluent API code example"
-                        rightImageSrc="/images/fluent-api-ui.png"
-                        rightImageAlt="Generated UI from Fluent API"
-                    />
+                    <Comparison />
                 </div>
             </CardContent>
         </Card>

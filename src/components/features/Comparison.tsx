@@ -12,7 +12,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-function ImageComparison() {
+function Comparison() {
   const [inset, setInset] = useState<number>(50);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -212,4 +212,4 @@ function ImageComparison() {
   );
 }
 
-export { ImageComparison };
+export { Comparison };
