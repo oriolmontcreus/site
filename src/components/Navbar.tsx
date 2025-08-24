@@ -137,7 +137,13 @@ export default function Component() {
                                     </div>
                                 </div>
 
-                                <span className={`text-neutral-800 dark:text-neutral-100 font-light text-md transition-all duration-200 ${collapsed ? 'opacity-0 -translate-x-2 pointer-events-none w-0 overflow-hidden' : 'opacity-100'}`} aria-hidden={collapsed}>
+                                <span
+                                    className={`text-neutral-800 dark:text-neutral-100 font-light text-md whitespace-nowrap overflow-hidden transition-[opacity,transform,max-width] duration-300 ease-in-out ${collapsed
+                                        ? 'opacity-0 -translate-x-2 pointer-events-none max-w-0'
+                                        : 'opacity-100 translate-x-0 max-w-[13ch]'
+                                        }`}
+                                    aria-hidden={collapsed}
+                                >
                                     CALIBUR CMS
                                 </span>
                             </div>
