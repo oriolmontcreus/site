@@ -3,16 +3,36 @@ import { Moon, Sun } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 
 export function ModeToggle() {
-    const [theme, setTheme] = React.useState<string>("light");
+    // Initialize theme from localStorage (if present) or from the document element (set by Layout script)
+    const [theme, setTheme] = React.useState<string>(() => {
+        if (typeof window === "undefined") return "light";
+        try {
+            const stored = localStorage.getItem("theme");
+            if (stored === "dark" || stored === "light") return stored;
+        } catch (e) {
+            /* ignore */
+        }
+        // Fallback to checking the document class (Layout may have set it) or prefers-color-scheme
+        if (typeof document !== "undefined" && document.documentElement.classList.contains("dark")) {
+            return "dark";
+        }
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    });
 
     React.useEffect(() => {
-        if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
+        if (typeof document !== "undefined") {
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+            } else {
+                document.documentElement.classList.remove("dark");
+            }
         }
-        if (typeof localStorage !== "undefined") {
-            localStorage.setItem("theme", theme);
+        try {
+            if (typeof localStorage !== "undefined") {
+                localStorage.setItem("theme", theme);
+            }
+        } catch (e) {
+            // ignore storage errors
         }
     }, [theme]);
 
