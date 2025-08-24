@@ -21,31 +21,49 @@ const navigationLinks = [
 ]
 
 export default function Component() {
-    const [collapsed, setCollapsed] = useState(false)
-    const lastScrollY = useRef(0)
-    const ticking = useRef(false)
+    // Start collapsed if the page isn't at the very top on mount.
+    const [collapsed, setCollapsed] = useState(() => {
+        if (typeof window !== "undefined") {
+            return window.scrollY > 0
+        }
+        return false
+    })
+
+    // Track whether we're on the initial load (at very top). If true, the bar is large until
+    // the user scrolls away; if the user scrolls back to top, we restore initial state.
+    const [initialLoad, setInitialLoad] = useState(() => {
+        if (typeof window !== "undefined") return window.scrollY === 0
+        return true
+    })
 
     useEffect(() => {
+        if (typeof window !== "undefined" && window.scrollY > 0) {
+            // If user landed mid-page, treat as already scrolled
+            setInitialLoad(false)
+            setCollapsed(true)
+        }
+
         const onScroll = () => {
-            const currentY = window.scrollY || window.pageYOffset
-            if (!ticking.current) {
-                window.requestAnimationFrame(() => {
-                    // Collapse when scrolling down past a small threshold, expand when scrolling up
-                    if (currentY > lastScrollY.current && currentY > 50) {
-                        setCollapsed(true)
-                    } else if (currentY < lastScrollY.current) {
-                        setCollapsed(false)
-                    }
-                    lastScrollY.current = currentY
-                    ticking.current = false
-                })
-                ticking.current = true
+            const y = window.scrollY || window.pageYOffset
+
+            if (y === 0) {
+                // Back to very top: expand and mark as initial load
+                setCollapsed(false)
+                setInitialLoad(true)
+                return
             }
+
+            if (initialLoad && y > 0) {
+                // First scroll away from top: collapse
+                setCollapsed(true)
+                setInitialLoad(false)
+            }
+            // Otherwise: do nothing — keep current collapsed state
         }
 
         window.addEventListener("scroll", onScroll, { passive: true })
         return () => window.removeEventListener("scroll", onScroll)
-    }, [])
+    }, [initialLoad])
 
     return (
         <header
