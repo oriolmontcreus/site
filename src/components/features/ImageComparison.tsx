@@ -12,14 +12,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-interface ImageComparisonProps {
-  leftImageSrc: string;
-  leftImageAlt?: string;
-  rightImageSrc: string;
-  rightImageAlt?: string;
-}
-
-function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImageAlt }: ImageComparisonProps) {
+function ImageComparison() {
   const [inset, setInset] = useState<number>(50);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
