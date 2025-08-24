@@ -167,8 +167,8 @@ function Comparison() {
           </pre>
         </div>
 
-        <div className="flex justify-center mt-3">
-          <ArrowDown className="h-6 w-6 text-slate-400" />
+        <div className="flex justify-center my-3">
+          <ArrowDown size={24} className="size-6 text-neutral-400" />
         </div>
 
         <div className="bg-white/3 p-4 flex items-center">
