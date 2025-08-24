@@ -1,3 +1,4 @@
+import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
     NavigationMenu,
@@ -16,15 +17,41 @@ import { GithubIcon } from "./icons/GithubIcon"
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
     { href: "#", label: "Home", active: true },
-    { href: "#", label: "Features" },
-    { href: "#", label: "Pricing" },
     { href: "#", label: "About" },
 ]
 
 export default function Component() {
+    const [collapsed, setCollapsed] = useState(false)
+    const lastScrollY = useRef(0)
+    const ticking = useRef(false)
+
+    useEffect(() => {
+        const onScroll = () => {
+            const currentY = window.scrollY || window.pageYOffset
+            if (!ticking.current) {
+                window.requestAnimationFrame(() => {
+                    // Collapse when scrolling down past a small threshold, expand when scrolling up
+                    if (currentY > lastScrollY.current && currentY > 50) {
+                        setCollapsed(true)
+                    } else if (currentY < lastScrollY.current) {
+                        setCollapsed(false)
+                    }
+                    lastScrollY.current = currentY
+                    ticking.current = false
+                })
+                ticking.current = true
+            }
+        }
+
+        window.addEventListener("scroll", onScroll, { passive: true })
+        return () => window.removeEventListener("scroll", onScroll)
+    }, [])
+
     return (
-        <header className="border-b border-neutral-400 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-4 md:px-6">
-            <div className="flex h-16 items-center justify-between gap-4">
+        <header
+            className={`fixed top-0 left-0 right-0 z-50 transition-all backdrop-blur-sm bg-white/80 dark:bg-neutral-900/80 border-b border-neutral-400 dark:border-neutral-700 px-4 md:px-6 ${collapsed ? 'shadow-sm' : ''}`}
+        >
+            <div className={`flex ${collapsed ? 'h-12' : 'h-16'} items-center justify-between gap-4 transition-[height] duration-300 ease-in-out`}>
                 {/* Left side */}
                 <div className="flex items-center gap-2">
                     {/* Mobile menu trigger */}
@@ -92,18 +119,20 @@ export default function Component() {
                                     </div>
                                 </div>
 
-                                <span className="text-neutral-800 dark:text-neutral-100 font-light text-md">CALIBUR CMS</span>
+                                <span className={`text-neutral-800 dark:text-neutral-100 font-light text-md transition-all duration-200 ${collapsed ? 'opacity-0 -translate-x-2 pointer-events-none w-0 overflow-hidden' : 'opacity-100'}`} aria-hidden={collapsed}>
+                                    CALIBUR CMS
+                                </span>
                             </div>
                         </a>
-                        {/* Navigation menu */}
-                        <NavigationMenu className="max-md:hidden">
+                        {/* Navigation menu (always visible; becomes compact when collapsed) */}
+                        <NavigationMenu className={`max-md:hidden transition-all duration-200`}>
                             <NavigationMenuList className="gap-2">
                                 {navigationLinks.map((link, index) => (
                                     <NavigationMenuItem key={index}>
                                         <NavigationMenuLink
                                             active={link.active}
                                             href={link.href}
-                                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                                            className={`text-muted-foreground hover:text-primary font-medium transition-all duration-150 ${collapsed ? 'py-1 text-sm' : 'py-1.5'}`}
                                         >
                                             {link.label}
                                         </NavigationMenuLink>

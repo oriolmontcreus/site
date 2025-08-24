@@ -48,7 +48,10 @@ const { title } = Astro.props;
 			}
 		</script>
 	</head>
-	<body class="min-h-screen w-full relative" style="background: #04060b;">
+	<body
+		class="min-h-screen w-full relative pt-16"
+		style="background: #04060b;"
+	>
 		<Navbar client:load />
 		<div class="relative z-10">
 			<slot />
