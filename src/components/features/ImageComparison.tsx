@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-import { GripVertical } from "lucide-react";
+import { GripVertical, ArrowDown } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -36,16 +36,16 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
       </div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Article title'</span>)</div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">required</span>()</div>
-      <div className="leading-6">{'    '}.<span className="text-sky-300">placeholder</span>(<span className="text-green-300">'Enter the article title'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">placeholder</span>(<span className="text-green-300">'Enter the article title'</span>)  </div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">translatable</span>(),</div>
 
       <div className="leading-6"><br /><span className="text-purple-300">Select</span>(<span className="text-green-300">'category'</span>)</div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Category'</span>)</div>
-      <div className="leading-6">{'    '}.<span className="text-sky-300">options</span>([<span className="text-green-300">"Tech"</span>, <span className="text-green-300">"Cars"</span>, <span className="text-green-300">"Fashion"</span>]),</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">options</span>([<span className="text-green-300">"Tech"</span>, <span className="text-green-300">"Cars"</span>, <span className="text-green-300">"Fashion"</span>]),  </div>
 
       <div className="leading-6"><br /><span className="text-purple-300">Toggle</span>(<span className="text-green-300">'isPublic'</span>)</div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">label</span>(<span className="text-green-300">'Should be public?'</span>)</div>
-      <div className="leading-6">{'    '}.<span className="text-sky-300">helperText</span>(<span className="text-green-300">'Makes the article public'</span>)</div>
+      <div className="leading-6">{'    '}.<span className="text-sky-300">helperText</span>(<span className="text-green-300">'Makes the article public'</span>)  </div>
       <div className="leading-6">{'    '}.<span className="text-sky-300">default</span>(<span className="text-green-300">true</span>),</div>
     </div>
   );
@@ -80,9 +80,11 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
     <div className="w-full">
       {/* scoped styles to hide scrollbar for the left panel */}
       <style>{`.hide-scrollbar::-webkit-scrollbar{display:none}.hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}`}</style>
+
+      {/* Desktop / large screens: keep existing interactive split view (md+ only) */}
       <div
         ref={containerRef}
-        className="relative aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
+        className="relative hidden md:block aspect-video w-full h-full overflow-hidden rounded-2xl select-none"
         onMouseMove={onMouseMove}
         onMouseUp={() => setOnMouseDown(false)}
         onTouchMove={onMouseMove}
@@ -161,6 +163,56 @@ function ImageComparison({ leftImageSrc, leftImageAlt, rightImageSrc, rightImage
           >
             <GripVertical className="h-4 w-4 select-none" />
           </button>
+        </div>
+      </div>
+
+      {/* Mobile: simple stacked column - code, arrow, then components/controls */}
+      <div className="relative md:hidden w-full overflow-hidden rounded-2xl select-none">
+        <div className="bg-slate-900/80 text-sm text-slate-50 overflow-auto p-4 hide-scrollbar rounded-2xl">
+          <pre className="m-0 whitespace-pre font-mono text-sm">
+            <code className="block w-full pr-4">{StaticCodeBlock}</code>
+          </pre>
+        </div>
+
+        <div className="flex justify-center mt-3">
+          <ArrowDown className="h-6 w-6 text-slate-400" />
+        </div>
+
+        <div className="bg-white/3 p-4 flex items-center">
+          <div className="w-full max-w-md mx-auto flex flex-col gap-4">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
+              <Input
+                data-slot="input"
+                className="w-full"
+                placeholder="Enter the article title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
+              <Select onValueChange={(v: string) => setCategory(v)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tech">Tech</SelectItem>
+                  <SelectItem value="cars">Cars</SelectItem>
+                  <SelectItem value="fashion">Fashion</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-medium text-slate-900 dark:text-slate-50">Public</div>
+                <div className="text-xs text-muted-foreground">Makes the article public</div>
+              </div>
+              <Switch checked={isPublic} onCheckedChange={(v) => setIsPublic(Boolean(v))} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
