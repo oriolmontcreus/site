@@ -16,9 +16,9 @@ export default function AIReadyCard() {
                     LLM text files included for easy AI agent context - get help from your favorite AI assistant
                 </CardDescription>
             </CardHeader>
-            <CardContent>
-                <div className="flex justify-center items-center">
-                    <div className="w-20 h-12 rounded-xl flex items-center justify-center font-bold text-xl text-blue-600 dark:text-blue-400 select-none tracking-widest bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 group-hover:ring-2 group-hover:ring-blue-400 group-hover:animate-chip-glow">
+            <CardContent className="h-full">
+                <div className="flex justify-center items-center h-full">
+                    <div className="w-32 h-20 rounded-xl flex items-center justify-center font-bold text-xl text-blue-600 dark:text-blue-400 select-none tracking-widest bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all duration-300 group-hover:ring-2 group-hover:ring-blue-400 group-hover:animate-chip-glow">
                         AI
                     </div>
                 </div>
