@@ -19,22 +19,6 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<script is:inline>
-			// Ultra-fast theme initialization to prevent flicker
-			(() => {
-				const stored = localStorage.getItem("theme");
-				const theme =
-					stored ||
-					(window.matchMedia("(prefers-color-scheme: dark)").matches
-						? "dark"
-						: "light");
-
-				// Apply theme class immediately
-				if (theme === "dark") {
-					document.documentElement.classList.add("dark");
-				}
-			})();
-		</script>
 	</head>
 	<body class="min-h-screen w-full relative bg-background text-foreground">
 		<Navbar client:load />

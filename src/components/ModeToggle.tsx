@@ -6,11 +6,11 @@ import { useTheme } from "@/utils/theme";
 export function ModeToggle() {
     const { theme, isHydrated, toggleTheme } = useTheme();
 
-    // Show a placeholder during hydration to prevent mismatch
+    // Show a simple placeholder during hydration
     if (!isHydrated) {
         return (
             <div className="size-8 rounded-full flex items-center justify-center">
-                <div className="size-4 animate-pulse bg-muted-foreground/20 rounded"></div>
+                <Sun size={16} className="text-muted-foreground" />
             </div>
         );
     }
@@ -27,12 +27,12 @@ export function ModeToggle() {
             >
                 <Moon
                     size={16}
-                    className="shrink-0 scale-0 opacity-0 transition-all duration-150 group-data-[state=on]:scale-100 group-data-[state=on]:opacity-100"
+                    className="shrink-0 scale-0 opacity-0 transition-transform duration-200 group-data-[state=on]:scale-100 group-data-[state=on]:opacity-100"
                     aria-hidden="true"
                 />
                 <Sun
                     size={16}
-                    className="absolute shrink-0 scale-100 opacity-100 transition-all duration-150 group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0"
+                    className="absolute shrink-0 scale-100 opacity-100 transition-transform duration-200 group-data-[state=on]:scale-0 group-data-[state=on]:opacity-0"
                     aria-hidden="true"
                 />
                 <span className="sr-only">Toggle theme</span>
