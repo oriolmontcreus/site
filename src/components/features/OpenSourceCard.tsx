@@ -1,16 +1,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Github } from "lucide-react"
-import { useState } from "react"
 import { CommitsGrid } from "../CommitsGrid"
 
 export default function OpenSourceCard() {
-    const [isHovered, setIsHovered] = useState(false)
 
     return (
         <Card
             className="md:col-span-2 lg:col-span-2 xl:col-span-3 hover:shadow-lg transition-shadow duration-300"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
         >
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
@@ -24,7 +20,7 @@ export default function OpenSourceCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <CommitsGrid text="OPEN SOURCE" isHovered={isHovered} />
+                <CommitsGrid text="OPEN SOURCE" />
             </CardContent>
         </Card>
     )

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import type { CSSProperties } from "react";
 import { useEffect, useState } from "react";
 
-export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHovered?: boolean }) => {
+export const CommitsGrid = ({ text }: { text: string }) => {
     const cleanString = (str: string): string => {
         const upperStr = str.toUpperCase();
         const allowedChars = Object.keys(letterPatterns);
@@ -51,15 +51,10 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
         shouldFlash: boolean;
         animationDelay: string;
         highlightColor: string;
-        hoverAnimationDelay: string;
     };
 
     const commitColors = ["#48d55d", "#016d32", "#0d4429"];
-    const hoverColors = [
-        "hsla(142, 71%, 45%, 0.4)", // Green with opacity
-        "hsla(142, 76%, 36%, 0.5)", // Darker green
-        "hsla(142, 72%, 29%, 0.6)"  // Even darker green
-    ];
+    // Removed hoverColors
 
     const [cells, setCells] = useState<CellData[]>([]);
 
@@ -71,9 +66,8 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
                 const isHighlighted = highlightedCells.includes(index);
                 const shouldFlash = !isHighlighted && Math.random() < 0.3;
                 const animationDelay = `${(Math.random() * 0.6).toFixed(1)}s`;
-                const hoverAnimationDelay = `${(Math.random() * 1.2).toFixed(1)}s`;
                 const highlightColor = commitColors[Math.floor(Math.random() * commitColors.length)];
-                return { isHighlighted, shouldFlash, animationDelay, highlightColor, hoverAnimationDelay };
+                return { isHighlighted, shouldFlash, animationDelay, highlightColor };
             });
             setCells(arr);
         }, 500);
@@ -97,34 +91,27 @@ export const CommitsGrid = ({ text, isHovered = false }: { text: string; isHover
                             `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
                             cell.isHighlighted ? "animate-highlight" : "",
                             cell.shouldFlash ? "animate-flash" : "",
-                            isHovered ? "animate-hover-wave" : "",
                             !cell.isHighlighted && !cell.shouldFlash ? "bg-card" : ""
                         )}
                         style={{
-                            animationDelay: isHovered ? cell.hoverAnimationDelay : cell.animationDelay,
+                            animationDelay: cell.animationDelay,
                             "--highlight": cell.highlightColor,
-                            "--hover-color": hoverColors[Math.floor(Math.random() * hoverColors.length)],
                         } as CSSProperties}
                     />
                 ))
                 : Array.from({ length: gridWidth * gridHeight }).map((_, index) => {
                     // Use deterministic values for SSR
-                    const deterministicDelay = isHovered
-                        ? `${((index % 12) * 0.1).toFixed(1)}s`
-                        : "0s";
-                    const deterministicHoverColor = hoverColors[index % hoverColors.length];
+                    const deterministicDelay = "0s";
                     return (
                         <div
                             key={index}
                             className={cn(
                                 `border h-full w-full aspect-square rounded-[4px] sm:rounded-[3px] transition-all duration-300 ease-out`,
                                 highlightedCells.includes(index) ? "animate-highlight" : "",
-                                isHovered ? "animate-hover-wave" : "",
                                 "bg-card"
                             )}
                             style={{
                                 animationDelay: deterministicDelay,
-                                "--hover-color": deterministicHoverColor,
                             } as CSSProperties}
                         />
                     );
