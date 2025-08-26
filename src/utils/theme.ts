@@ -1,43 +1,31 @@
 import * as React from 'react';
+import { waitMs } from './waitMs';
 
 type Theme = 'light' | 'dark';
 
 // Simple theme utilities
-export function setTheme(theme: Theme) {
+export async function setTheme(theme: Theme) {
     if (typeof document === 'undefined') return;
 
-    // Show overlay
     showThemeOverlay();
+    await waitMs(100);
 
-    if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
+    if (theme === 'dark') document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
 
     try {
-        localStorage.setItem('theme', theme);
+        setTimeout(() => { localStorage.setItem('theme', theme); }, 500);
     } catch (e) {
         // ignore
     }
-
-    // Hide overlay after 300ms delay
-    setTimeout(() => {
-        hideThemeOverlay();
-    }, 300);
-
-    // Dispatch custom event for React components to listen
-    window.dispatchEvent(new CustomEvent('theme-change', { detail: theme }));
+    setTimeout(() => { hideThemeOverlay(); }, 100);
 }
 
 function showThemeOverlay() {
     if (typeof document === 'undefined') return;
 
-    // Remove existing overlay if any
     const existingOverlay = document.getElementById('theme-transition-overlay');
-    if (existingOverlay) {
-        existingOverlay.remove();
-    }
+    if (existingOverlay) existingOverlay.remove();
 
     // Create overlay
     const overlay = document.createElement('div');
@@ -70,12 +58,10 @@ function hideThemeOverlay() {
     if (overlay) {
         // Fade out
         overlay.style.opacity = '0';
-        
+
         // Remove after transition completes
         setTimeout(() => {
-            if (overlay.parentNode) {
-                overlay.remove();
-            }
+            if (overlay.parentNode) overlay.remove();
         }, 150);
     }
 }
@@ -93,9 +79,9 @@ export function getTheme(): Theme {
     return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 }
 
-export function toggleTheme() {
+export async function toggleTheme() {
     const current = getTheme();
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    await setTheme(current === 'dark' ? 'light' : 'dark');
 }
 
 // Simple React hook
