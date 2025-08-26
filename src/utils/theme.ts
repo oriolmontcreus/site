@@ -48,18 +48,18 @@ function showThemeOverlay() {
         left: 0;
         width: 100%;
         height: 100%;
-        background: currentColor;
-        opacity: 0.1;
+        background: #000000;
+        opacity: 0;
         z-index: 9999;
         pointer-events: none;
-        transition: opacity 0.15s ease;
+        transition: opacity 0.15s ease-in-out;
     `;
 
     document.body.appendChild(overlay);
 
-    // Force reflow and fade in
+    // Force reflow and fade in to full opacity
     requestAnimationFrame(() => {
-        overlay.style.opacity = '0.3';
+        overlay.style.opacity = '1';
     });
 }
 
@@ -68,9 +68,14 @@ function hideThemeOverlay() {
 
     const overlay = document.getElementById('theme-transition-overlay');
     if (overlay) {
+        // Fade out
         overlay.style.opacity = '0';
+        
+        // Remove after transition completes
         setTimeout(() => {
-            overlay.remove();
+            if (overlay.parentNode) {
+                overlay.remove();
+            }
         }, 150);
     }
 }

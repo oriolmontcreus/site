@@ -2,24 +2,28 @@ import * as React from 'react';
 
 export function ThemeTransitionOverlay() {
     const [isVisible, setIsVisible] = React.useState(false);
+    const [isAnimating, setIsAnimating] = React.useState(false);
 
     React.useEffect(() => {
-        const handleThemeStart = () => {
+        const handleThemeChange = () => {
             setIsVisible(true);
-        };
-
-        const handleThemeEnd = () => {
+            setIsAnimating(true);
+            
+            // Start fade out after 150ms
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 150);
+            
+            // Remove overlay after fade out completes
             setTimeout(() => {
                 setIsVisible(false);
             }, 300);
         };
 
-        window.addEventListener('theme-change', handleThemeStart);
-        window.addEventListener('theme-change', handleThemeEnd);
+        window.addEventListener('theme-change', handleThemeChange);
 
         return () => {
-            window.removeEventListener('theme-change', handleThemeStart);
-            window.removeEventListener('theme-change', handleThemeEnd);
+            window.removeEventListener('theme-change', handleThemeChange);
         };
     }, []);
 
@@ -27,9 +31,9 @@ export function ThemeTransitionOverlay() {
 
     return (
         <div
-            className="fixed inset-0 z-[9999] pointer-events-none bg-black transition-opacity duration-300"
+            className="fixed inset-0 z-[9999] pointer-events-none bg-black transition-opacity duration-150 ease-in-out"
             style={{
-                opacity: isVisible ? 1 : 0,
+                opacity: isAnimating ? 1 : 0,
             }}
         />
     );
