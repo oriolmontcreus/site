@@ -1,3 +1,15 @@
+/* Global theme transition - optimized for performance */
+html {
+    transition: background-color 0.12s ease-out, color 0.12s ease-out;
+}
+
+/* Only transition background colors and borders to avoid layout shifts */
+*,
+*::before,
+*::after {
+    transition: background-color 0.12s ease-out, border-color 0.12s ease-out, color 0.12s ease-out, fill 0.12s ease-out, stroke 0.12s ease-out;
+}
+
 /* CommitsGrid animation keyframes and classes */
 @keyframes highlight {
     0% {
