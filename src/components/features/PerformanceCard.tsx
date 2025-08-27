@@ -2,6 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Zap } from "lucide-react"
 import { AstroLogo, WordPressLogo, GatsbyLogo, NextJsLogo, NuxtLogo } from "@/components/icons/logos"
+import { AstroIconLight } from "@/components/icons/AstroIconLight"
+import { AstroIconDark } from "@/components/icons/AstroIconDark"
 import AnimatedLink from "@/components/ui/AnimatedLink"
 
 export default function PerformanceCard() {
@@ -14,7 +16,16 @@ export default function PerformanceCard() {
     ]
 
     return (
-        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-2 lg:row-span-2 hover:shadow-lg transition-shadow duration-300">
+        <Card className="relative md:col-span-2 lg:col-span-2 xl:col-span-2 lg:row-span-2 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+            {/* Big tilted icon in top right */}
+            <div className="absolute top-6 right-4 opacity-50 pointer-events-none transform rotate-12">
+                <div className="block dark:hidden">
+                    <AstroIconLight size={80} />
+                </div>
+                <div className="hidden dark:block">
+                    <AstroIconDark size={80} />
+                </div>
+            </div>
             <CardHeader className="pb-4">
                 <div className="flex items-center gap-3 mb-2">
                     <div className="p-2 bg-primary/10 rounded-lg">
