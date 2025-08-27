@@ -14,19 +14,19 @@ export default function AnimatedLink({
     return (
         <a
             className={cn(
-                "group inline-flex items-center text-foreground hover:text-blue-600 transition-colors duration-300 ease-out",
+                "group inline-flex items-center text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 ease-out",
                 className
             )}
             {...props}
         >
-            <span className="relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-blue-600 after:transition-all after:duration-300 after:ease-out group-hover:after:w-full">
+            <span className="relative px-1 py-0.5 rounded-sm transition-all duration-300 ease-out group-hover:bg-blue-100 dark:group-hover:bg-blue-900/30 inline-flex items-center">
                 {children}
+                <div className="w-0 overflow-hidden transition-all duration-300 ease-out group-hover:w-5">
+                    <ExternalLink
+                        className="size-3 ml-[4px] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
+                    />
+                </div>
             </span>
-            <div className="w-0 overflow-hidden transition-all duration-300 ease-out group-hover:w-5">
-                <ExternalLink
-                    className="size-3 ml-[4px] mt-[2px] opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100"
-                />
-            </div>
         </a>
     )
 }

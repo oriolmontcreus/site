@@ -20,7 +20,6 @@ export default function PerformanceCard() {
                     <div className="p-2 bg-primary/10 rounded-lg">
                         <Zap className="h-6 w-6 text-primary" />
                     </div>
-                    <Badge variant="secondary">Performance</Badge>
                 </div>
                 <CardTitle className="text-2xl">Extreme Performance</CardTitle>
                 <CardDescription className="text-base">
