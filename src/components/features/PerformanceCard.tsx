@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Zap } from "lucide-react"
 import { AstroLogo, WordPressLogo, GatsbyLogo, NextJsLogo, NuxtLogo } from "@/components/icons/logos"
+import AnimatedLink from "@/components/ui/AnimatedLink"
 
 export default function PerformanceCard() {
     const frameworks = [
@@ -23,7 +24,10 @@ export default function PerformanceCard() {
                 </div>
                 <CardTitle className="text-2xl">Extreme Performance</CardTitle>
                 <CardDescription className="text-base">
-                    Fast website performance out of the box thanks to Astro.
+                    Fast website performance out of the box thanks to
+                    <AnimatedLink href="https://astro.build" target="_blank" rel="noopener noreferrer" className="ml-1">
+                        Astro
+                    </AnimatedLink>.
                 </CardDescription>
             </CardHeader>
             <CardContent>
