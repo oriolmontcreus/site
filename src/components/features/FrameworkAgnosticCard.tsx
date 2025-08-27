@@ -25,7 +25,7 @@ export default function FrameworkAgnosticCard() {
                 </div>
                 <CardTitle className="text-lg">Framework Agnostic</CardTitle>
                 <CardDescription>
-                    Built with Astro, use any framework you love
+                    Use any framework you love
                 </CardDescription>
             </CardHeader>
             <CardContent>
