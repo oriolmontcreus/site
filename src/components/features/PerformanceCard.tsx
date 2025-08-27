@@ -1,14 +1,15 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Zap } from "lucide-react"
+import { AstroLogo, WordPressLogo, GatsbyLogo, NextJsLogo, NuxtLogo } from "@/components/icons/logos"
 
 export default function PerformanceCard() {
     const frameworks = [
-        { name: "Astro", percentage: 63, logo: "🚀" },
-        { name: "WordPress", percentage: 44, logo: "📝" },
-        { name: "Gatsby", percentage: 42, logo: "⚡" },
-        { name: "Next.js", percentage: 27, logo: "▲" },
-        { name: "Nuxt", percentage: 24, logo: "💚" }
+        { name: "Astro", percentage: 63, LogoComponent: AstroLogo },
+        { name: "WordPress", percentage: 44, LogoComponent: WordPressLogo },
+        { name: "Gatsby", percentage: 42, LogoComponent: GatsbyLogo },
+        { name: "Next.js", percentage: 27, LogoComponent: NextJsLogo },
+        { name: "Nuxt", percentage: 24, LogoComponent: NuxtLogo }
     ]
 
     return (
@@ -48,7 +49,7 @@ export default function PerformanceCard() {
                                             : 'bg-muted-foreground/50'
                                             }`}
                                     >
-                                        <span className="text-lg">{framework.logo}</span>
+                                        <framework.LogoComponent className="text-white" />
                                     </div>
                                     <span className="sr-only">{framework.name} Core Web Vitals Passing</span>
                                     <p className={`text-lg sm:text-xl font-semibold ${index === 0
