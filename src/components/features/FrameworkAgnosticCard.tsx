@@ -11,6 +11,8 @@ import { VueIcon } from "../icons/VueIcon"
 import { PreactIcon } from "../icons/PreactIcon"
 import { SolidIcon } from "../icons/SolidIcon"
 import { AlpineIcon } from "../icons/AlpineIcon"
+import { AngularIcon } from "../icons/AngularIcon"
+import { QwikIcon } from "../icons/QwikIcon"
 
 export default function FrameworkAgnosticCard() {
     return (
@@ -86,6 +88,26 @@ export default function FrameworkAgnosticCard() {
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>Alpine.js</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <div className="cursor-help">
+                                <AngularIcon size={32} />
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Angular</p>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <div className="cursor-help">
+                                <QwikIcon size={32} />
+                            </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Qwik</p>
                         </TooltipContent>
                     </Tooltip>
                 </div>
