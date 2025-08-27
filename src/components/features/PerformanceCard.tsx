@@ -27,7 +27,7 @@ export default function PerformanceCard() {
                     Fast website performance out of the box thanks to
                     <AnimatedLink href="https://astro.build" target="_blank" rel="noopener noreferrer" className="ml-1">
                         Astro
-                    </AnimatedLink>.
+                    </AnimatedLink>
                 </CardDescription>
             </CardHeader>
             <CardContent>
