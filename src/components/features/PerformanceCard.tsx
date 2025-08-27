@@ -19,12 +19,12 @@ export default function PerformanceCard() {
         <Card className="relative md:col-span-2 lg:col-span-2 xl:col-span-2 lg:row-span-2 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
             {/* Big tilted icon in top right */}
             <div className="absolute top-6 right-4 opacity-50 pointer-events-none transform rotate-12">
-                <div className="block dark:hidden">
-                    <AstroIconLight size={80} />
-                </div>
-                <div className="hidden dark:block">
-                    <AstroIconDark size={80} />
-                </div>
+                <AstroIconLight 
+                    className="block dark:hidden w-12 h-12 md:w-20 md:h-20" 
+                />
+                <AstroIconDark 
+                    className="hidden dark:block w-12 h-12 md:w-20 md:h-20" 
+                />
             </div>
             <CardHeader className="pb-4">
                 <div className="flex items-center gap-3 mb-2">
