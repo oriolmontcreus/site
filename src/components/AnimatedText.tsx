@@ -17,7 +17,7 @@ function AnimatedText({ words, interval = 2000 }: AnimatedTextProps) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          if (!hasStarted)  setHasStarted(true);
+          if (!hasStarted) setHasStarted(true);
         } else setIsVisible(false);
       },
       {
@@ -29,7 +29,7 @@ function AnimatedText({ words, interval = 2000 }: AnimatedTextProps) {
     if (containerRef.current) observer.observe(containerRef.current);
 
     return () => {
-      if (containerRef.current)  observer.unobserve(containerRef.current);
+      if (containerRef.current) observer.unobserve(containerRef.current);
     };
   }, [hasStarted]);
 
@@ -50,7 +50,6 @@ function AnimatedText({ words, interval = 2000 }: AnimatedTextProps) {
     <span
       ref={containerRef}
       className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1 select-none"
-      data-oid=".6btiza"
     >
       &nbsp;
       {words.map((word, index) => (
@@ -70,7 +69,6 @@ function AnimatedText({ words, interval = 2000 }: AnimatedTextProps) {
                 opacity: 0,
               }
           }
-          data-oid="1rle.-s"
         >
           {word}
         </motion.span>
