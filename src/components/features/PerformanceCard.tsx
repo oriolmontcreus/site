@@ -77,7 +77,7 @@ export default function PerformanceCard() {
                         ))}
                     </div>
 
-                    <p className="text-muted-foreground text-balance text-sm">
+                    <div className="text-muted-foreground text-balance text-sm">
                         <AnimatedLink
                             href="https://lookerstudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC?params=%7B%22df44%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580WordPress%25EE%2580%2580Next.js%25EE%2580%2580Nuxt.js%25EE%2580%2580Gatsby%25EE%2580%2580Astro%25EE%2580%2580SvelteKit%25EE%2580%2580Remix%22%7D"
                             target="_blank"
@@ -101,7 +101,7 @@ export default function PerformanceCard() {
                         >
                             Chrome UX Report
                         </AnimatedLink>.
-                    </p>
+                    </div>
                 </div>
             </CardContent>
         </Card>
