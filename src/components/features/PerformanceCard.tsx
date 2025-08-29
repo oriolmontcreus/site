@@ -16,14 +16,14 @@ export default function PerformanceCard() {
     ]
 
     return (
-        <Card className="relative md:col-span-2 lg:col-span-2 xl:col-span-2 lg:row-span-2 hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+        <Card className="relative md:col-span-2 lg:col-span-2 xl:col-span-2 lg:row-span-2 overflow-hidden">
             {/* Big tilted icon in top right */}
             <div className="absolute top-6 right-4 opacity-50 pointer-events-none transform rotate-12">
-                <AstroIconLight 
-                    className="block dark:hidden w-12 h-12 md:w-20 md:h-20" 
+                <AstroIconLight
+                    className="block dark:hidden w-12 h-12 md:w-20 md:h-20"
                 />
-                <AstroIconDark 
-                    className="hidden dark:block w-12 h-12 md:w-20 md:h-20" 
+                <AstroIconDark
+                    className="hidden dark:block w-12 h-12 md:w-20 md:h-20"
                 />
             </div>
             <CardHeader className="pb-4">
@@ -52,7 +52,7 @@ export default function PerformanceCard() {
                                     }`}
                                 data-glow={index === 0 ? "true" : undefined}
                             >
-                                <p className="lg:w-2/12 xl:w-1/12 min-w-36 hidden lg:block text-xl lg:text-end font-bold">
+                                <p className="lg:w-2/12 xl:w-1/12 min-w-36 hidden lg:block text-xl lg:text-end text-foreground">
                                     {framework.name}
                                 </p>
                                 <div className="h-8 sm:h-10 w-full flex items-center gap-2 outline-1 outline-offset-2 sm:outline-offset-4 outline-muted-foreground/50 group-data-[glow]:outline-muted-foreground rounded-lg">
@@ -78,32 +78,29 @@ export default function PerformanceCard() {
                     </div>
 
                     <p className="text-muted-foreground text-balance text-sm">
-                        <a
-                            className="text-foreground underline underline-offset-2 decoration-muted-foreground hover:decoration-foreground transition-colors duration-500 ease-out"
+                        <AnimatedLink
                             href="https://lookerstudio.google.com/u/0/reporting/55bc8fad-44c2-4280-aa0b-5f3f0cd3d2be/page/M6ZPC?params=%7B%22df44%22:%22include%25EE%2580%25800%25EE%2580%2580IN%25EE%2580%2580WordPress%25EE%2580%2580Next.js%25EE%2580%2580Nuxt.js%25EE%2580%2580Gatsby%25EE%2580%2580Astro%25EE%2580%2580SvelteKit%25EE%2580%2580Remix%22%7D"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             View the full dataset
-                        </a>
-                        · Based on real-world performance data from{' '}
-                        <a
-                            className="text-foreground underline underline-offset-2 decoration-muted-foreground hover:decoration-foreground transition-colors duration-500 ease-out"
+                        </AnimatedLink>
+                        ✦ Based on real-world performance data from{' '}
+                        <AnimatedLink
                             href="https://httparchive.org/"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             HTTP Archive
-                        </a>
+                        </AnimatedLink>
                         {' '}and the{' '}
-                        <a
-                            className="text-foreground underline underline-offset-2 decoration-muted-foreground hover:decoration-foreground transition-colors duration-500 ease-out"
+                        <AnimatedLink
                             href="https://developer.chrome.com/docs/crux"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
                             Chrome UX Report
-                        </a>.
+                        </AnimatedLink>.
                     </p>
                 </div>
             </CardContent>
