@@ -21,26 +21,19 @@ const navigationLinks = [
 ]
 
 export default function Component() {
-    // Start collapsed if the page isn't at the very top on mount.
-    const [collapsed, setCollapsed] = useState(() => {
-        if (typeof window !== "undefined") {
-            return window.scrollY > 0
-        }
-        return false
-    })
-
-    // Track whether we're on the initial load (at very top). If true, the bar is large until
-    // the user scrolls away; if the user scrolls back to top, we restore initial state.
-    const [initialLoad, setInitialLoad] = useState(() => {
-        if (typeof window !== "undefined") return window.scrollY === 0
-        return true
-    })
+    const [collapsed, setCollapsed] = useState(false)
+    const [initialLoad, setInitialLoad] = useState(true)
+    const [isHydrated, setIsHydrated] = useState(false)
 
     useEffect(() => {
-        if (typeof window !== "undefined" && window.scrollY > 0) {
-            // If user landed mid-page, treat as already scrolled
-            setInitialLoad(false)
-            setCollapsed(true)
+        // Set initial state based on scroll position after hydration
+        if (typeof window !== "undefined") {
+            const initialScrollY = window.scrollY
+            if (initialScrollY > 0) {
+                setInitialLoad(false)
+                setCollapsed(true)
+            }
+            setIsHydrated(true)
         }
 
         const onScroll = () => {
@@ -61,8 +54,10 @@ export default function Component() {
             // Otherwise: do nothing — keep current collapsed state
         }
 
-        window.addEventListener("scroll", onScroll, { passive: true })
-        return () => window.removeEventListener("scroll", onScroll)
+        if (typeof window !== "undefined") {
+            window.addEventListener("scroll", onScroll, { passive: true })
+            return () => window.removeEventListener("scroll", onScroll)
+        }
     }, [initialLoad])
 
     return (

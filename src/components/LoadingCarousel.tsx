@@ -194,9 +194,8 @@ export function LoadingCarousel({
         "w-full max-w-6xl mx-auto rounded-lg bg-muted shadow-[0px_1px_1px_0px_rgba(0,0,0,0.05),0px_1px_1px_0px_rgba(255,252,240,0.5)_inset,0px_0px_0px_1px_hsla(0,0%,100%,0.1)_inset,0px_0px_1px_0px_rgba(28,27,26,0.5)]",
         className,
       )}
-      data-oid="k45mrcl"
     >
-      <div className="w-full overflow-hidden rounded-lg" data-oid="onio554">
+      <div className="w-full overflow-hidden rounded-lg">
         <Carousel
           setApi={setApi}
           plugins={[autoplay]}
@@ -204,16 +203,14 @@ export function LoadingCarousel({
           opts={{
             loop: true,
           }}
-          data-oid="wv83l4c"
         >
-          <CarouselContent data-oid="29s.4ew">
+          <CarouselContent>
             <AnimatePresence
               initial={false}
               custom={direction}
-              data-oid="ne-nno2"
             >
               {(displaySlides || []).map((slide, index) => (
-                <CarouselItem key={index} data-oid="aklaff4">
+                <CarouselItem key={index}>
                   <motion.div
                     variants={carouselVariants}
                     initial="enter"
@@ -222,19 +219,16 @@ export function LoadingCarousel({
                     custom={direction}
                     transition={{ duration: 0.8, ease: "easeInOut" }}
                     className={`relative ${aspectRatioClasses[aspectRatio]} w-full overflow-hidden`}
-                    data-oid="i810_3s"
                   >
                     <img
                       src={resolvedImageUrls[index]}
                       alt={`Visual representation for slide: ${slide.text}`}
                       className="object-cover w-full h-full"
-                      data-oid="q1e0584"
                     />
 
                     {backgroundGradient && (
                       <div
                         className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
-                        data-oid="3-c40yq"
                       />
                     )}
 
@@ -244,18 +238,15 @@ export function LoadingCarousel({
                         initial="hidden"
                         animate="visible"
                         className={`absolute ${textPosition === "top" ? "top-0" : "bottom-0"} left-0 right-0 p-4 sm:p-6 md:p-8`}
-                        data-oid="by9y2f_"
                       >
                         {displaySlides[current]?.url ? (
                           <a
                             href={displaySlides[current]?.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            data-oid="bh2suuk"
                           >
                             <p
                               className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed"
-                              data-oid="0bmt1_2"
                             >
                               {displaySlides[current]?.text || "Loading..."}
                             </p>
@@ -263,7 +254,6 @@ export function LoadingCarousel({
                         ) : (
                           <p
                             className="text-white text-center md:text-left text-base sm:text-lg md:text-xl lg:text-2xl lg:font-bold tracking-tight font-medium leading-relaxed"
-                            data-oid="0xjj8t4"
                           >
                             {displaySlides[current]?.text || "Loading..."}
                           </p>
@@ -279,12 +269,10 @@ export function LoadingCarousel({
             <>
               <CarouselPrevious
                 className="absolute left-2 top-1/2 -translate-y-1/2"
-                data-oid="kcri8a0"
               />
 
               <CarouselNext
                 className="absolute right-2 top-1/2 -translate-y-1/2"
-                data-oid="p6:7hml"
               />
             </>
           )}
@@ -294,7 +282,6 @@ export function LoadingCarousel({
             "bg-muted p-4 ",
             showIndicators && !backgroundTips ? "lg:py-2 lg:px-4 " : "",
           )}
-          data-oid="0h_3llt"
         >
           <div
             className={cn(
@@ -303,12 +290,10 @@ export function LoadingCarousel({
                 ? "sm:flex-col space-y-2 items-start gap-3"
                 : "",
             )}
-            data-oid="xd_ljkr"
           >
             {showIndicators && (
               <div
                 className="flex space-x-2 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto"
-                data-oid="209x8zr"
               >
                 {(displaySlides || []).map((_, index) => (
                   <motion.button
@@ -322,35 +307,31 @@ export function LoadingCarousel({
                     transition={{ duration: 0.5 }}
                     onClick={() => handleSelect(index)}
                     aria-label={`Go to slide ${index + 1}`}
-                    data-oid="rd:mt7v"
                   />
                 ))}
               </div>
             )}
             <div
               className="flex items-center space-x-2 text-primary whitespace-nowrap"
-              data-oid="v-mmfmb"
             >
               {backgroundTips ? (
-                <span className="text-sm font-medium" data-oid="jhmr.kl">
+                <span className="text-sm font-medium">
                   Slide {current + 1}/{displaySlides?.length || 0}
                 </span>
               ) : (
-                <div className="flex flex-col" data-oid="oibvg4y">
+                <div className="flex flex-col">
                   {displaySlides[current]?.url ? (
                     <a
                       href={displaySlides[current]?.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
-                      data-oid="owfrl0l"
                     >
                       {animateText ? (
                         <TextScramble
                           key={displaySlides[current]?.text || "default-1"}
                           duration={1.2}
                           characterSet=". "
-                          data-oid="5ijdezn"
                         >
                           {displaySlides[current]?.text || "Loading..."}
                         </TextScramble>
@@ -361,14 +342,12 @@ export function LoadingCarousel({
                   ) : (
                     <span
                       className="text-base lg:text-2xl xl:font-semibold tracking-tight font-medium"
-                      data-oid="6.d9t2d"
                     >
                       {animateText ? (
                         <TextScramble
                           key={displaySlides[current]?.text || "default-2"}
                           duration={1.2}
                           characterSet=". "
-                          data-oid="kk:e9_j"
                         >
                           {displaySlides[current]?.text || "Loading..."}
                         </TextScramble>
@@ -380,7 +359,7 @@ export function LoadingCarousel({
                 </div>
               )}
               {backgroundTips && (
-                <ChevronRight className="w-4 h-4" data-oid="qc8e_et" />
+                <ChevronRight className="w-4 h-4" />
               )}
             </div>
           </div>
@@ -390,7 +369,6 @@ export function LoadingCarousel({
               animate={controls}
               transition={{ duration: 0.5, ease: "linear" }}
               className="h-1 bg-muted origin-left mt-2"
-              data-oid="bwl0mzq"
             />
           )}
         </div>
@@ -477,7 +455,7 @@ function TextScramble({
   }, [trigger, text]);
 
   return (
-    <MotionComponent className={className} {...props} data-oid="wgg_hh7">
+    <MotionComponent className={className} {...props}>
       {displayText}
     </MotionComponent>
   );

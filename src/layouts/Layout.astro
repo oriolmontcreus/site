@@ -20,35 +20,22 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<script is:inline>
-			const getThemePreference = () => {
-				if (
-					typeof localStorage !== "undefined" &&
-					localStorage.getItem("theme")
-				) {
-					return localStorage.getItem("theme");
+			// Theme initialization
+			(() => {
+				const stored = localStorage.getItem("theme");
+				const theme =
+					stored ||
+					(window.matchMedia("(prefers-color-scheme: dark)").matches
+						? "dark"
+						: "light");
+
+				if (theme === "dark") {
+					document.documentElement.classList.add("dark");
 				}
-				return window.matchMedia("(prefers-color-scheme: dark)").matches
-					? "dark"
-					: "light";
-			};
-			const isDark = getThemePreference() === "dark";
-			document.documentElement.classList[isDark ? "add" : "remove"](
-				"dark",
-			);
-			if (typeof localStorage !== "undefined") {
-				const observer = new MutationObserver(() => {
-					const isDark =
-						document.documentElement.classList.contains("dark");
-					localStorage.setItem("theme", isDark ? "dark" : "light");
-				});
-				observer.observe(document.documentElement, {
-					attributes: true,
-					attributeFilter: ["class"],
-				});
-			}
+			})();
 		</script>
 	</head>
-	<body class="min-h-screen w-full relative bg-background transition-colors">
+	<body class="min-h-screen w-full relative bg-background text-foreground">
 		<Navbar client:load />
 		<div class="relative z-10">
 			<slot />

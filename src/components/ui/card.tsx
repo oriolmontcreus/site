@@ -11,7 +11,6 @@ function Card({ className, ...props }: React.ComponentProps<"div">) {
         className,
       )}
       {...props}
-      data-oid="j:odg0m"
     />
   );
 }
@@ -25,7 +24,6 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
         className,
       )}
       {...props}
-      data-oid="8:18ug3"
     />
   );
 }
@@ -36,7 +34,6 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-title"
       className={cn("leading-none font-semibold", className)}
       {...props}
-      data-oid="zl-e:ys"
     />
   );
 }
@@ -47,7 +44,6 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-description"
       className={cn("text-muted-foreground text-sm", className)}
       {...props}
-      data-oid="0:oc65s"
     />
   );
 }
@@ -61,7 +57,6 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
         className,
       )}
       {...props}
-      data-oid="jcsoiis"
     />
   );
 }
@@ -72,7 +67,6 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-content"
       className={cn("px-6", className)}
       {...props}
-      data-oid=":slggax"
     />
   );
 }
@@ -83,7 +77,6 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="card-footer"
       className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
       {...props}
-      data-oid=":z05dme"
     />
   );
 }

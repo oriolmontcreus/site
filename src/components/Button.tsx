@@ -63,7 +63,7 @@ interface IconRefProps {
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
@@ -92,32 +92,29 @@ const Button = React.forwardRef<
         className={cn(buttonVariants({ variant, effect, size, className }))}
         ref={ref}
         {...props}
-        data-oid="_icxw9n"
       >
         {Icon &&
           iconPlacement === "left" &&
           (effect === "expandIcon" ? (
             <div
               className="w-0 translate-x-[0%] pr-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-100 group-hover:pr-2 group-hover:opacity-100"
-              data-oid="nhcgb.1"
             >
-              <Icon data-oid="m3vtlcb" />
+              <Icon />
             </div>
           ) : (
-            <Icon data-oid="zfk5v3j" />
+            <Icon />
           ))}
-        <Slottable data-oid="6gveyce">{props.children}</Slottable>
+        <Slottable>{props.children}</Slottable>
         {Icon &&
           iconPlacement === "right" &&
           (effect === "expandIcon" ? (
             <div
               className="w-0 translate-x-[100%] pl-0 opacity-0 transition-all duration-200 group-hover:w-5 group-hover:translate-x-0 group-hover:pl-2 group-hover:opacity-100"
-              data-oid="d.o_hl."
             >
-              <Icon data-oid="fdt:szu" />
+              <Icon />
             </div>
           ) : (
-            <Icon data-oid="dhqzomh" />
+            <Icon />
           ))}
       </Comp>
     );
