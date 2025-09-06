@@ -1,7 +1,12 @@
 import type { Component, Page } from '../../../shared/types/pages.type';
 
-interface GlobalVariablesData {
+export interface GlobalVariablesData {
     [key: string]: any;
+}
+
+export interface GlobalVariableOptions {
+    locale?: string;
+    fallback?: any;
 }
 
 // Cache for global variables (loaded once per build)
@@ -24,6 +29,76 @@ async function loadGlobalVariables(): Promise<GlobalVariablesData> {
         return {};
     }
 }
+
+// ========================================
+// PUBLIC API - Direct Variable Access 
+// ========================================
+
+/**
+ * Get a single global variable
+ * Usage: const siteName = await getGlobalVariable('siteName');
+ */
+export async function getGlobalVariable(
+    key: string,
+    options: GlobalVariableOptions = {}
+): Promise<any> {
+    try {
+        const variables = await loadGlobalVariables();
+        const { locale, fallback } = options;
+
+        // Check translation first if locale provided
+        if (locale && variables.translations?.[locale]?.[key] !== undefined) {
+            return variables.translations[locale][key];
+        }
+
+        // Check root level
+        if (variables[key] !== undefined) return variables[key];
+
+        return fallback;
+
+    } catch (error) {
+        console.error(`Failed to get global variable "${key}":`, error);
+        return options.fallback;
+    }
+}
+
+/**
+ * Get multiple global variables efficiently
+ * Usage: const {siteName, theme} = await getGlobalVariables(['siteName', 'theme']);
+ */
+export async function getGlobalVariables(
+    keys: string[],
+    options: GlobalVariableOptions = {}
+): Promise<Record<string, any>> {
+    try {
+        const variables = await loadGlobalVariables();
+        const { locale, fallback } = options;
+
+        const result: Record<string, any> = {};
+        for (const key of keys) {
+            // Check translation first if locale provided
+            if (locale && variables.translations?.[locale]?.[key] !== undefined) {
+                result[key] = variables.translations[locale][key];
+            } else if (variables[key] !== undefined) {
+                result[key] = variables[key];
+            } else {
+                result[key] = fallback;
+            }
+        }
+
+        return result;
+    } catch (error) {
+        console.error('Failed to get global variables:', error);
+        return keys.reduce((acc, key) => {
+            acc[key] = options.fallback;
+            return acc;
+        }, {} as Record<string, any>);
+    }
+}
+
+// =======================
+// TEMPLATE PROCESSING
+// =======================
 
 /**
  * Replace {{variable}} patterns in text with tracking
@@ -103,10 +178,10 @@ function processValue(value: any, variables: GlobalVariablesData, locale?: strin
  */
 export async function processPageWithGlobalVariables(page: Page, locale?: string): Promise<Page> {
     const variables = await loadGlobalVariables();
-    
+
     // Track which variables are being used
     const usedVariables = new Set<string>();
-    
+
     const processedComponents = page.components.map(component => {
         const processedFormData = processValueWithTracking(component.formData, variables, locale, usedVariables);
         return {
