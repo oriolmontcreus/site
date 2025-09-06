@@ -12,20 +12,38 @@ let globalVariablesCache: GlobalVariablesData | null = null;
  */
 async function loadGlobalVariables(): Promise<GlobalVariablesData> {
     if (globalVariablesCache) {
-        console.log('⚡ [GlobalVars] Using cache');
         return globalVariablesCache;
     }
 
     try {
-        console.log('📁 [GlobalVars] Loading variables...');
         const module = await import('../data/globalVariables.json');
         globalVariablesCache = module.default;
-        console.log(`✅ [GlobalVars] Loaded ${Object.keys(globalVariablesCache).length} variables`);
         return globalVariablesCache;
     } catch (error) {
         console.error('❌ [GlobalVars] Failed to load:', error);
         return {};
     }
+}
+
+/**
+ * Replace {{variable}} patterns in text with tracking
+ */
+function processTextWithTracking(text: string, variables: GlobalVariablesData, locale: string | undefined, usedVariables: Set<string>): string {
+    if (!text?.includes?.('{{')) return text;
+
+    return text.replace(/\{\{([^}]+)\}\}/g, (match, name) => {
+        const key = name.trim();
+        const value = locale && variables.translations?.[locale]?.[key]
+            ? variables.translations[locale][key]
+            : variables[key];
+
+        if (value !== undefined) {
+            usedVariables.add(key);
+            return String(value);
+        }
+
+        return match;
+    });
 }
 
 /**
@@ -41,13 +59,27 @@ function processText(text: string, variables: GlobalVariablesData, locale?: stri
             : variables[key];
 
         if (value !== undefined) {
-            console.log(`  🔄 [GlobalVars] ${key} → "${value}"`);
             return String(value);
         }
 
-        console.warn(`  ⚠️ [GlobalVars] Variable "${key}" not found`);
         return match;
     });
+}
+
+/**
+ * Process any value recursively with tracking
+ */
+function processValueWithTracking(value: any, variables: GlobalVariablesData, locale: string | undefined, usedVariables: Set<string>): any {
+    if (typeof value === 'string') return processTextWithTracking(value, variables, locale, usedVariables);
+    if (Array.isArray(value)) return value.map(item => processValueWithTracking(item, variables, locale, usedVariables));
+    if (value && typeof value === 'object') {
+        const result: any = {};
+        for (const [key, val] of Object.entries(value)) {
+            result[key] = processValueWithTracking(val, variables, locale, usedVariables);
+        }
+        return result;
+    }
+    return value;
 }
 
 /**
@@ -70,13 +102,18 @@ function processValue(value: any, variables: GlobalVariablesData, locale?: strin
  * Process a page with global variables
  */
 export async function processPageWithGlobalVariables(page: Page, locale?: string): Promise<Page> {
-    console.log(`📄 [GlobalVars] Processing: ${page.title}`);
-
     const variables = await loadGlobalVariables();
-    const processedComponents = page.components.map(component => ({
-        ...component,
-        formData: processValue(component.formData, variables, locale)
-    }));
+    
+    // Track which variables are being used
+    const usedVariables = new Set<string>();
+    
+    const processedComponents = page.components.map(component => {
+        const processedFormData = processValueWithTracking(component.formData, variables, locale, usedVariables);
+        return {
+            ...component,
+            formData: processedFormData
+        };
+    });
 
     return { ...page, components: processedComponents };
 }
@@ -85,8 +122,6 @@ export async function processPageWithGlobalVariables(page: Page, locale?: string
  * Process multiple pages with global variables
  */
 export async function processPagesWithGlobalVariables(pages: Page[], locale?: string): Promise<Page[]> {
-    console.log(`📚 [GlobalVars] Processing ${pages.length} pages`);
-
     const variables = await loadGlobalVariables();
 
     return pages.map(page => ({
