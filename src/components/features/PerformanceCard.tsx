@@ -32,7 +32,7 @@ export default function PerformanceCard() {
                         <Zap className="h-6 w-6 text-primary" />
                     </div>
                 </div>
-                <CardTitle className="text-2xl">Extreme Performance</CardTitle>
+                <CardTitle className="text-2xl">Extreme performance</CardTitle>
                 <CardDescription className="text-base">
                     Fast website performance out of the box thanks to
                     <AnimatedLink href="https://astro.build" target="_blank" rel="noopener noreferrer" className="ml-1">
@@ -100,7 +100,7 @@ export default function PerformanceCard() {
                             rel="noopener noreferrer"
                         >
                             Chrome UX Report
-                        </AnimatedLink>.
+                        </AnimatedLink>
                     </div>
                 </div>
             </CardContent>

@@ -10,7 +10,7 @@ export default function FullyThemableCard() {
                         <Palette className="h-5 w-5 text-pink-600 dark:text-pink-400" />
                     </div>
                 </div>
-                <CardTitle className="text-lg">Fully Themable</CardTitle>
+                <CardTitle className="text-lg">Themable</CardTitle>
                 <CardDescription>
                     Built with shadcn/ui components, customize colors and support both light and dark modes
                 </CardDescription>

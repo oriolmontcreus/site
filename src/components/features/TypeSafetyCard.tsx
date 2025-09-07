@@ -11,7 +11,7 @@ export default function TypeSafetyCard() {
                         <Shield className="h-5 w-5 text-green-600 dark:text-green-400" />
                     </div>
                 </div>
-                <CardTitle className="text-lg">Full Type Safety</CardTitle>
+                <CardTitle className="text-lg">Type safe</CardTitle>
                 <CardDescription>
                     Everything is built with TypeScript for complete type safety and IDE autocompletion
                 </CardDescription>

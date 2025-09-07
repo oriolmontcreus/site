@@ -10,7 +10,7 @@ export default function FullyResponsiveCard() {
                         <Smartphone className="h-5 w-5 text-teal-600 dark:text-teal-400" />
                     </div>
                 </div>
-                <CardTitle className="text-lg">Fully Responsive</CardTitle>
+                <CardTitle className="text-lg">Responsive</CardTitle>
                 <CardDescription>
                     Optimized for desktop and laptop workflows, but works perfectly on tablets and phones too
                 </CardDescription>

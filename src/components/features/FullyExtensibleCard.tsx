@@ -13,7 +13,7 @@ export default function FullyExtensibleCard() {
                     </div>
                     <Badge variant="secondary">Extensible</Badge>
                 </div>
-                <CardTitle className="text-lg">Fully Extensible</CardTitle>
+                <CardTitle className="text-lg">Extensible</CardTitle>
                 <CardDescription>
                     Built with Svelte, HonoJs, and MongoDB - modern, easy-to-use technologies perfect for AI-assisted
                     development

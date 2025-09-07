@@ -9,13 +9,15 @@ export interface Props {
 const { className = "" } = Astro.props;
 ---
 
-<footer class={`bg-slate-900/50 border-t border-white/10 ${className}`}>
+<footer
+    class={`border-t bg-[radial-gradient(ellipse_1200px_800px_at_50%_0%,rgba(59,130,246,0.2)_0%,rgba(59,130,246,0.1)_40%,rgba(59,130,246,0.01)_70%,transparent_100%)] dark:bg-[radial-gradient(ellipse_1200px_800px_at_50%_0%,rgba(59,130,246,0.15)_0%,rgba(59,130,246,0.08)_40%,rgba(59,130,246,0.02)_70%,transparent_100%)] transition-all duration-200 ${className}`}
+>
     <div class="container mx-auto px-4 py-12">
         <div class="grid md:grid-cols-4 gap-8">
             <!-- Logo & Description -->
             <div class="md:col-span-2">
                 <Logo />
-                <p class="text-slate-400 max-w-md mb-6 mt-5">
+                <p class="text-muted-foreground max-w-md mb-6 mt-5">
                     The modern content management system built for developers
                     who want power and simplicity. Inspired by Filament v3,
                     powered by modern web technologies.
@@ -23,14 +25,14 @@ const { className = "" } = Astro.props;
                 <div class="flex space-x-4">
                     <a
                         href="https://github.com/excalibur-cms"
-                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
+                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-muted-foreground hover:text-white transition-colors"
                         aria-label="GitHub"
                     >
                         <Github className="w-5 h-5" />
                     </a>
                     <a
                         href="https://twitter.com/excalibur_cms"
-                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-slate-400 hover:text-white transition-colors"
+                        class="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-muted-foreground hover:text-white transition-colors"
                         aria-label="Twitter"
                     >
                         <Twitter className="w-5 h-5" />
@@ -40,33 +42,33 @@ const { className = "" } = Astro.props;
 
             <!-- Documentation -->
             <div>
-                <h3 class="text-white font-semibold mb-4">Documentation</h3>
+                <h3 class="font-semibold mb-4">Documentation</h3>
                 <ul class="space-y-2">
                     <li>
                         <a
                             href="/docs/getting-started"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Getting Started</a
                         >
                     </li>
                     <li>
                         <a
                             href="/docs/installation"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Installation</a
                         >
                     </li>
                     <li>
                         <a
                             href="/docs/components"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Components</a
                         >
                     </li>
                     <li>
                         <a
                             href="/docs/api"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >API Reference</a
                         >
                     </li>
@@ -75,60 +77,37 @@ const { className = "" } = Astro.props;
 
             <!-- Community -->
             <div>
-                <h3 class="text-white font-semibold mb-4">Community</h3>
+                <h3 class="font-semibold mb-4">Community</h3>
                 <ul class="space-y-2">
                     <li>
                         <a
                             href="/community"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Join Community</a
                         >
                     </li>
                     <li>
                         <a
                             href="/contributing"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Contributing</a
                         >
                     </li>
                     <li>
                         <a
                             href="/changelog"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Changelog</a
                         >
                     </li>
                     <li>
                         <a
                             href="/roadmap"
-                            class="text-slate-400 hover:text-white transition-colors"
+                            class="text-muted-foreground hover:text-white transition-colors"
                             >Roadmap</a
                         >
                     </li>
                 </ul>
-            </div>
-        </div>
-
-        <!-- Bottom Bar -->
-        <div
-            class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center"
-        >
-            <p class="text-slate-400 text-sm mb-4 md:mb-0">
-                © 2025 Excalibur CMS. Built with <Heart
-                    className="inline w-4 h-4 text-red-500"
-                /> and modern web technologies.
-            </p>
-            <div class="flex space-x-6 text-sm">
-                <a
-                    href="/privacy"
-                    class="text-slate-400 hover:text-white transition-colors"
-                    >Privacy Policy</a
-                >
-                <a
-                    href="/terms"
-                    class="text-slate-400 hover:text-white transition-colors"
-                    >Terms of Service</a
-                >
             </div>
         </div>
     </div>
