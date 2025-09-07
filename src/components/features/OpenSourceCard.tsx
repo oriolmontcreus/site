@@ -6,7 +6,7 @@ export default function OpenSourceCard() {
 
     return (
         <Card
-            className="md:col-span-2 lg:col-span-2 xl:col-span-3 hover:shadow-lg transition-shadow duration-300"
+            className="md:col-span-2 lg:col-span-2 xl:col-span-3"
         >
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">

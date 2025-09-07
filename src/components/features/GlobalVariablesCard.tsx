@@ -3,7 +3,7 @@ import { Globe } from "lucide-react"
 
 export default function GlobalVariablesCard() {
     return (
-        <Card className="md:col-span-2 lg:col-span-1 xl:col-span-2 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-2 lg:col-span-1 xl:col-span-2">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-cyan-100 dark:bg-cyan-900/20 rounded-lg">

@@ -3,7 +3,7 @@ import { Terminal } from "lucide-react"
 
 export default function CLIToolsCard() {
     return (
-        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-orange-100 dark:bg-orange-900/20 rounded-lg">

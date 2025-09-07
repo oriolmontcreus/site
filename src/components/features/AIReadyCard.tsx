@@ -1,10 +1,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Bot } from "lucide-react"
 
 export default function AIReadyCard() {
     return (
-        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300 group">
+        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1 group">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">

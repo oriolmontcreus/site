@@ -18,7 +18,7 @@
           "subtitle": "The blade that empowers both developers and clients",
           "contactEmail": "test@mail.com",
           "description": "",
-          "docsUrl": "",
+          "docsUrl": "test english",
           "demoUrl": "",
           "githubUrl": "",
           "flipWords": [
@@ -30,20 +30,13 @@
           ],
           "translations": {
             "es-ES": {
-              "flipWords_0": {},
-              "flipWords_1": {},
-              "flipWords_2": {},
-              "flipWords_3": {},
-              "flipWords_4": {}
+              "subtitle": "",
+              "docsUrl": "test spanish 2",
+              "flipWords": []
             },
             "en-US": {
-              "title": "{{siteName}}",
               "subtitle": "The blade that empowers both developers and clients",
-              "contactEmail": "",
-              "description": "",
-              "docsUrl": "",
-              "demoUrl": "",
-              "githubUrl": "",
+              "docsUrl": "test english 2",
               "flipWords": [
                 "fast",
                 "intuitive",
@@ -57,6 +50,6 @@
       }
     ],
     "createdAt": "2025-08-16T14:46:49.466Z",
-    "updatedAt": "2025-08-23T15:21:25.364Z"
+    "updatedAt": "2025-09-06T21:57:02.139Z"
   }
 ]

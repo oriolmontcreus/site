@@ -4,7 +4,7 @@ import { Upload } from "lucide-react"
 
 export default function SmartAssetsCard() {
     return (
-        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-2 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-2 lg:col-span-2 xl:col-span-2">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg">

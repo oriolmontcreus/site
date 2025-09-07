@@ -3,7 +3,7 @@ import { Palette } from "lucide-react"
 
 export default function FullyThemableCard() {
     return (
-        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300">
+        <Card className="md:col-span-1 lg:col-span-1 xl:col-span-1">
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-pink-100 dark:bg-pink-900/20 rounded-lg">

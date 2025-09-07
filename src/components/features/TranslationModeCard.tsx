@@ -102,7 +102,7 @@ export default function TranslationModeCard() {
 
     return (
         <Card
-            className="md:col-span-1 lg:col-span-1 xl:col-span-1 transition-shadow duration-300"
+            className="md:col-span-1 lg:col-span-1 xl:col-span-1"
         >
             <CardHeader className="pb-4">
                 <div className="flex items-center gap-3 mb-3">
