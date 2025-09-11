@@ -1,4 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { Globe } from "lucide-react"
 
 export default function GlobalVariablesCard() {
@@ -16,10 +17,34 @@ export default function GlobalVariablesCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="space-y-1 text-xs text-muted-foreground">
-                    <div>• Contact email across all pages</div>
-                    <div>• Social media links</div>
-                    <div>• Company information</div>
+                <div className="space-y-4">
+                    <div className="text-sm">
+                        <span className="text-muted-foreground">Welcome to </span>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <span
+                                    className="cursor-help font-medium dark:text-blue-400 text-blue-500 font-mono px-1 py-0.5 rounded transition-colors hover:bg-accent"
+                                    style={{
+                                        fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace'
+                                    }}
+                                >
+                                    {"{{siteName}}"}
+                                </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>EXCALIBUR CMS</p>
+                            </TooltipContent>
+                        </Tooltip>
+                        <span className="text-muted-foreground">!</span>
+                    </div>
+
+                    <div className="pt-2 border-t border-border/50">
+                        <div className="space-y-1 text-sm text-muted-foreground">
+                            <div>• Update once, change everywhere</div>
+                            <div>• Perfect for contact info & branding</div>
+                            <div>• Keep content consistent across pages</div>
+                        </div>
+                    </div>
                 </div>
             </CardContent>
         </Card>
