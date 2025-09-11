@@ -21,7 +21,7 @@ export default function FastDevelopmentCard() {
 
     return (
         <Card
-            className="md:col-span-1 lg:col-span-1 xl:col-span-1 hover:shadow-lg transition-shadow duration-300"
+            className="md:col-span-1 lg:col-span-1 xl:col-span-1"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
