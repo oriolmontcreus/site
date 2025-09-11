@@ -10,7 +10,6 @@ export default function SmartAssetsCard() {
                     <div className="p-2 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg">
                         <Upload className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                     </div>
-                    <Badge variant="secondary">Asset Management</Badge>
                 </div>
                 <CardTitle className="text-lg">Smart Assets</CardTitle>
                 <CardDescription>
