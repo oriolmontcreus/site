@@ -225,21 +225,11 @@ export default function FullyThemableCard() {
                                     onClick={() => applyTheme(theme)}
                                     className="group flex flex-col items-center gap-2 p-2 rounded-lg dark:hover:bg-muted/50 hover:bg-muted transition-all duration-200 hover:scale-105 cursor-pointer"
                                 >
-                                    {/* Color preview circles */}
-                                    <div className="flex items-center gap-1">
-                                        <div
-                                            className="w-4 h-4 rounded-full border border-border/20 transition-transform group-hover:scale-110"
-                                            style={{ backgroundColor: previewColors.primary }}
-                                        />
-                                        <div
-                                            className="w-3 h-3 rounded-full border border-border/20 transition-transform group-hover:scale-110"
-                                            style={{ backgroundColor: previewColors.secondary }}
-                                        />
-                                        <div
-                                            className="w-2 h-2 rounded-full border border-border/20 transition-transform group-hover:scale-110"
-                                            style={{ backgroundColor: previewColors.accent }}
-                                        />
-                                    </div>
+                                    {/* Color preview - single circle */}
+                                    <div
+                                        className="w-6 h-6 rounded-full border border-border/50 transition-transform group-hover:scale-110 shadow-sm"
+                                        style={{ backgroundColor: previewColors.primary }}
+                                    />
 
                                     {/* Theme name */}
                                     <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
