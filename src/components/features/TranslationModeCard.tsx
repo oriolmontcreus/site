@@ -115,7 +115,7 @@ export default function TranslationModeCard() {
                     Switch between Content and Translation modes to focus on either creating or translating
                 </CardDescription>
             </CardHeader>
-            <CardContent className="relative h-full min-h-[140px]">
+            <CardContent className="relative h-full min-h-[160px]">
                 <AnimatePresence>
                     {animatedWords.length > 0 && (
                         <motion.div
