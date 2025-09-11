@@ -3,7 +3,14 @@ import { Button } from "@/components/ui/button"
 import { Palette, RotateCcw } from "lucide-react"
 import { useState, useEffect } from "react"
 
-// Predefined color themes
+// Add color preview helpers
+const getThemePreviewColors = (theme: typeof colorThemes[0]) => {
+    return {
+        primary: theme.lightColors["--primary"],
+        secondary: theme.lightColors["--background"],
+        accent: theme.lightColors["--border"]
+    }
+}
 const colorThemes = [
     {
         name: "Default",
@@ -80,13 +87,13 @@ const colorThemes = [
             "--border": "oklch(0.85 0.08 40)",
         },
         darkColors: {
-            "--background": "oklch(0.12 0.03 40)",
-            "--foreground": "oklch(0.92 0.02 40)",
-            "--card": "oklch(0.18 0.04 40)",
-            "--card-foreground": "oklch(0.92 0.02 40)",
-            "--primary": "oklch(0.65 0.15 40)",
-            "--primary-foreground": "oklch(0.12 0.03 40)",
-            "--border": "oklch(0.3 0.08 40)",
+            "--background": "oklch(0.14 0.01 40)",
+            "--foreground": "oklch(0.94 0.01 40)",
+            "--card": "oklch(0.19 0.015 40)",
+            "--card-foreground": "oklch(0.94 0.01 40)",
+            "--primary": "oklch(0.55 0.08 40)",
+            "--primary-foreground": "oklch(0.14 0.01 40)",
+            "--border": "oklch(0.32 0.02 40)",
         }
     },
     {
@@ -121,7 +128,7 @@ export default function FullyThemableCard() {
         const original: Record<string, string> = {}
         const variablesToStore = [
             "--background",
-            "--foreground", 
+            "--foreground",
             "--card",
             "--card-foreground",
             "--primary",
@@ -137,13 +144,13 @@ export default function FullyThemableCard() {
     const applyTheme = (theme: typeof colorThemes[0]) => {
         const root = document.documentElement
         const isDarkMode = root.classList.contains('dark')
-        
+
         // Apply the appropriate colors based on current mode
         const colorsToApply = isDarkMode ? theme.darkColors : theme.lightColors
         Object.entries(colorsToApply).forEach(([property, value]) => {
             root.style.setProperty(property, value as string)
         })
-        
+
         // Store the theme data for mode switching
         root.setAttribute('data-current-theme', JSON.stringify(theme))
     }
@@ -186,7 +193,7 @@ export default function FullyThemableCard() {
                 root.style.setProperty(property, value)
             }
         })
-        
+
         // Remove the theme data attribute
         root.removeAttribute('data-current-theme')
     }
@@ -205,37 +212,43 @@ export default function FullyThemableCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded-full bg-primary"></div>
-                    <div className="w-4 h-4 rounded-full bg-secondary"></div>
-                    <div className="w-4 h-4 rounded-full bg-muted"></div>
-                    <span className="text-xs text-muted-foreground ml-2">+ Dark Mode</span>
-                </div>
 
-                <div className="space-y-2">
-                    <div className="text-xs font-medium text-muted-foreground mb-2">Try different themes:</div>
-                    <div className="grid grid-cols-2 gap-2">
-                        {colorThemes.map((theme, index) => (
-                            <Button
-                                key={theme.name}
-                                variant={index === 0 ? "outline" : "secondary"}
-                                size="sm"
-                                className="text-xs h-8"
-                                onClick={() => applyTheme(theme)}
-                            >
-                                {theme.name}
-                            </Button>
-                        ))}
+                <div className="space-y-3">
+
+                    {/* Color theme buttons */}
+                    <div className="grid grid-cols-3 gap-3">
+                        {colorThemes.map((theme) => {
+                            const previewColors = getThemePreviewColors(theme)
+                            return (
+                                <button
+                                    key={theme.name}
+                                    onClick={() => applyTheme(theme)}
+                                    className="group flex flex-col items-center gap-2 p-2 rounded-lg dark:hover:bg-muted/50 hover:bg-muted transition-all duration-200 hover:scale-105 cursor-pointer"
+                                >
+                                    {/* Color preview circles */}
+                                    <div className="flex items-center gap-1">
+                                        <div
+                                            className="w-4 h-4 rounded-full border border-border/20 transition-transform group-hover:scale-110"
+                                            style={{ backgroundColor: previewColors.primary }}
+                                        />
+                                        <div
+                                            className="w-3 h-3 rounded-full border border-border/20 transition-transform group-hover:scale-110"
+                                            style={{ backgroundColor: previewColors.secondary }}
+                                        />
+                                        <div
+                                            className="w-2 h-2 rounded-full border border-border/20 transition-transform group-hover:scale-110"
+                                            style={{ backgroundColor: previewColors.accent }}
+                                        />
+                                    </div>
+
+                                    {/* Theme name */}
+                                    <span className="text-xs font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                                        {theme.name}
+                                    </span>
+                                </button>
+                            )
+                        })}
                     </div>
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        className="w-full text-xs h-8 mt-2"
-                        onClick={resetTheme}
-                    >
-                        <RotateCcw className="h-3 w-3 mr-1" />
-                        Reset
-                    </Button>
                 </div>
             </CardContent>
         </Card>

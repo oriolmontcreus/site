@@ -11,7 +11,6 @@ export default function FullyExtensibleCard() {
                     <div className="p-2 bg-violet-100 dark:bg-violet-900/20 rounded-lg">
                         <Puzzle className="h-5 w-5 text-violet-600 dark:text-violet-400" />
                     </div>
-                    <Badge variant="secondary">Extensible</Badge>
                 </div>
                 <CardTitle className="text-lg">Extensible</CardTitle>
                 <CardDescription>
