@@ -1,5 +1,4 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Code2 } from "lucide-react"
 import { Comparison } from "./Comparison"
 
@@ -11,7 +10,6 @@ export default function FluentAPICard() {
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
                         <Code2 className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                     </div>
-                    <Badge variant="secondary">Developer Experience</Badge>
                 </div>
                 <CardTitle className="text-lg">Fluent API Design</CardTitle>
                 <CardDescription>

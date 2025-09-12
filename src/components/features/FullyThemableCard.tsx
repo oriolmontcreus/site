@@ -208,7 +208,7 @@ export default function FullyThemableCard() {
                 </div>
                 <CardTitle className="text-lg">Themable</CardTitle>
                 <CardDescription>
-                    Built with shadcn/ui components, customize colors and support both light and dark modes
+                    Built with shadcn/ui components, customize colors to your own liking. Supports both light and dark modes
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
