@@ -101,8 +101,9 @@ function Comparison() {
           <div className="bg-white/3 p-6 flex items-center">
             <div className="w-full max-w-[200px] mx-auto flex flex-col gap-6">
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
+                <label htmlFor="title-input" className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
                 <Input
+                  id="title-input"
                   data-slot="input"
                   className="w-full"
                   placeholder="Enter the article title"
@@ -112,9 +113,9 @@ function Comparison() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
+                <label htmlFor="category-select" className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
                 <Select onValueChange={(v: string) => setCategory(v)}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger id="category-select" className="w-full">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -174,8 +175,9 @@ function Comparison() {
         <div className="bg-white/3 p-4 flex items-center">
           <div className="w-full max-w-md mx-auto flex flex-col gap-4">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
+              <label htmlFor="title-input-mobile" className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Title</label>
               <Input
+                id="title-input-mobile"
                 data-slot="input"
                 className="w-full"
                 placeholder="Enter the article title"
@@ -185,9 +187,9 @@ function Comparison() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
+              <label htmlFor="category-select-mobile" className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-50">Category</label>
               <Select onValueChange={(v: string) => setCategory(v)}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger id="category-select-mobile" className="w-full">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
