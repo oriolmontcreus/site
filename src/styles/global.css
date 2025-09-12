@@ -176,6 +176,16 @@
       --sidebar-accent-foreground: oklch(0.205 0 0);
       --sidebar-border: oklch(0.922 0 0);
       --sidebar-ring: oklch(0.708 0 0);
+
+      ::selection {
+          background-color: oklch(44.252% 0.23937 265.374 / 0.225);
+          color: oklch(52.666% 0.26365 263.836);
+      }
+
+      ::-moz-selection {
+          background-color: oklch(44.252% 0.23937 265.374 / 0.225);
+          color: oklch(52.666% 0.26365 263.836);
+      }
   }
 
   .dark {
@@ -210,6 +220,16 @@
       --sidebar-accent-foreground: oklch(0.985 0 0);
       --sidebar-border: oklch(1 0 0 / 10%);
       --sidebar-ring: oklch(0.556 0 0);
+
+      ::selection {
+          background-color: oklch(25.546% 0.13922 271.304 / 0.362);
+          color: oklch(54.187% 0.13115 267.165);
+      }
+
+      ::-moz-selection {
+          background-color: oklch(25.546% 0.13922 271.304 / 0.362);
+          color: oklch(54.187% 0.13115 267.165);
+      }
   }
 
   @layer base {
