@@ -19,6 +19,9 @@ export async function setTheme(theme: Theme) {
         // ignore
     }
     setTimeout(() => { hideThemeOverlay(); }, 100);
+
+    // Dispatch custom event to notify React components
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: theme }));
 }
 
 function showThemeOverlay() {
@@ -86,7 +89,7 @@ export async function toggleTheme() {
 
 // Simple React hook
 export function useTheme() {
-    const [theme, setThemeState] = React.useState<Theme>('dark');
+    const [theme, setThemeState] = React.useState<Theme>('light');
     const [isHydrated, setIsHydrated] = React.useState(false);
 
     React.useEffect(() => {
@@ -101,10 +104,16 @@ export function useTheme() {
         return () => window.removeEventListener('theme-change', handleThemeChange as EventListener);
     }, []);
 
+    const handleToggleTheme = React.useCallback(async () => {
+        const newTheme = theme === 'dark' ? 'light' : 'dark';
+        setThemeState(newTheme); // Update state immediately for responsiveness
+        await setTheme(newTheme);
+    }, [theme]);
+
     return {
         theme,
         isHydrated,
         setTheme,
-        toggleTheme,
+        toggleTheme: handleToggleTheme,
     };
 }
