@@ -41,7 +41,7 @@ export default function PerformanceCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="p-4 sm:p-8 bg-muted/30 border border-border/20 rounded-xl sm:rounded-2xl">
+                <div className="p-4 sm:p-8 -mt-4 bg-muted/30 border border-border/20 rounded-xl sm:rounded-2xl">
                     <p className="text-muted-foreground">% of real-world sites with good Core Web Vitals</p>
 
                     <div className="mt-8 mb-5 space-y-4">

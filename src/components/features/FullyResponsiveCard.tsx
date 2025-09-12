@@ -16,10 +16,54 @@ export default function FullyResponsiveCard() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>📱 Mobile</span>
-                    <span>💻 Desktop</span>
-                    <span>📟 Tablet</span>
+                <div className="flex items-center justify-between gap-4 py-4">
+                    {/* Phone */}
+                    <div className="flex flex-col items-center group">
+                        <div className="relative transform transition-transform duration-200 group-hover:scale-105 select-none">
+                            <img
+                                src="/phone-opt.webp"
+                                alt="Mobile phone"
+                                width={64}
+                                height={64}
+                                loading="lazy"
+                                draggable={false}
+                                className="object-contain"
+                            />
+                        </div>
+                        <span className="text-xs text-muted-foreground mt-2">Mobile</span>
+                    </div>
+
+                    {/* Tablet */}
+                    <div className="flex flex-col items-center group">
+                        <div className="relative transform transition-transform duration-200 group-hover:scale-105 select-none">
+                            <img
+                                src="/ipad-opt.webp"
+                                alt="iPad tablet"
+                                width={64}
+                                height={64}
+                                loading="lazy"
+                                draggable={false}
+                                className="object-contain"
+                            />
+                        </div>
+                        <span className="text-xs text-muted-foreground mt-2">Tablet</span>
+                    </div>
+
+                    {/* Laptop */}
+                    <div className="flex flex-col items-center group">
+                        <div className="relative transform transition-transform duration-200 group-hover:scale-105 select-none">
+                            <img
+                                src="/laptop-opt.webp"
+                                alt="Laptop computer"
+                                width={64}
+                                height={64}
+                                loading="lazy"
+                                draggable={false}
+                                className="object-contain"
+                            />
+                        </div>
+                        <span className="text-xs text-muted-foreground mt-2">Desktop</span>
+                    </div>
                 </div>
             </CardContent>
         </Card>
